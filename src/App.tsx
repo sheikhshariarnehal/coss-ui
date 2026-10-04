@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { COMPONENTS_LIST, TOTAL_PARTICLES } from './data/components-list';
+import { BLOCKS_DATA } from './data/blocks-list';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { ComponentDocsViewer } from './components/ComponentDocsViewer';
 import { ParticlesGallery } from './components/ParticlesGallery';
+import { BlocksGallery } from './components/BlocksGallery';
 import { SearchModal } from './components/SearchModal';
 import { OverviewPage } from './components/OverviewPage';
 
@@ -18,9 +20,10 @@ const OVERVIEW_SLUGS = [
 ];
 
 function parseCurrentRoute(): {
-  tab: 'docs' | 'particles';
+  tab: 'docs' | 'particles' | 'blocks';
   componentSlug: string;
   overviewId: string | null;
+  blockSlug: string | null;
 } {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
 
@@ -30,7 +33,14 @@ function parseCurrentRoute(): {
     pathname.startsWith('/ui/particles') ||
     pathname.startsWith('/particles')
   ) {
-    return { tab: 'particles', componentSlug: 'accordion', overviewId: null };
+    return { tab: 'particles', componentSlug: 'accordion', overviewId: null, blockSlug: null };
+  }
+
+  // Check /ui/blocks or /blocks or /ui/blocks/:slug
+  const blockMatch = pathname.match(/^(?:\/ui)?\/blocks(?:\/([a-z0-9-]+))?/i);
+  if (blockMatch) {
+    const slug = blockMatch[1] ? blockMatch[1].toLowerCase() : null;
+    return { tab: 'blocks', componentSlug: 'accordion', overviewId: null, blockSlug: slug };
   }
 
   // Check /ui/docs/components/:slug or /docs/components/:slug or /components/:slug
@@ -38,7 +48,7 @@ function parseCurrentRoute(): {
   if (compMatch) {
     const slug = compMatch[1].toLowerCase();
     if (COMPONENTS_LIST.some((c) => c.slug === slug)) {
-      return { tab: 'docs', componentSlug: slug, overviewId: null };
+      return { tab: 'docs', componentSlug: slug, overviewId: null, blockSlug: null };
     }
   }
 
@@ -47,21 +57,22 @@ function parseCurrentRoute(): {
   if (overviewMatch) {
     const id = overviewMatch[1].toLowerCase();
     if (OVERVIEW_SLUGS.includes(id)) {
-      return { tab: 'docs', componentSlug: 'accordion', overviewId: id };
+      return { tab: 'docs', componentSlug: 'accordion', overviewId: id, blockSlug: null };
     }
     if (COMPONENTS_LIST.some((c) => c.slug === id)) {
-      return { tab: 'docs', componentSlug: id, overviewId: null };
+      return { tab: 'docs', componentSlug: id, overviewId: null, blockSlug: null };
     }
   }
 
-  return { tab: 'docs', componentSlug: 'accordion', overviewId: null };
+  return { tab: 'docs', componentSlug: 'accordion', overviewId: null, blockSlug: null };
 }
 
 export function App() {
   const initialRoute = parseCurrentRoute();
-  const [activeTab, setActiveTab] = useState<'docs' | 'particles'>(initialRoute.tab);
+  const [activeTab, setActiveTab] = useState<'docs' | 'particles' | 'blocks'>(initialRoute.tab);
   const [selectedSlug, setSelectedSlug] = useState<string>(initialRoute.componentSlug);
   const [selectedOverview, setSelectedOverview] = useState<string | null>(initialRoute.overviewId);
+  const [selectedBlockSlug, setSelectedBlockSlug] = useState<string | null>(initialRoute.blockSlug);
   const [isDark, setIsDark] = useState<boolean>(true);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
@@ -81,6 +92,7 @@ export function App() {
       setActiveTab(route.tab);
       setSelectedSlug(route.componentSlug);
       setSelectedOverview(route.overviewId);
+      setSelectedBlockSlug(route.blockSlug);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -91,6 +103,13 @@ export function App() {
   useEffect(() => {
     if (activeTab === 'particles') {
       document.title = 'Particles - coss ui';
+    } else if (activeTab === 'blocks') {
+      if (selectedBlockSlug) {
+        const blk = BLOCKS_DATA.find((b) => b.slug === selectedBlockSlug);
+        document.title = `${blk ? blk.name : 'Block'} - Blocks - coss ui`;
+      } else {
+        document.title = 'Interactive Blocks - coss ui';
+      }
     } else if (selectedOverview) {
       const formatted = selectedOverview
         .split('-')
@@ -101,7 +120,7 @@ export function App() {
       const comp = COMPONENTS_LIST.find((c) => c.slug === selectedSlug);
       document.title = `${comp ? comp.title : 'Components'} - coss ui`;
     }
-  }, [activeTab, selectedOverview, selectedSlug]);
+  }, [activeTab, selectedOverview, selectedSlug, selectedBlockSlug]);
 
   // Sync theme with document element
   useEffect(() => {
@@ -130,6 +149,7 @@ export function App() {
   const handleSelectComponent = (slug: string) => {
     setSelectedSlug(slug);
     setSelectedOverview(null);
+    setSelectedBlockSlug(null);
     setActiveTab('docs');
     window.history.pushState(null, '', `/ui/docs/components/${slug}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -137,16 +157,30 @@ export function App() {
 
   const handleSelectOverview = (id: string) => {
     setSelectedOverview(id);
+    setSelectedBlockSlug(null);
     setActiveTab('docs');
     window.history.pushState(null, '', `/ui/docs/${id}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleTabChange = (tab: 'docs' | 'particles') => {
+  const handleSelectBlock = (slug: string | null) => {
+    setSelectedBlockSlug(slug);
+    if (slug) {
+      window.history.pushState(null, '', `/ui/blocks/${slug}`);
+    } else {
+      window.history.pushState(null, '', '/ui/blocks');
+    }
+  };
+
+  const handleTabChange = (tab: 'docs' | 'particles' | 'blocks') => {
     setActiveTab(tab);
     if (tab === 'particles') {
+      setSelectedBlockSlug(null);
       window.history.pushState(null, '', '/ui/particles');
+    } else if (tab === 'blocks') {
+      window.history.pushState(null, '', '/ui/blocks');
     } else {
+      setSelectedBlockSlug(null);
       const url = selectedOverview
         ? `/ui/docs/${selectedOverview}`
         : `/ui/docs/components/${selectedSlug}`;
@@ -179,6 +213,7 @@ export function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         onToggleMobileSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
         totalParticles={TOTAL_PARTICLES}
+        totalBlocks={BLOCKS_DATA.length}
       />
 
       {/* Main Container */}
@@ -208,6 +243,14 @@ export function App() {
             )}
           </div>
         </div>
+      ) : activeTab === 'blocks' ? (
+        /* Blocks Gallery Page */
+        <div className="container relative flex-1 w-full max-w-[1416px]">
+          <BlocksGallery
+            selectedSlug={selectedBlockSlug}
+            onSelectBlock={handleSelectBlock}
+          />
+        </div>
       ) : (
         /* Particles Gallery Page */
         <div className="container relative flex-1 w-full max-w-[1416px]">
@@ -225,6 +268,10 @@ export function App() {
         components={COMPONENTS_LIST}
         onSelectComponent={handleSelectComponent}
         onSelectParticle={(slug) => handleSelectComponent(slug)}
+        onSelectBlock={(slug) => {
+          setActiveTab('blocks');
+          handleSelectBlock(slug);
+        }}
       />
     </div>
   );

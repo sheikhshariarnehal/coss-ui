@@ -2,13 +2,14 @@ import React from 'react';
 import { Search, Moon, Sun, Menu, Sparkles, BookOpen } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'docs' | 'particles';
-  setActiveTab: (tab: 'docs' | 'particles') => void;
+  activeTab: 'docs' | 'particles' | 'blocks';
+  setActiveTab: (tab: 'docs' | 'particles' | 'blocks') => void;
   isDark: boolean;
   toggleTheme: () => void;
   onOpenSearch: () => void;
   onToggleMobileSidebar: () => void;
   totalParticles: number;
+  totalBlocks?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSearch,
   onToggleMobileSidebar,
   totalParticles,
+  totalBlocks = 30,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full bg-sidebar/80 backdrop-blur-md before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-border/64">
@@ -66,6 +68,25 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               Docs
+            </a>
+            <a
+              href="/ui/blocks"
+              onClick={(e) => {
+                if (!e.metaKey && !e.ctrlKey) {
+                  e.preventDefault();
+                  setActiveTab('blocks');
+                }
+              }}
+              className={`relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border font-medium text-sm transition-all h-8 px-3 ${
+                activeTab === 'blocks'
+                  ? 'border-transparent bg-accent text-foreground'
+                  : 'border-transparent text-muted-foreground hover:bg-accent hover:text-foreground'
+              }`}
+            >
+              <span>Blocks</span>
+              <span className="rounded-full bg-pink-500/10 px-1.5 py-0.2 text-[11px] font-semibold text-pink-400">
+                {totalBlocks}
+              </span>
             </a>
             <a
               href="/ui/particles"

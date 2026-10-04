@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { ComponentMeta } from '../data/components-list';
-import { Search, Sparkles, BookOpen, X, ChevronRight, ArrowUpDown, CornerDownLeft } from 'lucide-react';
+import { BLOCKS_DATA } from '../data/blocks-list';
+import { Search, Sparkles, BookOpen, X, ChevronRight, ArrowUpDown, CornerDownLeft, Layers } from 'lucide-react';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -8,6 +9,7 @@ interface SearchModalProps {
   components: ComponentMeta[];
   onSelectComponent: (slug: string) => void;
   onSelectParticle?: (slug: string, particleId: string) => void;
+  onSelectBlock?: (slug: string) => void;
 }
 
 export const SearchModal: React.FC<SearchModalProps> = ({
@@ -16,6 +18,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   components,
   onSelectComponent,
   onSelectParticle,
+  onSelectBlock,
 }) => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -30,10 +33,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
     }
   }, [isOpen]);
 
-  // Flatten searchable items (Components + Particles)
+  // Flatten searchable items (Components + Blocks + Particles)
   const items = useMemo(() => {
     const list: Array<{
-      type: 'component' | 'particle';
+      type: 'component' | 'block' | 'particle';
       id: string;
       title: string;
       subtitle: string;
@@ -43,6 +46,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
     const q = query.toLowerCase().trim();
 
+    // 1. Search Components
     components.forEach((c) => {
       if (!q || c.title.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q) || c.description.toLowerCase().includes(q)) {
         list.push({
@@ -68,7 +72,20 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       });
     });
 
-    return list.slice(0, 40); // Top 40 results
+    // 2. Search Blocks
+    BLOCKS_DATA.forEach((b) => {
+      if (!q || b.name.toLowerCase().includes(q) || b.slug.toLowerCase().includes(q) || b.description.toLowerCase().includes(q) || b.tags.some(t => t.toLowerCase().includes(q))) {
+        list.push({
+          type: 'block',
+          id: `block-${b.slug}`,
+          title: b.name,
+          subtitle: `Interactive Block • ${b.category} • ${b.description}`,
+          slug: b.slug,
+        });
+      }
+    });
+
+    return list.slice(0, 45); // Top 45 results
   }, [components, query]);
 
   // Handle keyboard navigation
@@ -144,7 +161,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <div className="flex-1 overflow-y-auto p-2 divide-y divide-border/20">
           {items.length === 0 ? (
             <div className="py-12 text-center text-sm text-muted-foreground">
-              No components or particles match "{query}".
+              No components, blocks, or particles match "{query}".
             </div>
           ) : (
             <div className="space-y-1">
@@ -157,6 +174,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     onClick={() => {
                       if (item.type === 'component') {
                         onSelectComponent(item.slug);
+                      } else if (item.type === 'block') {
+                        if (onSelectBlock) onSelectBlock(item.slug);
+                        else onSelectComponent(item.slug);
                       } else if (item.particleId && onSelectParticle) {
                         onSelectParticle(item.slug, item.particleId);
                       } else {
@@ -176,11 +196,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                         className={`flex size-8 shrink-0 items-center justify-center rounded-lg border ${
                           item.type === 'component'
                             ? 'border-border/80 bg-background text-primary'
+                            : item.type === 'block'
+                            ? 'border-pink-500/20 bg-pink-500/10 text-pink-400'
                             : 'border-amber-500/20 bg-amber-500/10 text-amber-500'
                         }`}
                       >
                         {item.type === 'component' ? (
                           <BookOpen className="size-4" />
+                        ) : item.type === 'block' ? (
+                          <Layers className="size-4" />
                         ) : (
                           <Sparkles className="size-4" />
                         )}
@@ -192,7 +216,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
+                      <span className={`text-[10px] uppercase tracking-wider font-mono px-2 py-0.5 rounded ${
+                        item.type === 'block' ? 'bg-pink-500/10 text-pink-400 border border-pink-500/20' : 'bg-muted text-muted-foreground'
+                      }`}>
                         {item.type}
                       </span>
                       {isSelected && <CornerDownLeft className="size-3.5 text-primary" />}
