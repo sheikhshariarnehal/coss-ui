@@ -15,7 +15,7 @@
 <TabsPanel value="cli">
 
 ```bash
-npx shadcn@latest add @coss/skeuomorphic-button
+npx shadcn@latest add https://coss-ui-beta.vercel.app/r/skeuomorphic-button.json
 ```
 
 </TabsPanel>
