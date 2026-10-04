@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   X, Copy, Check, Box, Code2, Sparkles, Bookmark, Volume2,
-  Share2, Play, ChevronDown, ChevronRight, Link2
+  Play, ChevronDown, ChevronRight, Link2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { BlockItem } from '../data/blocks-list';
@@ -20,6 +20,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
   const [copiedInstall, setCopiedInstall] = useState(false);
   const [copiedUsage, setCopiedUsage] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedHow, setCopiedHow] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [copiedShare, setCopiedShare] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -28,10 +29,11 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
 
   // Accordion open states
   const [openSection, setOpenSection] = useState<'install' | 'usage' | 'code' | 'how' | null>('install');
+  const [codeSubTab, setCodeSubTab] = useState<'tsx' | 'css'>('tsx');
 
   // Interactive controls
-  const [fillState, setFillState] = useState<'light' | 'dark'>('light');
-  const [strokeState, setStrokeState] = useState<'off' | 'on'>('on');
+  const [fillState, setFillState] = useState<'light' | 'dark'>('dark');
+  const [strokeState, setStrokeState] = useState<'off' | 'on'>('off');
   const [assetType, setAssetType] = useState<'crypto' | 'currency'>('crypto');
   const [bounce, setBounce] = useState(30);
   const [corner, setCorner] = useState(28);
@@ -49,8 +51,10 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
   const BlockComponent = BLOCKS_COMPONENTS[block.slug] || BLOCKS_COMPONENTS['asset-swap'];
   const snippet = BLOCK_SNIPPETS[block.slug] || {
     install: 'npm install framer-motion lucide-react clsx tailwind-merge',
-    usage: `import { ${block.name.replace(/\s+/g, '')} } from '@/components/blocks/${block.slug}';\n\nexport default function Example() {\n  return <${block.name.replace(/\s+/g, '')} />;\n}`,
-    code: `// ${block.name} implementation\n// Exported from coss.com UI & bencho.dev\n\nexport function ${block.name.replace(/\s+/g, '')}() {\n  return <div>Interactive component</div>;\n}`,
+    usage: `import { ${block.name.replace(/\s+/g, '')} } from "@/components/blocks/${block.slug}";\n\nexport default function Example() {\n  return <${block.name.replace(/\s+/g, '')} />;\n}`,
+    codeTsx: `// ${block.name} implementation\n// Exported from coss.com UI & bencho.dev\n\nexport function ${block.name.replace(/\s+/g, '')}() {\n  return <div>Interactive component</div>;\n}`,
+    codeCss: `/* ${block.slug} styles */\n.${block.slug} {\n  border-radius: 28px;\n}`,
+    howItWorks: `/* ${block.name} Micro-interaction */\nconst spring = { type: "spring", stiffness: 350, damping: 25 };`,
   };
 
   const handleShare = () => {
@@ -60,14 +64,14 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
   };
 
   const copyPrompt = () => {
-    const promptText = `Create a high quality React component named "${block.name}" with Tailwind CSS and Framer Motion based on Bencho micro-interaction block:\n\nTitle: ${block.name}\nDescription: ${block.description}\nCategory: ${block.category}\nTags: ${block.tags.join(', ')}`;
+    const promptText = `Create a high quality React component named "${block.name}" with Tailwind CSS and Framer Motion based on Bencho micro-interaction block:\n\nTitle: ${block.name}\nDescription: ${block.description}\nCategory: ${block.category}\nTags: ${block.tags.join(', ')}\n\nHow it works:\n${snippet.howItWorks}`;
     navigator.clipboard.writeText(promptText);
     setCopiedPrompt(true);
     setTimeout(() => setCopiedPrompt(false), 2000);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md">
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -76,7 +80,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
         className="bencho-root w-full max-w-5xl flex flex-col md:flex-row gap-4 max-h-[92vh] overflow-y-auto select-none"
       >
         {/* Left Stage Canvas Card */}
-        <div className="flex-1 bg-[#ebedf1] dark:bg-[#1b1c20] border border-black/5 dark:border-white/10 rounded-[28px] p-6 flex flex-col justify-between min-h-[500px] relative shadow-2xl">
+        <div className="flex-1 bg-[#ebedf1] dark:bg-[#121316] border border-black/5 dark:border-white/10 rounded-[28px] p-6 flex flex-col justify-between min-h-[520px] relative shadow-2xl">
           {/* Top Stage Bar */}
           <div className="flex items-center justify-between z-10">
             {/* View Switcher: Cube (Preview) & Code (<>) */}
@@ -134,9 +138,9 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
             ) : (
               <button
                 onClick={copyPrompt}
-                className="px-4 py-2 rounded-full bg-neutral-950 text-white dark:bg-white dark:text-black text-xs font-semibold shadow-md flex items-center gap-1.5 hover:opacity-90 transition cursor-pointer"
+                className="px-4 py-2 rounded-full bg-white text-black dark:bg-white dark:text-black text-xs font-semibold shadow-md flex items-center gap-1.5 hover:opacity-90 transition cursor-pointer"
               >
-                {copiedPrompt ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5" />}
+                {copiedPrompt ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Sparkles className="w-3.5 h-3.5" />}
                 {copiedPrompt ? 'Copied prompt!' : 'Copy prompt'}
               </button>
             )}
@@ -154,12 +158,14 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
               />
             </div>
           ) : (
-            <div className="flex-1 my-6 space-y-3 overflow-y-auto max-h-[360px] pr-1">
+            <div className="flex-1 my-6 space-y-3 overflow-y-auto max-h-[380px] pr-1">
               {/* Install Accordion */}
-              <div className="bg-white/90 dark:bg-[#16171b] border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+              <div className={`bg-white/90 dark:bg-[#16171b] border rounded-2xl overflow-hidden transition-colors shadow-xs ${
+                openSection === 'install' ? 'border-neutral-400 dark:border-neutral-500' : 'border-black/5 dark:border-white/10'
+              }`}>
                 <div
                   onClick={() => setOpenSection(openSection === 'install' ? null : 'install')}
-                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                  className="px-4 py-3.5 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
                 >
                   <div className="flex items-center gap-2">
                     {openSection === 'install' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
@@ -178,8 +184,8 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
                   </button>
                 </div>
                 {openSection === 'install' && (
-                  <div className="px-4 pb-3 font-mono text-xs text-neutral-600 dark:text-neutral-300">
-                    <div className="p-3 bg-neutral-100 dark:bg-neutral-800 rounded-xl select-text overflow-x-auto">
+                  <div className="px-4 pb-3.5 font-mono text-xs text-neutral-600 dark:text-neutral-300">
+                    <div className="p-3 bg-neutral-100 dark:bg-[#101114] rounded-xl select-text overflow-x-auto">
                       {snippet.install}
                     </div>
                   </div>
@@ -187,10 +193,12 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
               </div>
 
               {/* Usage Accordion */}
-              <div className="bg-white/90 dark:bg-[#16171b] border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+              <div className={`bg-white/90 dark:bg-[#16171b] border rounded-2xl overflow-hidden transition-colors shadow-xs ${
+                openSection === 'usage' ? 'border-neutral-400 dark:border-neutral-500' : 'border-black/5 dark:border-white/10'
+              }`}>
                 <div
                   onClick={() => setOpenSection(openSection === 'usage' ? null : 'usage')}
-                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                  className="px-4 py-3.5 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
                 >
                   <div className="flex items-center gap-2">
                     {openSection === 'usage' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
@@ -209,55 +217,105 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
                   </button>
                 </div>
                 {openSection === 'usage' && (
-                  <div className="px-4 pb-3">
+                  <div className="px-4 pb-3.5">
                     <CodeBlock code={snippet.usage} language="tsx" />
                   </div>
                 )}
               </div>
 
-              {/* Code Accordion */}
-              <div className="bg-white/90 dark:bg-[#16171b] border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+              {/* Code Accordion (With tsx / css Tab Switcher) */}
+              <div className={`bg-white/90 dark:bg-[#16171b] border rounded-2xl overflow-hidden transition-colors shadow-xs ${
+                openSection === 'code' ? 'border-neutral-400 dark:border-neutral-500' : 'border-black/5 dark:border-white/10'
+              }`}>
                 <div
                   onClick={() => setOpenSection(openSection === 'code' ? null : 'code')}
-                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                  className="px-4 py-3.5 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
                 >
                   <div className="flex items-center gap-2">
                     {openSection === 'code' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                     <span>Code</span>
                   </div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigator.clipboard.writeText(snippet.code);
-                      setCopiedCode(true);
-                      setTimeout(() => setCopiedCode(false), 2000);
-                    }}
-                    className="p-1 text-neutral-400 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
-                  >
-                    {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {openSection === 'code' && (
+                      <div className="flex items-center p-0.5 bg-neutral-100 dark:bg-black/40 rounded-lg text-[11px]">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCodeSubTab('tsx');
+                          }}
+                          className={`px-2 py-0.5 rounded-md font-semibold transition ${
+                            codeSubTab === 'tsx'
+                              ? 'bg-white dark:bg-[#25262c] text-neutral-950 dark:text-white shadow-xs'
+                              : 'text-neutral-400 hover:text-neutral-800 dark:hover:text-white'
+                          }`}
+                        >
+                          tsx
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCodeSubTab('css');
+                          }}
+                          className={`px-2 py-0.5 rounded-md font-semibold transition ${
+                            codeSubTab === 'css'
+                              ? 'bg-white dark:bg-[#25262c] text-neutral-950 dark:text-white shadow-xs'
+                              : 'text-neutral-400 hover:text-neutral-800 dark:hover:text-white'
+                          }`}
+                        >
+                          css
+                        </button>
+                      </div>
+                    )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigator.clipboard.writeText(codeSubTab === 'tsx' ? snippet.codeTsx : snippet.codeCss);
+                        setCopiedCode(true);
+                        setTimeout(() => setCopiedCode(false), 2000);
+                      }}
+                      className="p-1 text-neutral-400 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
+                    >
+                      {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
                 </div>
                 {openSection === 'code' && (
-                  <div className="px-4 pb-3">
-                    <CodeBlock code={snippet.code} language="tsx" />
+                  <div className="px-4 pb-3.5">
+                    <CodeBlock
+                      code={codeSubTab === 'tsx' ? snippet.codeTsx : snippet.codeCss}
+                      language={codeSubTab}
+                    />
                   </div>
                 )}
               </div>
 
               {/* How it works Accordion */}
-              <div className="bg-white/90 dark:bg-[#16171b] border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+              <div className={`bg-white/90 dark:bg-[#16171b] border rounded-2xl overflow-hidden transition-colors shadow-xs ${
+                openSection === 'how' ? 'border-neutral-400 dark:border-neutral-500' : 'border-black/5 dark:border-white/10'
+              }`}>
                 <div
                   onClick={() => setOpenSection(openSection === 'how' ? null : 'how')}
-                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                  className="px-4 py-3.5 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
                 >
                   <div className="flex items-center gap-2">
                     {openSection === 'how' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                     <span>How it works</span>
                   </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigator.clipboard.writeText(snippet.howItWorks);
+                      setCopiedHow(true);
+                      setTimeout(() => setCopiedHow(false), 2000);
+                    }}
+                    className="p-1 text-neutral-400 hover:text-neutral-900 dark:hover:text-white cursor-pointer"
+                  >
+                    {copiedHow ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
                 </div>
                 {openSection === 'how' && (
-                  <div className="px-4 pb-3 text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                    Uses physics-based spring animations with Framer Motion, optimized CSS transitions, and zero layout shift for fluid 60fps micro-interactions.
+                  <div className="px-4 pb-3.5">
+                    <CodeBlock code={snippet.howItWorks} language="tsx" />
                   </div>
                 )}
               </div>
@@ -411,7 +469,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
               className={`w-full py-2.5 rounded-full text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer ${
                 addedToBench
                   ? 'bg-emerald-500 text-black'
-                  : 'bg-neutral-950 text-white dark:bg-white dark:text-black hover:opacity-95'
+                  : 'bg-white text-black dark:bg-white dark:text-black hover:opacity-95'
               }`}
             >
               {addedToBench ? 'Added to bench ✓' : 'Add to bench 1'}
