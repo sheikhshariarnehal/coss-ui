@@ -11,6 +11,10 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: /^@\/origin\/(.+)$/,
+        replacement: path.resolve(__dirname, 'registry/default/$1'),
+      },
+      {
         find: /^@\/registry\/default\/ui\/(.+)$/,
         replacement: path.resolve(__dirname, 'components/$1/$1.tsx'),
       },
@@ -36,10 +40,6 @@ export default defineConfig({
       },
       {
         find: /^@\/registry\/default\/hooks\/(.+)$/,
-        replacement: path.resolve(__dirname, 'hooks/$1.ts'),
-      },
-      {
-        find: /^@coss\/ui\/hooks\/(.+)$/,
         replacement: path.resolve(__dirname, 'hooks/$1.ts'),
       },
       {

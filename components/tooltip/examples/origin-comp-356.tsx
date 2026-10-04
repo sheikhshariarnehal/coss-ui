@@ -1,0 +1,24 @@
+import { Button } from "@/origin/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/origin/ui/tooltip";
+
+export default function Component() {
+  return (
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button size="sm" variant="outline">
+            W/ arrow
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent className="dark px-2 py-1 text-xs" showArrow={true}>
+          This tooltip has an arrow
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}

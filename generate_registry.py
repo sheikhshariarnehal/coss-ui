@@ -42,10 +42,31 @@ for comp_folder in sorted(os.listdir(COMPONENTS_DIR)):
         for ex_file in sorted(os.listdir(examples_dir)):
             if ex_file.endswith(".tsx"):
                 ex_name = ex_file.replace(".tsx", "")
+                ex_path = os.path.join(examples_dir, ex_file)
+                ex_title = ""
+                
+                if ex_file.startswith("origin-comp-"):
+                    try:
+                        with open(ex_path, "r", encoding="utf-8", errors="ignore") as ef:
+                            code = ef.read()
+                        m_label = re.search(r'<Label[^>]*>([^<]+)</Label>', code)
+                        if m_label:
+                            txt = re.sub(r'\s+', ' ', m_label.group(1).strip())
+                            if 2 < len(txt) < 45:
+                                ex_title = txt
+                    except Exception:
+                        pass
+                    if not ex_title:
+                        num = ex_name.replace("origin-comp-", "")
+                        ex_title = f"{title} #{num}"
+                else:
+                    clean = re.sub(r'^p-', '', ex_name)
+                    ex_title = clean.replace('-', ' ').title()
+
                 examples.append({
                     "id": ex_name,
                     "filename": ex_file,
-                    "title": ex_name.replace("p-", "").replace("-", " ").title()
+                    "title": ex_title
                 })
 
     components_data.append({

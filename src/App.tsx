@@ -8,6 +8,7 @@ import { ParticlesGallery } from './components/ParticlesGallery';
 import { BlocksGallery } from './components/BlocksGallery';
 import { SearchModal } from './components/SearchModal';
 import { OverviewPage } from './components/OverviewPage';
+import { OriginPage } from './origin/OriginPage';
 
 const OVERVIEW_SLUGS = [
   'introduction',
@@ -20,12 +21,20 @@ const OVERVIEW_SLUGS = [
 ];
 
 function parseCurrentRoute(): {
-  tab: 'docs' | 'particles' | 'blocks';
+  tab: 'docs' | 'particles' | 'blocks' | 'origin';
   componentSlug: string;
   overviewId: string | null;
   blockSlug: string | null;
+  originCategory: string | null;
 } {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+
+  // Check /origin or /origin/:category
+  const originMatch = pathname.match(/^\/origin(?:\/([a-z0-9-]+))?/i);
+  if (originMatch) {
+    const cat = originMatch[1] ? originMatch[1].toLowerCase() : null;
+    return { tab: 'origin', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: cat };
+  }
 
   if (
     pathname === '/ui/particles' ||
@@ -33,14 +42,14 @@ function parseCurrentRoute(): {
     pathname.startsWith('/ui/particles') ||
     pathname.startsWith('/particles')
   ) {
-    return { tab: 'particles', componentSlug: 'accordion', overviewId: null, blockSlug: null };
+    return { tab: 'particles', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null };
   }
 
   // Check /ui/blocks or /blocks or /ui/blocks/:slug
   const blockMatch = pathname.match(/^(?:\/ui)?\/blocks(?:\/([a-z0-9-]+))?/i);
   if (blockMatch) {
     const slug = blockMatch[1] ? blockMatch[1].toLowerCase() : null;
-    return { tab: 'blocks', componentSlug: 'accordion', overviewId: null, blockSlug: slug };
+    return { tab: 'blocks', componentSlug: 'accordion', overviewId: null, blockSlug: slug, originCategory: null };
   }
 
   // Check /ui/docs/components/:slug or /docs/components/:slug or /components/:slug
@@ -48,7 +57,7 @@ function parseCurrentRoute(): {
   if (compMatch) {
     const slug = compMatch[1].toLowerCase();
     if (COMPONENTS_LIST.some((c) => c.slug === slug)) {
-      return { tab: 'docs', componentSlug: slug, overviewId: null, blockSlug: null };
+      return { tab: 'docs', componentSlug: slug, overviewId: null, blockSlug: null, originCategory: null };
     }
   }
 
@@ -57,22 +66,23 @@ function parseCurrentRoute(): {
   if (overviewMatch) {
     const id = overviewMatch[1].toLowerCase();
     if (OVERVIEW_SLUGS.includes(id)) {
-      return { tab: 'docs', componentSlug: 'accordion', overviewId: id, blockSlug: null };
+      return { tab: 'docs', componentSlug: 'accordion', overviewId: id, blockSlug: null, originCategory: null };
     }
     if (COMPONENTS_LIST.some((c) => c.slug === id)) {
-      return { tab: 'docs', componentSlug: id, overviewId: null, blockSlug: null };
+      return { tab: 'docs', componentSlug: id, overviewId: null, blockSlug: null, originCategory: null };
     }
   }
 
-  return { tab: 'docs', componentSlug: 'accordion', overviewId: null, blockSlug: null };
+  return { tab: 'docs', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null };
 }
 
 export function App() {
   const initialRoute = parseCurrentRoute();
-  const [activeTab, setActiveTab] = useState<'docs' | 'particles' | 'blocks'>(initialRoute.tab);
+  const [activeTab, setActiveTab] = useState<'docs' | 'particles' | 'blocks' | 'origin'>(initialRoute.tab);
   const [selectedSlug, setSelectedSlug] = useState<string>(initialRoute.componentSlug);
   const [selectedOverview, setSelectedOverview] = useState<string | null>(initialRoute.overviewId);
   const [selectedBlockSlug, setSelectedBlockSlug] = useState<string | null>(initialRoute.blockSlug);
+  const [selectedOriginCategory, setSelectedOriginCategory] = useState<string | null>(initialRoute.originCategory);
   const [isDark, setIsDark] = useState<boolean>(true);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
@@ -93,6 +103,7 @@ export function App() {
       setSelectedSlug(route.componentSlug);
       setSelectedOverview(route.overviewId);
       setSelectedBlockSlug(route.blockSlug);
+      setSelectedOriginCategory(route.originCategory);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -101,7 +112,17 @@ export function App() {
 
   // Sync document title
   useEffect(() => {
-    if (activeTab === 'particles') {
+    if (activeTab === 'origin') {
+      if (selectedOriginCategory) {
+        const formatted = selectedOriginCategory
+          .split('-')
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+        document.title = `${formatted} - coss.com origin`;
+      } else {
+        document.title = 'Origin - Beautiful UI components - coss.com';
+      }
+    } else if (activeTab === 'particles') {
       document.title = 'Particles - coss ui';
     } else if (activeTab === 'blocks') {
       if (selectedBlockSlug) {
@@ -172,9 +193,24 @@ export function App() {
     }
   };
 
-  const handleTabChange = (tab: 'docs' | 'particles' | 'blocks') => {
+  const handleSelectOriginCategory = (slug: string | null) => {
+    setSelectedOriginCategory(slug);
+    setActiveTab('origin');
+    if (slug) {
+      window.history.pushState(null, '', `/origin/${slug}`);
+    } else {
+      window.history.pushState(null, '', '/origin');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleTabChange = (tab: 'docs' | 'particles' | 'blocks' | 'origin') => {
     setActiveTab(tab);
-    if (tab === 'particles') {
+    if (tab === 'origin') {
+      setSelectedBlockSlug(null);
+      const url = selectedOriginCategory ? `/origin/${selectedOriginCategory}` : '/origin';
+      window.history.pushState(null, '', url);
+    } else if (tab === 'particles') {
       setSelectedBlockSlug(null);
       window.history.pushState(null, '', '/ui/particles');
     } else if (tab === 'blocks') {
@@ -191,6 +227,34 @@ export function App() {
 
   const currentComponent =
     COMPONENTS_LIST.find((c) => c.slug === selectedSlug) || COMPONENTS_LIST[0];
+
+  // If in Origin tab, render the full authentic 1:1 Origin UI Experience
+  if (activeTab === 'origin') {
+    return (
+      <div className={isDark ? 'dark' : ''}>
+        <OriginPage
+          selectedCategory={selectedOriginCategory}
+          onSelectCategory={handleSelectOriginCategory}
+          onSwitchToCossUi={() => handleTabChange('docs')}
+          darkMode={isDark}
+          onToggleDarkMode={toggleTheme}
+          onOpenSearch={() => setIsSearchOpen(true)}
+        />
+        {/* Global ⌘K Search Modal */}
+        <SearchModal
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+          components={COMPONENTS_LIST}
+          onSelectComponent={handleSelectComponent}
+          onSelectParticle={(slug) => handleSelectComponent(slug)}
+          onSelectBlock={(slug) => {
+            setActiveTab('blocks');
+            handleSelectBlock(slug);
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative isolate flex min-h-screen flex-col bg-sidebar font-sans text-foreground antialiased selection:bg-neutral-800 selection:text-white">
