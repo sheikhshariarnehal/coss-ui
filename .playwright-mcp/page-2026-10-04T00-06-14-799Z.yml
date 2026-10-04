@@ -1,0 +1,423 @@
+- generic [ref=f3e2]:
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]:
+        - link "Home" [ref=f3e6] [cursor=pointer]:
+          - /url: https://coss.com/
+          - text: coss.com
+        - generic [ref=f3e7]: ui
+      - generic [ref=f3e8]:
+        - navigation [ref=f3e9]:
+          - link "Docs" [ref=f3e10] [cursor=pointer]:
+            - /url: /ui/docs
+          - link "Particles" [ref=f3e11] [cursor=pointer]:
+            - /url: /ui/particles
+        - button [ref=f3e13] [cursor=pointer]:
+          - generic [ref=f3e14]:
+            - generic: ⌘
+            - generic: K
+        - separator [ref=f3e15]
+        - link "10.6k" [ref=f3e16] [cursor=pointer]:
+          - /url: https://github.com/cosscom/coss
+        - button "Toggle theme" [ref=f3e18] [cursor=pointer]
+  - main [ref=f3e20]:
+    - generic [ref=f3e21]:
+      - generic [ref=f3e24]:
+        - generic [ref=f3e26]:
+          - generic [ref=f3e27]: Overview
+          - list [ref=f3e29]:
+            - listitem [ref=f3e30]:
+              - link "Introduction" [ref=f3e31] [cursor=pointer]:
+                - /url: /ui/docs
+            - listitem [ref=f3e32]:
+              - link "Get Started" [ref=f3e33] [cursor=pointer]:
+                - /url: /ui/docs/get-started
+            - listitem [ref=f3e34]:
+              - link "Styling" [ref=f3e35] [cursor=pointer]:
+                - /url: /ui/docs/styling
+            - listitem [ref=f3e36]:
+              - link "Migrating from Radix" [ref=f3e37] [cursor=pointer]:
+                - /url: /ui/docs/radix-migration
+            - listitem [ref=f3e38]:
+              - link "Skills" [ref=f3e39] [cursor=pointer]:
+                - /url: /ui/docs/skills
+            - listitem [ref=f3e40]:
+              - link "Changelog" [ref=f3e41] [cursor=pointer]:
+                - /url: /ui/docs/changelog
+            - listitem [ref=f3e42]:
+              - link "Roadmap" [ref=f3e43] [cursor=pointer]:
+                - /url: /ui/docs/roadmap
+        - generic [ref=f3e44]:
+          - generic [ref=f3e45]: Components
+          - list [ref=f3e47]:
+            - listitem [ref=f3e48]:
+              - link "Accordion" [ref=f3e49] [cursor=pointer]:
+                - /url: /ui/docs/components/accordion
+            - listitem [ref=f3e50]:
+              - link "Alert" [ref=f3e51] [cursor=pointer]:
+                - /url: /ui/docs/components/alert
+            - listitem [ref=f3e52]:
+              - link "Alert Dialog" [ref=f3e53] [cursor=pointer]:
+                - /url: /ui/docs/components/alert-dialog
+            - listitem [ref=f3e54]:
+              - link "Autocomplete" [ref=f3e55] [cursor=pointer]:
+                - /url: /ui/docs/components/autocomplete
+            - listitem [ref=f3e56]:
+              - link "Avatar" [ref=f3e57] [cursor=pointer]:
+                - /url: /ui/docs/components/avatar
+            - listitem [ref=f3e58]:
+              - link "Badge" [ref=f3e59] [cursor=pointer]:
+                - /url: /ui/docs/components/badge
+            - listitem [ref=f3e60]:
+              - link "Breadcrumb" [ref=f3e61] [cursor=pointer]:
+                - /url: /ui/docs/components/breadcrumb
+            - listitem [ref=f3e62]:
+              - link "Button" [ref=f3e63] [cursor=pointer]:
+                - /url: /ui/docs/components/button
+            - listitem [ref=f3e64]:
+              - link "Calendar" [ref=f3e65] [cursor=pointer]:
+                - /url: /ui/docs/components/calendar
+            - listitem [ref=f3e66]:
+              - link "Card" [ref=f3e67] [cursor=pointer]:
+                - /url: /ui/docs/components/card
+            - listitem [ref=f3e68]:
+              - link "Checkbox" [ref=f3e69] [cursor=pointer]:
+                - /url: /ui/docs/components/checkbox
+            - listitem [ref=f3e70]:
+              - link "Checkbox Group" [ref=f3e71] [cursor=pointer]:
+                - /url: /ui/docs/components/checkbox-group
+            - listitem [ref=f3e72]:
+              - link "Collapsible" [ref=f3e73] [cursor=pointer]:
+                - /url: /ui/docs/components/collapsible
+            - listitem [ref=f3e74]:
+              - link "Combobox" [ref=f3e75] [cursor=pointer]:
+                - /url: /ui/docs/components/combobox
+            - listitem [ref=f3e76]:
+              - link "Command" [ref=f3e77] [cursor=pointer]:
+                - /url: /ui/docs/components/command
+            - listitem [ref=f3e78]:
+              - link "Context Menu" [ref=f3e79] [cursor=pointer]:
+                - /url: /ui/docs/components/context-menu
+            - listitem [ref=f3e80]:
+              - link "Date Picker" [ref=f3e81] [cursor=pointer]:
+                - /url: /ui/docs/components/date-picker
+            - listitem [ref=f3e82]:
+              - link "Dialog" [ref=f3e83] [cursor=pointer]:
+                - /url: /ui/docs/components/dialog
+            - listitem [ref=f3e84]:
+              - link "Drawer" [ref=f3e85] [cursor=pointer]:
+                - /url: /ui/docs/components/drawer
+            - listitem [ref=f3e86]:
+              - link "Empty" [ref=f3e87] [cursor=pointer]:
+                - /url: /ui/docs/components/empty
+            - listitem [ref=f3e88]:
+              - link "Field" [ref=f3e89] [cursor=pointer]:
+                - /url: /ui/docs/components/field
+            - listitem [ref=f3e90]:
+              - link "Fieldset" [ref=f3e91] [cursor=pointer]:
+                - /url: /ui/docs/components/fieldset
+            - listitem [ref=f3e92]:
+              - link "Form" [ref=f3e93] [cursor=pointer]:
+                - /url: /ui/docs/components/form
+            - listitem [ref=f3e94]:
+              - link "Frame" [ref=f3e95] [cursor=pointer]:
+                - /url: /ui/docs/components/frame
+            - listitem [ref=f3e96]:
+              - link "Group" [ref=f3e97] [cursor=pointer]:
+                - /url: /ui/docs/components/group
+            - listitem [ref=f3e98]:
+              - link "Input" [ref=f3e99] [cursor=pointer]:
+                - /url: /ui/docs/components/input
+            - listitem [ref=f3e100]:
+              - link "Input Group" [ref=f3e101] [cursor=pointer]:
+                - /url: /ui/docs/components/input-group
+            - listitem [ref=f3e102]:
+              - link "Kbd" [ref=f3e103] [cursor=pointer]:
+                - /url: /ui/docs/components/kbd
+            - listitem [ref=f3e104]:
+              - link "Label" [ref=f3e105] [cursor=pointer]:
+                - /url: /ui/docs/components/label
+            - listitem [ref=f3e106]:
+              - link "Menu" [ref=f3e107] [cursor=pointer]:
+                - /url: /ui/docs/components/menu
+            - listitem [ref=f3e108]:
+              - link "Meter" [ref=f3e109] [cursor=pointer]:
+                - /url: /ui/docs/components/meter
+            - listitem [ref=f3e110]:
+              - link "Number Field" [ref=f3e111] [cursor=pointer]:
+                - /url: /ui/docs/components/number-field
+            - listitem [ref=f3e112]:
+              - link "OTP Field" [ref=f3e113] [cursor=pointer]:
+                - /url: /ui/docs/components/otp-field
+            - listitem [ref=f3e114]:
+              - link "Pagination" [ref=f3e115] [cursor=pointer]:
+                - /url: /ui/docs/components/pagination
+            - listitem [ref=f3e116]:
+              - link "Popover" [ref=f3e117] [cursor=pointer]:
+                - /url: /ui/docs/components/popover
+            - listitem [ref=f3e118]:
+              - link "Preview Card" [ref=f3e119] [cursor=pointer]:
+                - /url: /ui/docs/components/preview-card
+            - listitem [ref=f3e120]:
+              - link "Progress" [ref=f3e121] [cursor=pointer]:
+                - /url: /ui/docs/components/progress
+            - listitem [ref=f3e122]:
+              - link "Radio Group" [ref=f3e123] [cursor=pointer]:
+                - /url: /ui/docs/components/radio-group
+            - listitem [ref=f3e124]:
+              - link "Scroll Area" [ref=f3e125] [cursor=pointer]:
+                - /url: /ui/docs/components/scroll-area
+            - listitem [ref=f3e126]:
+              - link "Select" [ref=f3e127] [cursor=pointer]:
+                - /url: /ui/docs/components/select
+            - listitem [ref=f3e128]:
+              - link "Segmented Control New" [ref=f3e129] [cursor=pointer]:
+                - /url: /ui/docs/components/segmented-control
+                - text: Segmented Control
+                - generic [ref=f3e130]: New
+            - listitem [ref=f3e131]:
+              - link "Separator" [ref=f3e132] [cursor=pointer]:
+                - /url: /ui/docs/components/separator
+            - listitem [ref=f3e133]:
+              - link "Sheet" [ref=f3e134] [cursor=pointer]:
+                - /url: /ui/docs/components/sheet
+            - listitem [ref=f3e135]:
+              - link "Skeleton" [ref=f3e136] [cursor=pointer]:
+                - /url: /ui/docs/components/skeleton
+            - listitem [ref=f3e137]:
+              - link "Slider" [ref=f3e138] [cursor=pointer]:
+                - /url: /ui/docs/components/slider
+            - listitem [ref=f3e139]:
+              - link "Spinner" [ref=f3e140] [cursor=pointer]:
+                - /url: /ui/docs/components/spinner
+            - listitem [ref=f3e141]:
+              - link "Switch" [ref=f3e142] [cursor=pointer]:
+                - /url: /ui/docs/components/switch
+            - listitem [ref=f3e143]:
+              - link "Table" [ref=f3e144] [cursor=pointer]:
+                - /url: /ui/docs/components/table
+            - listitem [ref=f3e145]:
+              - link "Tabs" [ref=f3e146] [cursor=pointer]:
+                - /url: /ui/docs/components/tabs
+            - listitem [ref=f3e147]:
+              - link "Textarea" [ref=f3e148] [cursor=pointer]:
+                - /url: /ui/docs/components/textarea
+            - listitem [ref=f3e149]:
+              - link "Toast" [ref=f3e150] [cursor=pointer]:
+                - /url: /ui/docs/components/toast
+            - listitem [ref=f3e151]:
+              - link "Toggle" [ref=f3e152] [cursor=pointer]:
+                - /url: /ui/docs/components/toggle
+            - listitem [ref=f3e153]:
+              - link "Toggle Group" [ref=f3e154] [cursor=pointer]:
+                - /url: /ui/docs/components/toggle-group
+            - listitem [ref=f3e155]:
+              - link "Toolbar" [ref=f3e156] [cursor=pointer]:
+                - /url: /ui/docs/components/toolbar
+            - listitem [ref=f3e157]:
+              - link "Tooltip" [ref=f3e158] [cursor=pointer]:
+                - /url: /ui/docs/components/tooltip
+        - generic [ref=f3e159]:
+          - generic [ref=f3e160]: Hooks
+          - list [ref=f3e162]:
+            - listitem [ref=f3e163]:
+              - link "useMediaQuery" [ref=f3e164] [cursor=pointer]:
+                - /url: /ui/docs/hooks/use-media-query
+            - listitem [ref=f3e165]:
+              - link "useCopyToClipboard" [ref=f3e166] [cursor=pointer]:
+                - /url: /ui/docs/hooks/use-copy-to-clipboard
+        - generic [ref=f3e167]:
+          - generic [ref=f3e168]: Resources
+          - list [ref=f3e170]:
+            - listitem [ref=f3e171]:
+              - link "llms.txt" [ref=f3e172] [cursor=pointer]:
+                - /url: /ui/llms.txt
+            - listitem [ref=f3e173]:
+              - link "coss.com origin" [ref=f3e174] [cursor=pointer]:
+                - /url: https://coss.com/origin
+      - generic [ref=f3e176]:
+        - generic [ref=f3e178]:
+          - generic [ref=f3e182]:
+            - generic [ref=f3e183]:
+              - generic [ref=f3e184]:
+                - heading "Accordion" [level=1] [ref=f3e185]
+                - paragraph [ref=f3e186]: A set of collapsible panels with headings and content.
+              - generic [ref=f3e187]:
+                - link "API Reference" [ref=f3e188] [cursor=pointer]:
+                  - /url: https://base-ui.com/react/components/accordion#api-reference
+                - button "Copy Markdown" [ref=f3e189] [cursor=pointer]
+            - generic [ref=f3e190]:
+              - generic [ref=f3e191]:
+                - tablist [ref=f3e194]:
+                  - tab "Preview" [selected] [ref=f3e195] [cursor=pointer]
+                  - tab "Code" [ref=f3e196] [cursor=pointer]
+                - generic [ref=f3e201]:
+                  - heading [level=3] [ref=f3e203]:
+                    - button "What is Base UI?" [ref=f3e204] [cursor=pointer]
+                  - heading [level=3] [ref=f3e206]:
+                    - button "How do I get started?" [ref=f3e207] [cursor=pointer]
+                  - generic [ref=f3e208]:
+                    - heading [level=3] [ref=f3e209]:
+                      - button "Can I use it for my project?" [expanded] [ref=f3e210] [cursor=pointer]
+                    - region "Can I use it for my project?" [ref=f3e211]:
+                      - generic [ref=f3e212]: Of course! Base UI is free and open source.
+              - heading [level=2] [ref=f3e213]:
+                - link "Installation" [ref=f3e214] [cursor=pointer]:
+                  - /url: "#installation"
+              - generic [ref=f3e215]:
+                - tablist [ref=f3e216]:
+                  - tab "CLI" [selected] [ref=f3e217] [cursor=pointer]
+                  - tab "Manual" [ref=f3e218] [cursor=pointer]
+                - tabpanel [ref=f3e219]:
+                  - figure [ref=f3e220]:
+                    - generic [ref=f3e223]:
+                      - generic [ref=f3e224]:
+                        - tablist [ref=f3e229]:
+                          - tab "bun" [ref=f3e230] [cursor=pointer]
+                          - tab "npm" [ref=f3e231] [cursor=pointer]
+                          - tab "pnpm" [selected] [ref=f3e232] [cursor=pointer]
+                          - tab "yarn" [ref=f3e233] [cursor=pointer]
+                        - tabpanel [ref=f3e235]:
+                          - code [ref=f3e237]: pnpm dlx shadcn@latest add @coss/accordion
+                      - button "Copy" [ref=f3e238] [cursor=pointer]
+              - heading [level=2] [ref=f3e240]:
+                - link "Usage" [ref=f3e241] [cursor=pointer]:
+                  - /url: "#usage"
+              - figure [ref=f3e242]:
+                - generic [ref=f3e244]:
+                  - button "Copy" [ref=f3e245] [cursor=pointer]
+                  - code [ref=f3e247]:
+                    - generic [ref=f3e248]: "import {"
+                    - generic [ref=f3e249]: Accordion,
+                    - generic [ref=f3e250]: AccordionItem,
+                    - generic [ref=f3e251]: AccordionPanel,
+                    - generic [ref=f3e252]: AccordionTrigger,
+                    - generic [ref=f3e253]: "} from \"@/components/ui/accordion\""
+              - figure [ref=f3e254]:
+                - generic [ref=f3e256]:
+                  - button "Copy" [ref=f3e257] [cursor=pointer]
+                  - code [ref=f3e259]:
+                    - generic [ref=f3e260]: <Accordion>
+                    - generic [ref=f3e261]: <AccordionItem value="item-1">
+                    - generic [ref=f3e262]: <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                    - generic [ref=f3e263]: <AccordionPanel>
+                    - generic [ref=f3e264]: Yes. It adheres to the WAI-ARIA design pattern.
+                    - generic [ref=f3e265]: </AccordionPanel>
+                    - generic [ref=f3e266]: </AccordionItem>
+                    - generic [ref=f3e267]: </Accordion>
+              - heading [level=2] [ref=f3e268]:
+                - link "API Reference" [ref=f3e269] [cursor=pointer]:
+                  - /url: "#api-reference"
+              - heading [level=3] [ref=f3e270]:
+                - link "Accordion" [ref=f3e271] [cursor=pointer]:
+                  - /url: "#accordion"
+              - paragraph [ref=f3e272]:
+                - text: Root component. Alias for
+                - code [ref=f3e273]: Accordion.Root
+                - text: from Base UI.
+              - heading [level=3] [ref=f3e274]:
+                - link "AccordionItem" [ref=f3e275] [cursor=pointer]:
+                  - /url: "#accordionitem"
+              - paragraph [ref=f3e276]:
+                - text: Individual accordion item container. Styled wrapper for
+                - code [ref=f3e277]: Accordion.Item
+                - text: from Base UI with bottom border styling.
+              - heading [level=3] [ref=f3e278]:
+                - link "AccordionTrigger" [ref=f3e279] [cursor=pointer]:
+                  - /url: "#accordiontrigger"
+              - paragraph [ref=f3e280]:
+                - text: Trigger button that toggles the accordion panel. Styled wrapper for
+                - code [ref=f3e281]: Accordion.Trigger
+                - text: from Base UI. Includes a built-in chevron icon that rotates when expanded.
+              - heading [level=3] [ref=f3e282]:
+                - link "AccordionPanel" [ref=f3e283] [cursor=pointer]:
+                  - /url: "#accordionpanel"
+              - paragraph [ref=f3e284]:
+                - text: Collapsible content panel. Styled wrapper for
+                - code [ref=f3e285]: Accordion.Panel
+                - text: from Base UI with animated height transitions. Also exported as
+                - code [ref=f3e286]: AccordionContent
+                - text: .
+              - heading [level=2] [ref=f3e287]:
+                - link "Examples" [ref=f3e288] [cursor=pointer]:
+                  - /url: "#examples"
+              - heading [level=3] [ref=f3e289]:
+                - link "Single Accordion" [ref=f3e290] [cursor=pointer]:
+                  - /url: "#single-accordion"
+              - generic [ref=f3e291]:
+                - tablist [ref=f3e294]:
+                  - tab "Preview" [selected] [ref=f3e295] [cursor=pointer]
+                  - tab "Code" [ref=f3e296] [cursor=pointer]
+                - generic [ref=f3e301]:
+                  - heading [level=3] [ref=f3e303]:
+                    - button "What is Base UI?" [ref=f3e304] [cursor=pointer]
+                  - heading [level=3] [ref=f3e306]:
+                    - button "How do I get started?" [ref=f3e307] [cursor=pointer]
+                  - heading [level=3] [ref=f3e309]:
+                    - button "Can I use it for my project?" [ref=f3e310] [cursor=pointer]
+              - heading [level=3] [ref=f3e311]:
+                - link "Multiple Accordion" [ref=f3e312] [cursor=pointer]:
+                  - /url: "#multiple-accordion"
+              - generic [ref=f3e313]:
+                - tablist [ref=f3e316]:
+                  - tab "Preview" [selected] [ref=f3e317] [cursor=pointer]
+                  - tab "Code" [ref=f3e318] [cursor=pointer]
+                - generic [ref=f3e323]:
+                  - heading [level=3] [ref=f3e325]:
+                    - button "What is Base UI?" [ref=f3e326] [cursor=pointer]
+                  - heading [level=3] [ref=f3e328]:
+                    - button "How do I get started?" [ref=f3e329] [cursor=pointer]
+                  - heading [level=3] [ref=f3e331]:
+                    - button "Can I use it for my project?" [ref=f3e332] [cursor=pointer]
+              - heading [level=3] [ref=f3e333]:
+                - link "Controlled Accordion" [ref=f3e334] [cursor=pointer]:
+                  - /url: "#controlled-accordion"
+              - generic [ref=f3e335]:
+                - tablist [ref=f3e338]:
+                  - tab "Preview" [selected] [ref=f3e339] [cursor=pointer]
+                  - tab "Code" [ref=f3e340] [cursor=pointer]
+                - generic [ref=f3e345]:
+                  - generic [ref=f3e346]:
+                    - heading [level=3] [ref=f3e348]:
+                      - button "What is Base UI?" [ref=f3e349] [cursor=pointer]
+                    - heading [level=3] [ref=f3e351]:
+                      - button "How do I get started?" [ref=f3e352] [cursor=pointer]
+                    - heading [level=3] [ref=f3e354]:
+                      - button "Can I use it for my project?" [ref=f3e355] [cursor=pointer]
+                  - generic [ref=f3e356]:
+                    - button "Open First Two" [ref=f3e357] [cursor=pointer]
+                    - paragraph [ref=f3e358]: "Open items: None"
+          - generic [ref=f3e360]:
+            - paragraph [ref=f3e361]:
+              - link "coss.com ui" [ref=f3e362] [cursor=pointer]:
+                - /url: /ui
+            - paragraph [ref=f3e363]:
+              - text: Built by and for the team of
+              - link "Cal.com" [ref=f3e364] [cursor=pointer]:
+                - /url: https://cal.com
+              - text: ", Inc. — the leading commercial open source company (“coss”)."
+        - generic [ref=f3e369]:
+          - paragraph [ref=f3e370]: On This Page
+          - generic [ref=f3e371]:
+            - link "Installation" [ref=f3e372] [cursor=pointer]:
+              - /url: "#installation"
+            - link "Usage" [ref=f3e373] [cursor=pointer]:
+              - /url: "#usage"
+            - link "API Reference" [ref=f3e374] [cursor=pointer]:
+              - /url: "#api-reference"
+            - link "Accordion" [ref=f3e375] [cursor=pointer]:
+              - /url: "#accordion"
+            - link "AccordionItem" [ref=f3e376] [cursor=pointer]:
+              - /url: "#accordionitem"
+            - link "AccordionTrigger" [ref=f3e377] [cursor=pointer]:
+              - /url: "#accordiontrigger"
+            - link "AccordionPanel" [ref=f3e378] [cursor=pointer]:
+              - /url: "#accordionpanel"
+            - link "Examples" [ref=f3e379] [cursor=pointer]:
+              - /url: "#examples"
+            - link "Single Accordion" [ref=f3e380] [cursor=pointer]:
+              - /url: "#single-accordion"
+            - link "Multiple Accordion" [ref=f3e381] [cursor=pointer]:
+              - /url: "#multiple-accordion"
+            - link "Controlled Accordion" [ref=f3e382] [cursor=pointer]:
+              - /url: "#controlled-accordion"

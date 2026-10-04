@@ -1,0 +1,179 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - button "Toggle Menu" [ref=f1e5] [cursor=pointer]
+      - generic [ref=f1e7]:
+        - link "Home" [ref=f1e8] [cursor=pointer]:
+          - /url: https://coss.com/
+          - text: coss.com
+        - generic [ref=f1e9]: ui
+      - generic [ref=f1e10]:
+        - button [ref=f1e12] [cursor=pointer]:
+          - generic [ref=f1e13]:
+            - generic: ⌘
+            - generic: K
+        - separator [ref=f1e14]
+        - link "10.6k" [ref=f1e15] [cursor=pointer]:
+          - /url: https://github.com/cosscom/coss
+        - button "Toggle theme" [ref=f1e17] [cursor=pointer]
+  - main [ref=f1e19]:
+    - generic [ref=f1e24]:
+      - generic [ref=f1e28]:
+        - generic [ref=f1e29]:
+          - generic [ref=f1e30]:
+            - heading "Accordion" [level=1] [ref=f1e31]
+            - paragraph [ref=f1e32]: A set of collapsible panels with headings and content.
+          - generic [ref=f1e33]:
+            - link "API Reference" [ref=f1e34] [cursor=pointer]:
+              - /url: https://base-ui.com/react/components/accordion#api-reference
+            - button "Copy Markdown" [ref=f1e35] [cursor=pointer]
+        - generic [ref=f1e36]:
+          - generic [ref=f1e37]:
+            - tablist [ref=f1e40]:
+              - tab "Preview" [selected] [ref=f1e41] [cursor=pointer]
+              - tab "Code" [ref=f1e42] [cursor=pointer]
+            - generic [ref=f1e47]:
+              - heading [level=3] [ref=f1e49]:
+                - button "What is Base UI?" [ref=f1e50] [cursor=pointer]
+              - heading [level=3] [ref=f1e52]:
+                - button "How do I get started?" [ref=f1e53] [cursor=pointer]
+              - generic [ref=f1e54]:
+                - heading [level=3] [ref=f1e55]:
+                  - button "Can I use it for my project?" [expanded] [ref=f1e56] [cursor=pointer]
+                - region "Can I use it for my project?" [ref=f1e57]:
+                  - generic [ref=f1e58]: Of course! Base UI is free and open source.
+          - heading [level=2] [ref=f1e59]:
+            - link "Installation" [ref=f1e60] [cursor=pointer]:
+              - /url: "#installation"
+          - generic [ref=f1e61]:
+            - tablist [ref=f1e62]:
+              - tab "CLI" [selected] [ref=f1e63] [cursor=pointer]
+              - tab "Manual" [ref=f1e64] [cursor=pointer]
+            - tabpanel [ref=f1e65]:
+              - figure [ref=f1e66]:
+                - generic [ref=f1e69]:
+                  - generic [ref=f1e70]:
+                    - tablist [ref=f1e75]:
+                      - tab "bun" [ref=f1e76] [cursor=pointer]
+                      - tab "npm" [ref=f1e77] [cursor=pointer]
+                      - tab "pnpm" [selected] [ref=f1e78] [cursor=pointer]
+                      - tab "yarn" [ref=f1e79] [cursor=pointer]
+                    - tabpanel [ref=f1e81]:
+                      - code [ref=f1e83]: pnpm dlx shadcn@latest add @coss/accordion
+                  - button "Copy" [ref=f1e84] [cursor=pointer]
+          - heading [level=2] [ref=f1e86]:
+            - link "Usage" [ref=f1e87] [cursor=pointer]:
+              - /url: "#usage"
+          - figure [ref=f1e88]:
+            - generic [ref=f1e90]:
+              - button "Copy" [ref=f1e91] [cursor=pointer]
+              - code [ref=f1e93]:
+                - generic [ref=f1e94]: "import {"
+                - generic [ref=f1e95]: Accordion,
+                - generic [ref=f1e96]: AccordionItem,
+                - generic [ref=f1e97]: AccordionPanel,
+                - generic [ref=f1e98]: AccordionTrigger,
+                - generic [ref=f1e99]: "} from \"@/components/ui/accordion\""
+          - figure [ref=f1e100]:
+            - generic [ref=f1e102]:
+              - button "Copy" [ref=f1e103] [cursor=pointer]
+              - code [ref=f1e105]:
+                - generic [ref=f1e106]: <Accordion>
+                - generic [ref=f1e107]: <AccordionItem value="item-1">
+                - generic [ref=f1e108]: <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                - generic [ref=f1e109]: <AccordionPanel>
+                - generic [ref=f1e110]: Yes. It adheres to the WAI-ARIA design pattern.
+                - generic [ref=f1e111]: </AccordionPanel>
+                - generic [ref=f1e112]: </AccordionItem>
+                - generic [ref=f1e113]: </Accordion>
+          - heading [level=2] [ref=f1e114]:
+            - link "API Reference" [ref=f1e115] [cursor=pointer]:
+              - /url: "#api-reference"
+          - heading [level=3] [ref=f1e116]:
+            - link "Accordion" [ref=f1e117] [cursor=pointer]:
+              - /url: "#accordion"
+          - paragraph [ref=f1e118]:
+            - text: Root component. Alias for
+            - code [ref=f1e119]: Accordion.Root
+            - text: from Base UI.
+          - heading [level=3] [ref=f1e120]:
+            - link "AccordionItem" [ref=f1e121] [cursor=pointer]:
+              - /url: "#accordionitem"
+          - paragraph [ref=f1e122]:
+            - text: Individual accordion item container. Styled wrapper for
+            - code [ref=f1e123]: Accordion.Item
+            - text: from Base UI with bottom border styling.
+          - heading [level=3] [ref=f1e124]:
+            - link "AccordionTrigger" [ref=f1e125] [cursor=pointer]:
+              - /url: "#accordiontrigger"
+          - paragraph [ref=f1e126]:
+            - text: Trigger button that toggles the accordion panel. Styled wrapper for
+            - code [ref=f1e127]: Accordion.Trigger
+            - text: from Base UI. Includes a built-in chevron icon that rotates when expanded.
+          - heading [level=3] [ref=f1e128]:
+            - link "AccordionPanel" [ref=f1e129] [cursor=pointer]:
+              - /url: "#accordionpanel"
+          - paragraph [ref=f1e130]:
+            - text: Collapsible content panel. Styled wrapper for
+            - code [ref=f1e131]: Accordion.Panel
+            - text: from Base UI with animated height transitions. Also exported as
+            - code [ref=f1e132]: AccordionContent
+            - text: .
+          - heading [level=2] [ref=f1e133]:
+            - link "Examples" [ref=f1e134] [cursor=pointer]:
+              - /url: "#examples"
+          - heading [level=3] [ref=f1e135]:
+            - link "Single Accordion" [ref=f1e136] [cursor=pointer]:
+              - /url: "#single-accordion"
+          - generic [ref=f1e137]:
+            - tablist [ref=f1e140]:
+              - tab "Preview" [selected] [ref=f1e141] [cursor=pointer]
+              - tab "Code" [ref=f1e142] [cursor=pointer]
+            - generic [ref=f1e147]:
+              - heading [level=3] [ref=f1e149]:
+                - button "What is Base UI?" [ref=f1e150] [cursor=pointer]
+              - heading [level=3] [ref=f1e152]:
+                - button "How do I get started?" [ref=f1e153] [cursor=pointer]
+              - heading [level=3] [ref=f1e155]:
+                - button "Can I use it for my project?" [ref=f1e156] [cursor=pointer]
+          - heading [level=3] [ref=f1e157]:
+            - link "Multiple Accordion" [ref=f1e158] [cursor=pointer]:
+              - /url: "#multiple-accordion"
+          - generic [ref=f1e159]:
+            - tablist [ref=f1e162]:
+              - tab "Preview" [selected] [ref=f1e163] [cursor=pointer]
+              - tab "Code" [ref=f1e164] [cursor=pointer]
+            - generic [ref=f1e169]:
+              - heading [level=3] [ref=f1e171]:
+                - button "What is Base UI?" [ref=f1e172] [cursor=pointer]
+              - heading [level=3] [ref=f1e174]:
+                - button "How do I get started?" [ref=f1e175] [cursor=pointer]
+              - heading [level=3] [ref=f1e177]:
+                - button "Can I use it for my project?" [ref=f1e178] [cursor=pointer]
+          - heading [level=3] [ref=f1e179]:
+            - link "Controlled Accordion" [ref=f1e180] [cursor=pointer]:
+              - /url: "#controlled-accordion"
+          - generic [ref=f1e181]:
+            - tablist [ref=f1e184]:
+              - tab "Preview" [selected] [ref=f1e185] [cursor=pointer]
+              - tab "Code" [ref=f1e186] [cursor=pointer]
+            - generic [ref=f1e191]:
+              - generic [ref=f1e192]:
+                - heading [level=3] [ref=f1e194]:
+                  - button "What is Base UI?" [ref=f1e195] [cursor=pointer]
+                - heading [level=3] [ref=f1e197]:
+                  - button "How do I get started?" [ref=f1e198] [cursor=pointer]
+                - heading [level=3] [ref=f1e200]:
+                  - button "Can I use it for my project?" [ref=f1e201] [cursor=pointer]
+              - generic [ref=f1e202]:
+                - button "Open First Two" [ref=f1e203] [cursor=pointer]
+                - paragraph [ref=f1e204]: "Open items: None"
+      - generic [ref=f1e206]:
+        - paragraph [ref=f1e207]:
+          - link "coss.com ui" [ref=f1e208] [cursor=pointer]:
+            - /url: /ui
+        - paragraph [ref=f1e209]:
+          - text: Built by and for the team of
+          - link "Cal.com" [ref=f1e210] [cursor=pointer]:
+            - /url: https://cal.com
+          - text: ", Inc. — the leading commercial open source company (“coss”)."

@@ -1,0 +1,266 @@
+- generic [ref=f4e3]:
+  - banner [ref=f4e4]:
+    - generic [ref=f4e5]:
+      - button "coss.com ui" [ref=f4e6]:
+        - generic [ref=f4e7]: coss.com
+        - generic [ref=f4e8]: ui
+      - generic [ref=f4e9]:
+        - navigation [ref=f4e10]:
+          - button "Docs" [ref=f4e11] [cursor=pointer]
+          - button "Particles 554" [ref=f4e12] [cursor=pointer]:
+            - generic [ref=f4e13]: Particles
+            - generic [ref=f4e14]: "554"
+        - button "Search docs... ⌘ K" [ref=f4e16] [cursor=pointer]:
+          - generic [ref=f4e17]: Search docs...
+          - generic [ref=f4e22]:
+            - generic: ⌘
+            - generic: K
+        - link "10.6k" [ref=f4e24] [cursor=pointer]:
+          - /url: https://github.com/cosscom/coss
+        - button "Toggle theme" [ref=f4e29] [cursor=pointer]
+  - generic [ref=f4e36]:
+    - complementary [ref=f4e37]:
+      - generic [ref=f4e38]:
+        - generic [ref=f4e39]:
+          - generic [ref=f4e40]: Overview
+          - list [ref=f4e41]:
+            - listitem [ref=f4e42]:
+              - button "Introduction" [ref=f4e43]
+            - listitem [ref=f4e45]:
+              - button "Get Started" [ref=f4e46]
+            - listitem [ref=f4e48]:
+              - button "Styling" [ref=f4e49]
+            - listitem [ref=f4e51]:
+              - button "Migrating from Radix" [ref=f4e52]
+            - listitem [ref=f4e54]:
+              - button "Skills" [ref=f4e55]
+            - listitem [ref=f4e57]:
+              - button "Changelog" [ref=f4e58]
+            - listitem [ref=f4e60]:
+              - button "Roadmap" [ref=f4e61]
+        - generic [ref=f4e63]:
+          - generic [ref=f4e64]: Components
+          - list [ref=f4e66]:
+            - listitem [ref=f4e67]:
+              - button "Accordion" [ref=f4e68]
+            - listitem [ref=f4e70]:
+              - button "Alert" [ref=f4e71]
+            - listitem [ref=f4e73]:
+              - button "Alert Dialog" [ref=f4e74]
+            - listitem [ref=f4e76]:
+              - button "Autocomplete" [ref=f4e77]
+            - listitem [ref=f4e79]:
+              - button "Avatar" [ref=f4e80]
+            - listitem [ref=f4e82]:
+              - button "Badge" [ref=f4e83]
+            - listitem [ref=f4e85]:
+              - button "Breadcrumb" [ref=f4e86]
+            - listitem [ref=f4e88]:
+              - button "Button" [ref=f4e89]
+            - listitem [ref=f4e91]:
+              - button "Calendar" [ref=f4e92]
+            - listitem [ref=f4e94]:
+              - button "Card" [ref=f4e95]
+            - listitem [ref=f4e97]:
+              - button "Checkbox" [ref=f4e98]
+            - listitem [ref=f4e100]:
+              - button "Checkbox Group" [ref=f4e101]
+            - listitem [ref=f4e103]:
+              - button "Collapsible" [ref=f4e104]
+            - listitem [ref=f4e106]:
+              - button "Combobox" [ref=f4e107]
+            - listitem [ref=f4e109]:
+              - button "Command" [ref=f4e110]
+            - listitem [ref=f4e112]:
+              - button "Context Menu" [ref=f4e113]
+            - listitem [ref=f4e115]:
+              - button "Date Picker" [ref=f4e116]
+            - listitem [ref=f4e118]:
+              - button "Dialog" [ref=f4e119]
+            - listitem [ref=f4e121]:
+              - button "Drawer" [ref=f4e122]
+            - listitem [ref=f4e124]:
+              - button "Empty" [ref=f4e125]
+            - listitem [ref=f4e127]:
+              - button "Field" [ref=f4e128]
+            - listitem [ref=f4e130]:
+              - button "Fieldset" [ref=f4e131]
+            - listitem [ref=f4e133]:
+              - button "Form" [ref=f4e134]
+            - listitem [ref=f4e136]:
+              - button "Frame" [ref=f4e137]
+            - listitem [ref=f4e139]:
+              - button "Group" [ref=f4e140]
+            - listitem [ref=f4e142]:
+              - button "Input" [ref=f4e143]
+            - listitem [ref=f4e145]:
+              - button "Input Group" [ref=f4e146]
+            - listitem [ref=f4e148]:
+              - button "Kbd" [ref=f4e149]
+            - listitem [ref=f4e151]:
+              - button "Label" [ref=f4e152]
+            - listitem [ref=f4e154]:
+              - button "Menu" [ref=f4e155]
+            - listitem [ref=f4e157]:
+              - button "Meter" [ref=f4e158]
+            - listitem [ref=f4e160]:
+              - button "Navigation" [ref=f4e161]
+            - listitem [ref=f4e163]:
+              - button "Number Field" [ref=f4e164]
+            - listitem [ref=f4e166]:
+              - button "OTP Field" [ref=f4e167]
+            - listitem [ref=f4e169]:
+              - button "Pagination" [ref=f4e170]
+            - listitem [ref=f4e172]:
+              - button "Popover" [ref=f4e173]
+            - listitem [ref=f4e175]:
+              - button "Preview Card" [ref=f4e176]
+            - listitem [ref=f4e178]:
+              - button "Progress" [ref=f4e179]
+            - listitem [ref=f4e181]:
+              - button "Radio Group" [ref=f4e182]
+            - listitem [ref=f4e184]:
+              - button "Scroll Area" [ref=f4e185]
+            - listitem [ref=f4e187]:
+              - button "Segmented Control" [ref=f4e188]
+            - listitem [ref=f4e190]:
+              - button "Select" [ref=f4e191]
+            - listitem [ref=f4e193]:
+              - button "Separator" [ref=f4e194]
+            - listitem [ref=f4e196]:
+              - button "Sheet" [ref=f4e197]
+            - listitem [ref=f4e199]:
+              - button "Sidebar" [ref=f4e200]
+            - listitem [ref=f4e202]:
+              - button "Skeleton" [ref=f4e203]
+            - listitem [ref=f4e205]:
+              - button "Slider" [ref=f4e206]
+            - listitem [ref=f4e208]:
+              - button "Spinner" [ref=f4e209]
+            - listitem [ref=f4e211]:
+              - button "Switch" [ref=f4e212]
+            - listitem [ref=f4e214]:
+              - button "Table" [ref=f4e215]
+            - listitem [ref=f4e217]:
+              - button "Tabs" [ref=f4e218]
+            - listitem [ref=f4e220]:
+              - button "Textarea" [ref=f4e221]
+            - listitem [ref=f4e223]:
+              - button "Toast" [ref=f4e224]
+            - listitem [ref=f4e226]:
+              - button "Toggle" [ref=f4e227]
+            - listitem [ref=f4e229]:
+              - button "Toggle Group" [ref=f4e230]
+            - listitem [ref=f4e232]:
+              - button "Toolbar" [ref=f4e233]
+            - listitem [ref=f4e235]:
+              - button "Tooltip" [ref=f4e236]
+    - generic [ref=f4e239]:
+      - generic [ref=f4e241]:
+        - generic [ref=f4e244]:
+          - generic [ref=f4e245]:
+            - generic [ref=f4e246]:
+              - heading "Accordion" [level=1] [ref=f4e247]
+              - paragraph [ref=f4e248]: A set of collapsible panels with headings and content.
+            - generic [ref=f4e249]:
+              - link "API Reference" [ref=f4e250] [cursor=pointer]:
+                - /url: https://base-ui.com/react/components/accordion
+              - button "Copy Markdown" [ref=f4e255] [cursor=pointer]
+          - generic [ref=f4e259]:
+            - generic [ref=f4e261]:
+              - button "Preview" [ref=f4e262] [cursor=pointer]
+              - button "Code" [ref=f4e263] [cursor=pointer]
+            - generic [ref=f4e264]: Rendering component...
+          - generic [ref=f4e268]:
+            - heading "Installation" [level=2] [ref=f4e269]
+            - generic [ref=f4e270]:
+              - button "CLI" [ref=f4e271] [cursor=pointer]
+              - button "Manual" [ref=f4e272] [cursor=pointer]
+            - generic [ref=f4e273]:
+              - button "Copy code" [ref=f4e274]
+              - code [ref=f4e280]: npx shadcn@latest add @coss/accordion
+          - generic [ref=f4e281]:
+            - heading "Usage" [level=2] [ref=f4e282]
+            - generic [ref=f4e283]:
+              - button "Copy code" [ref=f4e284]
+              - table [ref=f4e289]:
+                - rowgroup [ref=f4e290]:
+                  - row [ref=f4e291]:
+                    - cell "1" [ref=f4e292]
+                    - cell [ref=f4e293]:
+                      - code [ref=f4e294]: "import { Accordion } from \"@/components/ui/accordion\";"
+                  - row [ref=f4e295]:
+                    - cell "2" [ref=f4e296]
+                    - cell [ref=f4e297]:
+                      - code [ref=f4e298]
+                  - row [ref=f4e299]:
+                    - cell "3" [ref=f4e300]
+                    - cell [ref=f4e301]:
+                      - code [ref=f4e302]: "export default function Example() {"
+                  - row [ref=f4e303]:
+                    - cell "4" [ref=f4e304]
+                    - cell [ref=f4e305]:
+                      - code [ref=f4e306]: return (
+                  - row [ref=f4e307]:
+                    - cell "5" [ref=f4e308]
+                    - cell [ref=f4e309]:
+                      - code [ref=f4e310]: <Accordion>
+                  - row [ref=f4e311]:
+                    - cell "6" [ref=f4e312]
+                    - cell [ref=f4e313]:
+                      - code [ref=f4e314]: "{/* Content */}"
+                  - row [ref=f4e315]:
+                    - cell "7" [ref=f4e316]
+                    - cell [ref=f4e317]:
+                      - code [ref=f4e318]: </Accordion>
+                  - row [ref=f4e319]:
+                    - cell "8" [ref=f4e320]
+                    - cell [ref=f4e321]:
+                      - code [ref=f4e322]: );
+                  - row [ref=f4e323]:
+                    - cell "9" [ref=f4e324]
+                    - cell [ref=f4e325]:
+                      - code [ref=f4e326]: "}"
+          - generic [ref=f4e327]:
+            - heading "Examples" [level=2] [ref=f4e328]
+            - generic [ref=f4e329]:
+              - generic [ref=f4e330]:
+                - heading "Accordion 1" [level=3] [ref=f4e331]
+                - generic [ref=f4e332]:
+                  - generic [ref=f4e334]:
+                    - button "Preview" [ref=f4e335] [cursor=pointer]
+                    - button "Code" [ref=f4e336] [cursor=pointer]
+                  - generic [ref=f4e337]: Rendering component...
+              - generic [ref=f4e341]:
+                - heading "Accordion 2" [level=3] [ref=f4e342]
+                - generic [ref=f4e343]:
+                  - generic [ref=f4e345]:
+                    - button "Preview" [ref=f4e346] [cursor=pointer]
+                    - button "Code" [ref=f4e347] [cursor=pointer]
+                  - generic [ref=f4e348]: Rendering component...
+              - generic [ref=f4e352]:
+                - heading "Accordion 3" [level=3] [ref=f4e353]
+                - generic [ref=f4e354]:
+                  - generic [ref=f4e356]:
+                    - button "Preview" [ref=f4e357] [cursor=pointer]
+                    - button "Code" [ref=f4e358] [cursor=pointer]
+                  - generic [ref=f4e359]: Rendering component...
+              - generic [ref=f4e363]:
+                - heading "Accordion 4" [level=3] [ref=f4e364]
+                - generic [ref=f4e365]:
+                  - generic [ref=f4e367]:
+                    - button "Preview" [ref=f4e368] [cursor=pointer]
+                    - button "Code" [ref=f4e369] [cursor=pointer]
+                  - generic [ref=f4e370]: Rendering component...
+        - generic [ref=f4e375]:
+          - generic [ref=f4e376]: coss.com ui
+          - generic [ref=f4e377]: Built by and for the team of Cal.com, Inc. — the leading commercial open source company ("coss").
+      - generic [ref=f4e379]:
+        - paragraph [ref=f4e380]: On This Page
+        - generic [ref=f4e381]:
+          - link "Installation" [ref=f4e382] [cursor=pointer]:
+            - /url: "#installation"
+          - link "Usage" [ref=f4e383] [cursor=pointer]:
+            - /url: "#usage"
+          - link "Examples" [ref=f4e384] [cursor=pointer]:
+            - /url: "#examples"
