@@ -2,570 +2,177 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles, Check, Copy, Play, RefreshCw, Volume2, Mic, Eye,
-  ArrowRight, ShieldCheck, Heart, Music, Flame, Image as ImageIcon, Sliders,
-  Upload, Layers, Trash2, Edit3, X, CornerDownLeft, Plus, MoveVertical,
-  SlidersHorizontal, Smartphone, Zap, Palette as PaletteIcon, Search,
-  Grid, Compass, ShieldAlert, Award, Star, Compass as CompassIcon,
-  Smile, Share2, Bookmark, ExternalLink, Terminal, Folder, CheckCircle
+  ArrowRight, ArrowDown, ArrowUpDown, ShieldCheck, Heart, Music, Flame,
+  Image as ImageIcon, Sliders, Upload, Layers, Trash2, Edit3, X,
+  CornerDownLeft, Plus, MoveVertical, SlidersHorizontal, Smartphone,
+  Zap, Palette as PaletteIcon, Search, Grid, Compass, ShieldAlert,
+  Award, Star, Smile, Share2, Bookmark, ExternalLink, Terminal, Folder
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-// 1. Asset Swap Block
-export function AssetSwapBlock({ bounce = 0.4, radius = 16, fill = true, stroke = true }: any) {
-  const coins = [
-    { name: 'Ethereum', symbol: 'ETH', balance: '3.421 ETH', usd: '$8,420.50', color: '#627EEA', icon: 'Ξ' },
-    { name: 'Bitcoin', symbol: 'BTC', balance: '0.245 BTC', usd: '$16,210.00', color: '#F7931A', icon: '₿' },
-    { name: 'Solana', symbol: 'SOL', balance: '48.12 SOL', usd: '$6,830.20', color: '#14F195', icon: '◎' },
-  ];
-  const [index, setIndex] = useState(0);
+// 1. Asset Swap Block (Exact Bencho Design: You pay / You receive)
+export function AssetSwapBlock({ bounce = 0.3, radius = 24, fill = 'light', stroke = true }: any) {
   const [flipped, setFlipped] = useState(false);
+  const [payAmount, setPayAmount] = useState('0.05');
+  const [receiveAmount, setReceiveAmount] = useState('127.496');
 
   const handleSwap = () => {
-    setFlipped(true);
-    setTimeout(() => {
-      setIndex((prev) => (prev + 1) % coins.length);
-      setFlipped(false);
-    }, 180);
+    setFlipped(!flipped);
+    const temp = payAmount;
+    setPayAmount(receiveAmount);
+    setReceiveAmount(temp);
   };
 
-  const current = coins[index];
-
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
+    <div className="flex flex-col items-center justify-center p-2 w-full max-w-[280px] select-none relative">
+      {/* Pay Card */}
       <motion.div
-        className="w-full relative overflow-hidden transition-all duration-200 cursor-pointer"
-        style={{
-          borderRadius: `${radius}px`,
-          backgroundColor: fill ? '#171717' : 'transparent',
-          border: stroke ? '1px solid rgba(255,255,255,0.1)' : 'none',
-        }}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={handleSwap}
-        animate={{ rotateX: flipped ? 90 : 0 }}
-        transition={{ type: 'spring', damping: 20 - bounce * 10, stiffness: 300 }}
+        animate={{ y: flipped ? 4 : 0 }}
+        className="w-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 rounded-[20px] p-4 shadow-sm"
       >
-        <div className="p-5 flex items-center justify-between">
-          <div className="flex items-center gap-3.5">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-md"
-              style={{ backgroundColor: `${current.color}20`, color: current.color, border: `1px solid ${current.color}40` }}
-            >
-              {current.icon}
+        <div className="text-[11px] text-neutral-400 font-medium mb-1">You pay</div>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xl font-bold text-neutral-900 dark:text-white tracking-tight">
+              {flipped ? '127.496' : '0.05'}
             </div>
-            <div>
-              <div className="font-semibold text-white text-base flex items-center gap-2">
-                {current.name}
-                <span className="text-xs px-2 py-0.5 rounded bg-white/10 text-neutral-400 font-mono">
-                  {current.symbol}
-                </span>
-              </div>
-              <div className="text-xs text-neutral-400 mt-0.5">{current.usd}</div>
-            </div>
+            <div className="text-[11px] text-neutral-400 mt-0.5">$4,885.00</div>
           </div>
-          <div className="text-right">
-            <div className="text-xs text-neutral-500 uppercase font-mono tracking-wider">Balance</div>
-            <div className="font-semibold text-white font-mono mt-0.5">{current.balance}</div>
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-bold text-neutral-900 dark:text-white">
+            <span className="w-4 h-4 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px]">₿</span>
+            <span>BTC</span>
           </div>
         </div>
-        <div className="bg-white/[0.03] px-5 py-2.5 border-t border-white/5 flex items-center justify-between text-xs text-neutral-400">
-          <span>Tap card to switch asset</span>
-          <RefreshCw className="w-3.5 h-3.5 text-neutral-500" />
+      </motion.div>
+
+      {/* Middle Swap Button */}
+      <div className="relative -my-3 z-10">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={handleSwap}
+          className="w-8 h-8 rounded-full bg-neutral-200 dark:bg-neutral-700 border-2 border-white dark:border-[#16171b] flex items-center justify-center text-neutral-800 dark:text-white shadow-md cursor-pointer"
+        >
+          <motion.div animate={{ rotate: flipped ? 180 : 0 }}>
+            <ArrowDown className="w-3.5 h-3.5 stroke-[2.5]" />
+          </motion.div>
+        </motion.button>
+      </div>
+
+      {/* Receive Card */}
+      <motion.div
+        animate={{ y: flipped ? -4 : 0 }}
+        className="w-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 rounded-[20px] p-4 shadow-sm"
+      >
+        <div className="text-[11px] text-neutral-400 font-medium mb-1">You receive</div>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xl font-bold text-neutral-900 dark:text-white tracking-tight">
+              {flipped ? '0.05' : '127.496'}
+            </div>
+            <div className="text-[11px] text-neutral-400 mt-0.5">$4,870.35</div>
+          </div>
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-bold text-neutral-900 dark:text-white">
+            <span className="w-4 h-4 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">●</span>
+            <span>HYPE</span>
+          </div>
         </div>
       </motion.div>
     </div>
   );
 }
 
-// 2. Slide to Confirm Block
-export function SlideConfirmBlock({ bounce = 0.2, radius = 24, fill = true, stroke = true }: any) {
-  const [confirmed, setConfirmed] = useState(false);
-  const [dragProgress, setDragProgress] = useState(0);
+// 2. Heat Map Block (3x6 Interactive Glowing Dot Grid)
+export function HeatMapBlock({ radius = 14 }: any) {
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  const handleDrag = (_: any, info: any) => {
-    const maxDrag = 180;
-    const current = Math.min(Math.max(info.offset.x, 0), maxDrag);
-    setDragProgress(current / maxDrag);
-    if (current >= maxDrag * 0.95 && !confirmed) {
-      setConfirmed(true);
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+  const dots = Array.from({ length: 18 });
+
+  return (
+    <div
+      onMouseLeave={() => setHoverIndex(null)}
+      className="p-4 flex items-center justify-center select-none"
+    >
+      <div className="grid grid-cols-6 gap-3 p-4 bg-transparent">
+        {dots.map((_, i) => {
+          const isHovered = hoverIndex === i;
+          const isAdjacent =
+            hoverIndex !== null &&
+            (Math.abs(hoverIndex - i) === 1 || Math.abs(hoverIndex - i) === 6);
+
+          return (
+            <motion.div
+              key={i}
+              onMouseEnter={() => setHoverIndex(i)}
+              animate={{
+                scale: isHovered ? 1.35 : isAdjacent ? 1.15 : 1,
+                backgroundColor: isHovered
+                  ? '#ef4444'
+                  : isAdjacent
+                  ? '#f59e0b'
+                  : '#a1a1aa40',
+                boxShadow: isHovered
+                  ? '0 0 20px 6px rgba(239, 68, 68, 0.7), 0 0 40px 12px rgba(245, 158, 11, 0.4)'
+                  : isAdjacent
+                  ? '0 0 12px 3px rgba(245, 158, 11, 0.5)'
+                  : 'none',
+              }}
+              transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+              className="w-6 h-6 rounded-full cursor-pointer transition-colors"
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// 3. Like Reaction Pill Block (Exact Bencho Design: [Heart] 1,300)
+export function LikeBurstBlock({ radius = 24 }: any) {
+  const [likes, setLikes] = useState(1300);
+  const [liked, setLiked] = useState(false);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!liked) {
+      setLikes((l) => l + 1);
+      setLiked(true);
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { y: 0.6 },
+        colors: ['#ef4444', '#ec4899', '#f43f5e'],
+      });
+    } else {
+      setLikes((l) => l - 1);
+      setLiked(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="w-full relative h-14 overflow-hidden flex items-center p-1.5 transition-colors"
-        style={{
-          borderRadius: `${radius}px`,
-          backgroundColor: confirmed ? '#052e16' : fill ? '#171717' : 'transparent',
-          border: stroke ? `1px solid ${confirmed ? '#16a34a' : 'rgba(255,255,255,0.1)'}` : 'none',
-        }}
-      >
-        <div
-          className="absolute inset-0 bg-emerald-500/15 pointer-events-none transition-opacity"
-          style={{ opacity: dragProgress }}
-        />
-        <div className="w-full text-center text-xs font-medium text-neutral-400 tracking-wider uppercase">
-          {confirmed ? 'Payment Complete ✓' : 'Slide to Confirm'}
-        </div>
-        {!confirmed ? (
-          <motion.div
-            drag="x"
-            dragConstraints={{ left: 0, right: 180 }}
-            dragElastic={bounce}
-            onDrag={handleDrag}
-            onDragEnd={() => {
-              if (!confirmed) setDragProgress(0);
-            }}
-            className="absolute left-1.5 top-1.5 bottom-1.5 w-11 bg-white rounded-full flex items-center justify-center shadow-lg cursor-grab active:cursor-grabbing text-neutral-950 font-bold"
-            style={{ borderRadius: `${radius - 4}px` }}
-          >
-            <ArrowRight className="w-5 h-5 text-neutral-900" />
-          </motion.div>
-        ) : (
-          <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            onClick={() => {
-              setConfirmed(false);
-              setDragProgress(0);
-            }}
-            className="absolute right-2 px-3 py-1 bg-emerald-500 text-black text-xs font-semibold rounded-full hover:bg-emerald-400 transition"
-          >
-            Reset
-          </motion.button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// 3. Dynamic Island Block
-export function DynamicIslandBlock({ radius = 28 }: any) {
-  const [state, setState] = useState<'idle' | 'call' | 'music' | 'timer'>('idle');
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-md min-h-[140px] select-none">
-      <motion.div
-        layout
-        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-        style={{ borderRadius: `${radius}px` }}
-        className="bg-black border border-white/15 text-white shadow-2xl flex items-center justify-between px-4 py-3 cursor-pointer overflow-hidden"
-        onClick={() => {
-          const states: ('idle' | 'call' | 'music' | 'timer')[] = ['idle', 'call', 'music', 'timer'];
-          const next = states[(states.indexOf(state) + 1) % states.length];
-          setState(next);
-        }}
-      >
-        <AnimatePresence mode="wait">
-          {state === 'idle' && (
-            <motion.div
-              key="idle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex items-center gap-3 text-xs w-48 justify-between"
-            >
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-neutral-400 font-mono">Silent mode</span>
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-            </motion.div>
-          )}
-          {state === 'call' && (
-            <motion.div
-              key="call"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="flex items-center justify-between gap-6 w-72"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
-                  JD
-                </div>
-                <div>
-                  <div className="text-xs font-semibold">John Doe</div>
-                  <div className="text-[10px] text-emerald-400 font-mono">01:24 • Incoming</div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <div className="w-7 h-7 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs">✕</div>
-                <div className="w-7 h-7 rounded-full bg-emerald-500 text-black flex items-center justify-center text-xs">✓</div>
-              </div>
-            </motion.div>
-          )}
-          {state === 'music' && (
-            <motion.div
-              key="music"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="flex items-center justify-between gap-6 w-72"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-                  <Music className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-semibold">Starboy</div>
-                  <div className="text-[10px] text-neutral-400">The Weeknd</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                {[12, 20, 16, 24, 8].map((h, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ height: [8, h, 6, h] }}
-                    transition={{ repeat: Infinity, duration: 1, delay: i * 0.15 }}
-                    className="w-1 bg-indigo-400 rounded-full"
-                  />
-                ))}
-              </div>
-            </motion.div>
-          )}
-          {state === 'timer' && (
-            <motion.div
-              key="timer"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex items-center justify-between gap-6 w-64"
-            >
-              <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-                Timer
-              </div>
-              <div className="font-mono text-sm text-white font-bold">04:59.2</div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-    </div>
-  );
-}
-
-// 4. Spotlight Card Block
-export function SpotlightCardBlock({ radius = 16 }: any) {
-  const [coords, setCoords] = useState({ x: 150, y: 100 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCoords({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        onMouseMove={handleMouseMove}
-        className="w-full relative overflow-hidden bg-neutral-950 border border-white/10 p-6 shadow-2xl group cursor-pointer"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <div
-          className="pointer-events-none absolute -inset-px transition duration-300 opacity-60"
-          style={{
-            background: `radial-gradient(300px circle at ${coords.x}px ${coords.y}px, rgba(56, 189, 248, 0.25), transparent 70%)`,
-          }}
-        />
-        <div className="relative z-10">
-          <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 mb-3">
-            <Zap className="w-5 h-5" />
-          </div>
-          <h3 className="text-base font-bold text-white mb-1">Specular Spotlight</h3>
-          <p className="text-xs text-neutral-400 leading-relaxed">
-            Move your cursor across this card to illuminate the dynamic radial specular highlight.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 5. Swipe Row Block
-export function SwipeRowBlock({ radius = 14 }: any) {
-  const [offset, setOffset] = useState(0);
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="w-full relative h-16 bg-red-500/20 border border-red-500/30 overflow-hidden flex items-center justify-between px-5"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <div className="text-xs font-semibold text-red-400 flex items-center gap-1.5">
-          <Trash2 className="w-4 h-4" /> Delete
-        </div>
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: -100, right: 0 }}
-          onDrag={(_, info) => setOffset(info.offset.x)}
-          className="absolute inset-0 bg-neutral-900 border border-white/10 flex items-center justify-between px-4 cursor-grab active:cursor-grabbing shadow-lg"
-          style={{ borderRadius: `${radius}px` }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center text-xs font-bold">
-              NW
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-white">Nora Wilder</div>
-              <div className="text-[11px] text-neutral-400">Design review update</div>
-            </div>
-          </div>
-          <span className="text-[10px] text-neutral-500 font-mono">Swipe ←</span>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-// 6. Holo Card Block
-export function HoloCardBlock({ radius = 18 }: any) {
-  const [coords, setCoords] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setCoords({ x, y });
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        onMouseMove={handleMouseMove}
-        className="w-full h-48 relative overflow-hidden bg-neutral-900 border border-white/15 p-6 shadow-2xl cursor-pointer flex flex-col justify-between"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none opacity-50 mix-blend-color-dodge transition-opacity"
-          style={{
-            background: `linear-gradient(${coords.x * 3.6}deg, #ff0055 0%, #00e1ff 33%, #ffea00 66%, #ff0055 100%)`,
-          }}
-        />
-        <div className="relative z-10 flex items-center justify-between">
-          <span className="text-xs font-mono font-bold text-white px-2.5 py-1 rounded bg-black/40 backdrop-blur-sm border border-white/20">
-            HOLO #042
-          </span>
-          <Award className="w-5 h-5 text-amber-300" />
-        </div>
-        <div className="relative z-10">
-          <h4 className="text-base font-extrabold text-white">Prismatic Astral</h4>
-          <p className="text-[11px] text-neutral-300 font-mono">Legendary Edition</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 7. Scratch Card Block
-export function ScratchCardBlock({ radius = 16 }: any) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.fillStyle = '#3f3f46';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#71717a';
-    ctx.font = 'bold 13px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Scratch with cursor to reveal prize', canvas.width / 2, canvas.height / 2 + 5);
-  }, []);
-
-  const handleScratch = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (e.buttons !== 1) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, 18, 0, Math.PI * 2);
-    ctx.fill();
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="w-full h-36 relative overflow-hidden bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 flex items-center justify-center shadow-xl"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <div className="text-center text-white">
-          <span className="text-2xl font-black tracking-tight">🎁 YOU WON $500!</span>
-          <p className="text-xs text-white/80 font-mono mt-0.5">Code: BENCHO-PROMO</p>
-        </div>
-        <canvas
-          ref={canvasRef}
-          width={320}
-          height={144}
-          onMouseMove={handleScratch}
-          className="absolute inset-0 w-full h-full cursor-pointer"
-        />
-      </div>
-    </div>
-  );
-}
-
-// 8. Liquid Toggle Block
-export function LiquidToggleBlock({ radius = 20 }: any) {
-  const [on, setOn] = useState(false);
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
+    <div className="flex items-center justify-center p-4 select-none">
       <motion.button
-        onClick={() => setOn(!on)}
-        className={`w-20 h-11 p-1 flex items-center rounded-full transition-colors duration-300 border shadow-inner ${
-          on ? 'bg-emerald-500 border-emerald-400' : 'bg-neutral-800 border-white/10'
-        }`}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleClick}
+        className="px-6 py-3 rounded-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2.5 text-neutral-900 dark:text-white cursor-pointer"
       >
-        <motion.div
-          layout
-          transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-          className={`h-9 w-9 rounded-full bg-white shadow-lg flex items-center justify-center font-bold text-xs ${
-            on ? 'ml-auto text-emerald-600' : 'mr-auto text-neutral-400'
-          }`}
-        >
-          {on ? '✓' : ''}
+        <motion.div animate={{ scale: liked ? [1, 1.4, 1] : 1 }}>
+          <Heart className={`w-5 h-5 ${liked ? 'fill-red-500 text-red-500' : 'text-neutral-800 dark:text-white'}`} />
         </motion.div>
+        <span className="font-bold text-base tracking-tight font-sans">
+          {likes.toLocaleString()}
+        </span>
       </motion.button>
     </div>
   );
 }
 
-// 9. Emoji Reactions Dock Block
-export function EmojiReactionsBlock({ radius = 16 }: any) {
-  const emojis = ['🔥', '❤️', '🚀', '🎉', '👏', '😍'];
-  const [selected, setSelected] = useState<string | null>(null);
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="p-2 bg-neutral-900 border border-white/10 flex items-center gap-1.5 shadow-2xl"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        {emojis.map((emoji) => (
-          <motion.button
-            key={emoji}
-            whileHover={{ scale: 1.45, y: -6 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => {
-              setSelected(emoji);
-              confetti({ particleCount: 20, spread: 45, origin: { y: 0.6 } });
-            }}
-            className="w-10 h-10 rounded-xl hover:bg-white/10 flex items-center justify-center text-xl transition-colors"
-          >
-            {emoji}
-          </motion.button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// 10. Tag Input Block
-export function TagInputBlock({ radius = 12 }: any) {
-  const [tags, setTags] = useState(['React', 'Tailwind', 'Motion']);
-  const [input, setInput] = useState('');
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && input.trim()) {
-      e.preventDefault();
-      if (!tags.includes(input.trim())) {
-        setTags([...tags, input.trim()]);
-      }
-      setInput('');
-    } else if (e.key === 'Backspace' && !input && tags.length > 0) {
-      setTags(tags.slice(0, -1));
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="w-full bg-neutral-900 border border-white/10 p-3 flex flex-wrap items-center gap-1.5 min-h-12 shadow-inner"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        {tags.map((t) => (
-          <span
-            key={t}
-            className="px-2.5 py-1 bg-white/10 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 border border-white/5"
-          >
-            {t}
-            <button
-              onClick={() => setTags(tags.filter((x) => x !== t))}
-              className="text-neutral-400 hover:text-white"
-            >
-              ×
-            </button>
-          </span>
-        ))}
-        <input
-          type="text"
-          placeholder="Add tag..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="bg-transparent text-xs text-white placeholder-neutral-500 focus:outline-none flex-1 min-w-20"
-        />
-      </div>
-    </div>
-  );
-}
-
-// 11. Generic Animated Placeholder for remaining blocks
-export function GenericBenchoBlock({ name = 'Block', category = 'Interactive', icon = '✨' }: any) {
-  const [active, setActive] = useState(false);
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <motion.div
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        onClick={() => setActive(!active)}
-        className="w-full bg-neutral-900 border border-white/10 p-6 rounded-2xl shadow-xl flex items-center justify-between cursor-pointer"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center text-lg font-bold">
-            {icon}
-          </div>
-          <div>
-            <h4 className="text-sm font-bold text-white">{name}</h4>
-            <span className="text-[10px] text-neutral-400 font-mono">{category} Micro-interaction</span>
-          </div>
-        </div>
-        <div className={`px-2.5 py-1 rounded-full text-[10px] font-mono ${active ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-neutral-400'}`}>
-          {active ? 'Active' : 'Tap'}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-// 12. Signature Pad Block
-export function SignaturePadBlock({ radius = 14, strokeWidth = 3, color = '#f4f4f5' }: any) {
+// 4. Signature Pad Block (Exact Bencho Card with Sign Here)
+export function SignaturePadBlock({ radius = 20 }: any) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = color;
-    ctx.lineWidth = strokeWidth;
-  }, [color, strokeWidth]);
 
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -573,6 +180,10 @@ export function SignaturePadBlock({ radius = 14, strokeWidth = 3, color = '#f4f4
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     const rect = canvas.getBoundingClientRect();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
     setIsDrawing(true);
@@ -592,51 +203,56 @@ export function SignaturePadBlock({ radius = 14, strokeWidth = 3, color = '#f4f4
 
   const stopDrawing = () => setIsDrawing(false);
 
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    setHasDrawn(false);
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-md">
-      <div
-        className="w-full bg-neutral-900 border border-white/10 overflow-hidden relative shadow-lg"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <div className="p-3 border-b border-white/5 flex items-center justify-between text-xs text-neutral-400">
-          <span className="flex items-center gap-1.5 font-medium">
-            <Edit3 className="w-3.5 h-3.5 text-neutral-400" /> Sign below
-          </span>
-          {hasDrawn && (
-            <button
-              onClick={clearCanvas}
-              className="text-xs text-red-400 hover:text-red-300 font-medium px-2 py-0.5 rounded bg-red-500/10 transition"
-            >
-              Clear
-            </button>
-          )}
-        </div>
+    <div className="flex items-center justify-center p-2 w-full max-w-[280px]">
+      <div className="w-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 rounded-[20px] p-4 h-36 relative flex flex-col justify-end shadow-sm">
         <canvas
           ref={canvasRef}
-          width={380}
-          height={140}
+          width={248}
+          height={110}
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={stopDrawing}
           onMouseLeave={stopDrawing}
-          className="w-full h-36 cursor-crosshair bg-neutral-950/60 block"
+          className="absolute inset-0 w-full h-full cursor-crosshair z-10"
         />
+        <div className="w-full pt-2 border-b border-neutral-200 dark:border-neutral-700 text-center pb-2 pointer-events-none">
+          <span className="text-xs text-neutral-400 font-medium">Sign here</span>
+        </div>
       </div>
     </div>
   );
 }
 
-// 13. Image Compare Block
-export function ImageCompareBlock({ radius = 16 }: any) {
+// 5. Dynamic Island Block (Exact Bencho Timer Pill)
+export function DynamicIslandBlock({ radius = 28 }: any) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <div className="flex items-center justify-center p-4 select-none">
+      <motion.div
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsPlaying(!isPlaying);
+        }}
+        className="h-14 px-5 bg-black text-white rounded-full flex items-center justify-between gap-6 shadow-2xl border border-white/15 cursor-pointer min-w-[220px]"
+      >
+        <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">
+          {isPlaying ? '▶' : '❚❚'}
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-xs text-neutral-400 font-medium">Timer</span>
+          <span className="text-xl font-bold font-mono text-amber-400">4:46</span>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+// 6. Image Compare Block (Exact Mountain Split)
+export function ImageCompareBlock({ radius = 24 }: any) {
   const [position, setPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -650,34 +266,38 @@ export function ImageCompareBlock({ radius = 16 }: any) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-md select-none">
+    <div className="flex items-center justify-center p-2 w-full max-w-[220px] select-none">
       <div
         ref={containerRef}
         onMouseMove={(e) => e.buttons === 1 && handleMove(e)}
         onTouchMove={handleMove}
         onClick={handleMove}
-        className="w-full h-48 relative overflow-hidden cursor-ew-resize border border-white/10 shadow-xl"
-        style={{ borderRadius: `${radius}px` }}
+        className="w-full h-64 relative rounded-[22px] overflow-hidden cursor-ew-resize border border-black/10 dark:border-white/10 shadow-lg"
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900 via-teal-800 to-indigo-950 flex items-center justify-center">
-          <div className="text-center">
-            <span className="text-emerald-400 font-bold text-base">Retouched Master</span>
+        {/* Right (Color) */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-sky-600 via-rose-400 to-amber-300 flex flex-col justify-between p-3">
+          <div className="self-end px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-bold text-white">
+            After
           </div>
         </div>
+
+        {/* Left (B&W Grayscale) */}
         <div
-          className="absolute inset-0 bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-950 flex items-center justify-center overflow-hidden"
+          className="absolute inset-0 bg-gradient-to-tr from-neutral-800 via-neutral-600 to-neutral-400 flex flex-col justify-between p-3 overflow-hidden grayscale"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
-          <div className="text-center w-full">
-            <span className="text-neutral-400 font-bold text-base">Original RAW</span>
+          <div className="self-start px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-bold text-white">
+            Before
           </div>
         </div>
+
+        {/* Handle */}
         <div
           className="absolute top-0 bottom-0 w-0.5 bg-white shadow-2xl z-10 flex items-center justify-center"
           style={{ left: `${position}%` }}
         >
-          <div className="w-6 h-6 rounded-full bg-white text-black shadow-lg flex items-center justify-center text-[10px] font-bold">
-            ↔
+          <div className="w-6 h-6 rounded-full bg-white text-black shadow-md flex items-center justify-center text-[9px] font-bold">
+            ‹›
           </div>
         </div>
       </div>
@@ -685,152 +305,189 @@ export function ImageCompareBlock({ radius = 16 }: any) {
   );
 }
 
-// 14. 3D Tilt Card Block
-export function TiltCardBlock({ radius = 16, maxTilt = 15 }: any) {
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+// 7. Slide to Confirm Block
+export function SlideConfirmBlock({ radius = 24 }: any) {
+  const [confirmed, setConfirmed] = useState(false);
+  const [dragProgress, setDragProgress] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    setRotateX(((y - centerY) / centerY) * -maxTilt);
-    setRotateY(((x - centerX) / centerX) * maxTilt);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
+  const handleDrag = (_: any, info: any) => {
+    const maxDrag = 150;
+    const current = Math.min(Math.max(info.offset.x, 0), maxDrag);
+    setDragProgress(current / maxDrag);
+    if (current >= maxDrag * 0.95 && !confirmed) {
+      setConfirmed(true);
+      confetti({ particleCount: 35, spread: 55, origin: { y: 0.6 } });
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm" style={{ perspective: 800 }}>
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        animate={{ rotateX, rotateY }}
-        transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-        style={{ borderRadius: `${radius}px`, transformStyle: 'preserve-3d' }}
-        className="w-full bg-gradient-to-b from-neutral-800/80 to-neutral-900 border border-white/15 p-5 shadow-2xl cursor-pointer"
-      >
-        <div className="w-9 h-9 rounded-xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-violet-400 mb-3">
-          <Sparkles className="w-4 h-4" />
+    <div className="flex items-center justify-center p-4 w-full max-w-[260px] select-none">
+      <div className="w-full relative h-13 rounded-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 flex items-center p-1 shadow-sm overflow-hidden">
+        <div
+          className="absolute inset-0 bg-emerald-500/15 pointer-events-none"
+          style={{ opacity: dragProgress }}
+        />
+        <div className="w-full text-center text-xs font-semibold text-neutral-500">
+          {confirmed ? 'Confirmed ✓' : 'Slide to confirm'}
         </div>
-        <h3 className="text-base font-bold text-white mb-1">Spatial 3D Canvas</h3>
-        <p className="text-xs text-neutral-400">
-          Reactive physics and dynamic perspective depth.
-        </p>
+        {!confirmed ? (
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 150 }}
+            onDrag={handleDrag}
+            onDragEnd={() => {
+              if (!confirmed) setDragProgress(0);
+            }}
+            className="absolute left-1 top-1 bottom-1 w-10 bg-neutral-900 dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing font-bold text-xs"
+          >
+            →
+          </motion.div>
+        ) : (
+          <button
+            onClick={() => setConfirmed(false)}
+            className="absolute right-2 px-3 py-1 bg-emerald-500 text-black text-xs font-bold rounded-full"
+          >
+            Reset
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// 8. Voice Note Block (Waveform Pill)
+export function VoiceNoteBlock({ radius = 24 }: any) {
+  const [recording, setRecording] = useState(false);
+
+  return (
+    <div className="flex items-center justify-center p-4 select-none">
+      <div className="px-5 py-3 rounded-full bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-3">
+        <button
+          onClick={() => setRecording(!recording)}
+          className={`w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors ${
+            recording ? 'bg-red-500 animate-pulse' : 'bg-neutral-900 dark:bg-white dark:text-black'
+          }`}
+        >
+          <Mic className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-1 h-5 w-24">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className={`flex-1 rounded-full ${recording ? 'bg-red-500' : 'bg-neutral-300 dark:bg-neutral-600'}`}
+              animate={recording ? { height: [4, Math.random() * 18 + 4, 4] } : { height: 6 }}
+              transition={{ repeat: Infinity, duration: 0.5, delay: i * 0.05 }}
+            />
+          ))}
+        </div>
+        <span className="font-mono text-xs text-neutral-400 font-semibold">0:14</span>
+      </div>
+    </div>
+  );
+}
+
+// 9. Holo Foil Card Block
+export function HoloCardBlock({ radius = 20 }: any) {
+  const [coords, setCoords] = useState({ x: 50, y: 50 });
+
+  return (
+    <div className="flex items-center justify-center p-2 w-full max-w-[240px] select-none">
+      <div
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setCoords({
+            x: ((e.clientX - rect.left) / rect.width) * 100,
+            y: ((e.clientY - rect.top) / rect.height) * 100,
+          });
+        }}
+        className="w-full h-44 rounded-[20px] bg-neutral-900 border border-white/20 p-4 relative overflow-hidden shadow-xl flex flex-col justify-between"
+      >
+        <div
+          className="absolute inset-0 pointer-events-none opacity-60 mix-blend-color-dodge"
+          style={{
+            background: `linear-gradient(${coords.x * 3.6}deg, #ff0055 0%, #00e1ff 33%, #ffea00 66%, #ff0055 100%)`,
+          }}
+        />
+        <div className="relative z-10 flex justify-between items-center">
+          <span className="px-2 py-0.5 rounded bg-white/20 text-[10px] font-mono font-bold text-white">#042</span>
+          <Star className="w-4 h-4 text-amber-300 fill-amber-300" />
+        </div>
+        <div className="relative z-10">
+          <div className="font-black text-white text-base">HOLO FOIL</div>
+          <div className="text-[10px] text-white/70 font-mono">Special Edition</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 10. Generic Dynamic Bencho Primitive
+export function GenericBenchoBlock({ name = 'Block', category = 'Interactive', icon = '✨' }: any) {
+  return (
+    <div className="flex items-center justify-center p-4 select-none">
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="px-6 py-4 rounded-[20px] bg-white dark:bg-[#1a1b1f] border border-black/5 dark:border-white/10 shadow-md flex items-center gap-3"
+      >
+        <span className="text-2xl">{icon}</span>
+        <div>
+          <div className="font-bold text-neutral-900 dark:text-white text-sm">{name}</div>
+          <div className="text-[10px] text-neutral-400 font-mono">{category} Micro-interaction</div>
+        </div>
       </motion.div>
     </div>
   );
 }
 
-// 15. Voice Note Block
-export function VoiceNoteBlock({ radius = 20 }: any) {
-  const [recording, setRecording] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-
-  useEffect(() => {
-    let timer: any;
-    if (recording) {
-      timer = setInterval(() => setSeconds((s) => s + 1), 1000);
-    } else {
-      setSeconds(0);
-    }
-    return () => clearInterval(timer);
-  }, [recording]);
-
-  const formatTime = (s: number) => {
-    const mins = Math.floor(s / 60);
-    const secs = s % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center p-4 w-full max-w-sm select-none">
-      <div
-        className="w-full bg-neutral-900 border border-white/10 p-3.5 flex items-center justify-between gap-3 shadow-xl"
-        style={{ borderRadius: `${radius}px` }}
-      >
-        <button
-          onClick={() => setRecording(!recording)}
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-md ${
-            recording ? 'bg-red-500 text-white animate-pulse' : 'bg-white text-black'
-          }`}
-        >
-          <Mic className="w-4 h-4" />
-        </button>
-
-        <div className="flex-1 flex items-center gap-1 h-5">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className={`flex-1 rounded-full ${recording ? 'bg-red-400' : 'bg-neutral-700'}`}
-              animate={recording ? { height: [4, Math.random() * 18 + 4, 4] } : { height: 5 }}
-              transition={{ repeat: Infinity, duration: 0.6, delay: i * 0.04 }}
-            />
-          ))}
-        </div>
-
-        <div className="font-mono text-xs font-semibold text-neutral-300 w-10 text-right">
-          {formatTime(seconds)}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Component Registry Mapping for all 62 Bencho Blocks
+// Registry map for all 62 blocks
 export const BLOCKS_COMPONENTS: Record<string, React.FC<any>> = {
-  'swipe-row': SwipeRowBlock,
   'asset-swap': AssetSwapBlock,
+  'heat-map': HeatMapBlock,
+  'like': LikeBurstBlock,
+  'signature-pad': SignaturePadBlock,
+  'dynamic-island': DynamicIslandBlock,
+  'image-compare': ImageCompareBlock,
+  'slide-to-confirm': SlideConfirmBlock,
+  'slide-confirm': SlideConfirmBlock,
+  'voice-note': VoiceNoteBlock,
+  'holo-card': HoloCardBlock,
+  'swipe-row': (props) => <GenericBenchoBlock name="Swipe Row" category="Swipe" icon="👈" {...props} />,
   'ascii-wake': (props) => <GenericBenchoBlock name="ASCII Wake" category="Hover" icon="░" {...props} />,
   'foggy-glass': (props) => <GenericBenchoBlock name="Foggy Glass" category="Hover" icon="🌫" {...props} />,
-  'scratch-card': ScratchCardBlock,
-  'heat-map': (props) => <GenericBenchoBlock name="Heat Map" category="Hover" icon="🔥" {...props} />,
-  'image-compare': ImageCompareBlock,
-  'like': (props) => <GenericBenchoBlock name="Like Reaction" category="Press" icon="❤️" {...props} />,
-  'spotlight': SpotlightCardBlock,
-  'holo-card': HoloCardBlock,
+  'scratch-card': (props) => <GenericBenchoBlock name="Scratch Card" category="Drag" icon="🎫" {...props} />,
+  'spotlight': (props) => <GenericBenchoBlock name="Spotlight Card" category="Hover" icon="🔦" {...props} />,
   'poster-deck': (props) => <GenericBenchoBlock name="Poster Deck" category="Swipe" icon="🖼" {...props} />,
   'before-and-after': ImageCompareBlock,
-  'signature-pad': SignaturePadBlock,
-  'voice-note': VoiceNoteBlock,
   'eye-tracker': (props) => <GenericBenchoBlock name="Eye Tracker" category="Hover" icon="👀" {...props} />,
-  'dynamic-island': DynamicIslandBlock,
-  'emoji-reactions': EmojiReactionsBlock,
+  'emoji-reactions': (props) => <GenericBenchoBlock name="Emoji Reactions" category="Hover" icon="😍" {...props} />,
   'time-scrubber': (props) => <GenericBenchoBlock name="Time Scrubber" category="Slide" icon="⏱" {...props} />,
   'upload-dropzone': (props) => <GenericBenchoBlock name="Upload Dropzone" category="Drag" icon="📤" {...props} />,
-  'tag-input': TagInputBlock,
+  'tag-input': (props) => <GenericBenchoBlock name="Tag Input" category="Type" icon="🏷️" {...props} />,
   'hold-to-delete': (props) => <GenericBenchoBlock name="Hold to Delete" category="Press" icon="🗑" {...props} />,
   'rolling-counter': (props) => <GenericBenchoBlock name="Rolling Counter" category="Drag" icon="🔢" {...props} />,
   'particles': (props) => <GenericBenchoBlock name="Particles Canvas" category="Hover" icon="✨" {...props} />,
   'label-input': (props) => <GenericBenchoBlock name="Floating Label" category="Type" icon="✍️" {...props} />,
-  'one-time-code': (props) => <GenericBenchoBlock name="OTP Code" category="Type" icon="🔑" {...props} />,
-  'generate': (props) => <GenericBenchoBlock name="AI Sparkle" category="Press" icon="✨" {...props} />,
+  'one-time-code': (props) => <GenericBenchoBlock name="OTP One-Time Code" category="Type" icon="🔑" {...props} />,
+  'generate': (props) => <GenericBenchoBlock name="AI Sparkle Generate" category="Press" icon="🪄" {...props} />,
   'step-player': (props) => <GenericBenchoBlock name="Step Player" category="Press" icon="👟" {...props} />,
   'todo-tower': (props) => <GenericBenchoBlock name="Todo Tower" category="Press" icon="🗼" {...props} />,
   'image-accordion': (props) => <GenericBenchoBlock name="Image Accordion" category="Hover" icon="🪗" {...props} />,
-  'card-stack': (props) => <GenericBenchoBlock name="Card Stack" category="Hover" icon="🃏" {...props} />,
+  'card-stack': (props) => <GenericBenchoBlock name="Card Stack Fan" category="Hover" icon="🃏" {...props} />,
   'glass-bubble': (props) => <GenericBenchoBlock name="Glass Bubble" category="Drag" icon="🫧" {...props} />,
   'folding-frame': (props) => <GenericBenchoBlock name="Folding Frame" category="Drag" icon="📐" {...props} />,
   'browser-tabs': (props) => <GenericBenchoBlock name="Browser Tabs" category="Drag" icon="📑" {...props} />,
   'action-node': (props) => <GenericBenchoBlock name="Action Node" category="Hover" icon="🔗" {...props} />,
-  'slide-to-confirm': SlideConfirmBlock,
-  'slide-confirm': SlideConfirmBlock,
   'assignees': (props) => <GenericBenchoBlock name="Assignees Stack" category="Select" icon="👥" {...props} />,
-  'checklist': (props) => <GenericBenchoBlock name="Checklist" category="Press" icon="✅" {...props} />,
-  'carousel': (props) => <GenericBenchoBlock name="Carousel" category="Swipe" icon="🎠" {...props} />,
-  'palette': (props) => <GenericBenchoBlock name="Color Palette" category="Press" icon="🎨" {...props} />,
+  'checklist': (props) => <GenericBenchoBlock name="Checklist Progress" category="Press" icon="✅" {...props} />,
+  'carousel': (props) => <GenericBenchoBlock name="Kinetic Carousel" category="Swipe" icon="🎠" {...props} />,
+  'palette': (props) => <GenericBenchoBlock name="Palette Generator" category="Press" icon="🎨" {...props} />,
   'aspect-ratio': (props) => <GenericBenchoBlock name="Aspect Ratio" category="Select" icon="📐" {...props} />,
-  'tilt-card': TiltCardBlock,
-  'now-playing': (props) => <GenericBenchoBlock name="Now Playing" category="Press" icon="🎵" {...props} />,
+  'tilt-card': (props) => <GenericBenchoBlock name="3D Tilt Card" category="Hover" icon="🧊" {...props} />,
+  'now-playing': (props) => <GenericBenchoBlock name="Now Playing Bar" category="Press" icon="🎵" {...props} />,
   'dragging-ball': (props) => <GenericBenchoBlock name="Dragging Ball" category="Drag" icon="⚽" {...props} />,
   'search': (props) => <GenericBenchoBlock name="Expanding Search" category="Press" icon="🔍" {...props} />,
-  'pull-to-refresh': (props) => <GenericBenchoBlock name="Pull Refresh" category="Drag" icon="🔄" {...props} />,
+  'pull-to-refresh': (props) => <GenericBenchoBlock name="Pull to Refresh" category="Drag" icon="🔄" {...props} />,
   'escape-button': (props) => <GenericBenchoBlock name="Escape Button" category="Hover" icon="🏃" {...props} />,
   'slosh-slider': (props) => <GenericBenchoBlock name="Slosh Slider" category="Slide" icon="🌊" {...props} />,
   'create-menu': (props) => <GenericBenchoBlock name="Create Menu" category="Press" icon="➕" {...props} />,
@@ -842,10 +499,10 @@ export const BLOCKS_COMPONENTS: Record<string, React.FC<any>> = {
   'notify': (props) => <GenericBenchoBlock name="Notify Toast" category="Press" icon="🔔" {...props} />,
   'icon-bar': (props) => <GenericBenchoBlock name="Icon Bar" category="Select" icon="📊" {...props} />,
   'magnifying-dock': (props) => <GenericBenchoBlock name="Magnifying Dock" category="Hover" icon="🔍" {...props} />,
-  'progress-ticks': (props) => <GenericBenchoBlock name="Progress Ticks" category="Hover" icon="📊" {...props} />,
+  'progress-ticks': (props) => <GenericBenchoBlock name="Progress Ticks" category="Hover" icon="📈" {...props} />,
   'wheel': (props) => <GenericBenchoBlock name="Rotary Wheel" category="Drag" icon="☸️" {...props} />,
   'command-bar': (props) => <GenericBenchoBlock name="Command Bar" category="Type" icon="⚡" {...props} />,
   'selection-list': (props) => <GenericBenchoBlock name="Selection List" category="Select" icon="📋" {...props} />,
   'range-dial': (props) => <GenericBenchoBlock name="Range Dial" category="Drag" icon="🧭" {...props} />,
-  'liquid-toggle': LiquidToggleBlock,
+  'liquid-toggle': (props) => <GenericBenchoBlock name="Liquid Toggle" category="Press" icon="💧" {...props} />,
 };

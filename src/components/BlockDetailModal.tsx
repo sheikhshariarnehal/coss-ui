@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Copy, Check, Sliders, Code2, Sparkles, Terminal, ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  X, Copy, Check, Box, Code2, Sparkles, Bookmark, Volume2,
+  Share2, Play, ChevronDown, ChevronRight, CornerDownLeft
+} from 'lucide-react';
 import { BlockItem } from '../data/blocks-list';
 import { BLOCKS_COMPONENTS } from '../blocks';
 import { BLOCK_SNIPPETS } from '../blocks/snippets';
@@ -15,21 +18,18 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
   const [copiedInstall, setCopiedInstall] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
+  const [copiedShare, setCopiedShare] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [addedToBench, setAddedToBench] = useState(false);
 
-  // Dynamic parameters state
-  const [bounce, setBounce] = useState(0.4);
-  const [radius, setRadius] = useState(16);
-  const [fill, setFill] = useState(true);
-  const [stroke, setStroke] = useState(true);
+  // Accordion open states
+  const [openSection, setOpenSection] = useState<'install' | 'usage' | 'code' | 'how' | null>('install');
 
-  useEffect(() => {
-    if (block?.defaultProps) {
-      if (block.defaultProps.bounce !== undefined) setBounce(block.defaultProps.bounce);
-      if (block.defaultProps.radius !== undefined) setRadius(block.defaultProps.radius);
-      if (block.defaultProps.fill !== undefined) setFill(block.defaultProps.fill);
-      if (block.defaultProps.stroke !== undefined) setStroke(block.defaultProps.stroke);
-    }
-  }, [block]);
+  // Interactive controls
+  const [fillState, setFillState] = useState<'light' | 'dark'>('light');
+  const [strokeState, setStrokeState] = useState<'off' | 'on'>('on');
+  const [bounce, setBounce] = useState(30);
+  const [corner, setCorner] = useState(28);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -45,207 +45,308 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
   const snippet = BLOCK_SNIPPETS[block.slug] || {
     install: 'npm install framer-motion lucide-react clsx tailwind-merge',
     usage: `import { ${block.name.replace(/\s+/g, '')} } from '@/components/blocks/${block.slug}';\n\nexport default function Example() {\n  return <${block.name.replace(/\s+/g, '')} />;\n}`,
-    code: `// ${block.name} interactive implementation\n// Full source code available on coss UI registry`,
+    code: `// ${block.name} implementation\n// Exported from coss.com UI & bencho.dev`,
   };
 
-  const copyInstall = () => {
-    navigator.clipboard.writeText(snippet.install);
-    setCopiedInstall(true);
-    setTimeout(() => setCopiedInstall(false), 2000);
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopiedShare(true);
+    setTimeout(() => setCopiedShare(false), 2000);
   };
 
   const copyPrompt = () => {
-    const promptText = `Create a React component named "${block.name}" with Tailwind CSS and Framer Motion based on the Bencho micro-interaction block:\n\nDescription: ${block.description}\nCategory: ${block.category}\nTags: ${block.tags.join(', ')}`;
+    const promptText = `Create a React component named "${block.name}" with Tailwind CSS and Framer Motion based on Bencho micro-interaction block:\n\nDescription: ${block.description}\nCategory: ${block.category}\nTags: ${block.tags.join(', ')}`;
     navigator.clipboard.writeText(promptText);
     setCopiedPrompt(true);
     setTimeout(() => setCopiedPrompt(false), 2000);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md">
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.2 }}
-        className="bencho-scope w-full max-w-5xl max-h-[90vh] bg-[var(--bencho-card)] border border-[var(--bencho-border)] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+        className="bencho-root w-full max-w-5xl flex flex-col md:flex-row gap-4 max-h-[90vh] overflow-y-auto"
       >
-        {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--bencho-border)] bg-[var(--bencho-surface)]">
-          <div className="flex items-center gap-3">
-            <span className="bencho-chip">
-              {block.category}
-            </span>
-            <h2 className="text-lg font-bold text-[var(--bencho-ink)] tracking-tight">{block.name}</h2>
-          </div>
-
-          {/* Tab Selector & Close */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center p-1 bg-[var(--bencho-surface-2)] rounded-lg border border-[var(--bencho-border)]">
+        {/* Left Stage Canvas Card */}
+        <div className="flex-1 bg-[#e5e7eb] dark:bg-[#1b1c20] border border-black/5 dark:border-white/10 rounded-[28px] p-6 flex flex-col justify-between min-h-[460px] relative shadow-2xl">
+          {/* Top Stage Bar */}
+          <div className="flex items-center justify-between z-10">
+            {/* View Switcher: Cube (Preview) & Code (<>) */}
+            <div className="flex items-center p-1 bg-white/70 dark:bg-black/40 backdrop-blur-md rounded-full border border-black/5 dark:border-white/10 shadow-sm">
               <button
                 onClick={() => setActiveTab('preview')}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition ${
-                  activeTab === 'preview' ? 'bg-[var(--bencho-surface-3)] text-[var(--bencho-ink)]' : 'text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)]'
+                className={`p-1.5 px-2.5 rounded-full transition flex items-center gap-1 text-xs font-semibold ${
+                  activeTab === 'preview'
+                    ? 'bg-white dark:bg-[#25262c] text-neutral-950 dark:text-white shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
                 }`}
+                title="Interactive Preview"
               >
-                Preview
+                <Box className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setActiveTab('code')}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition flex items-center gap-1.5 ${
-                  activeTab === 'code' ? 'bg-[var(--bencho-surface-3)] text-[var(--bencho-ink)]' : 'text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)]'
+                className={`p-1.5 px-2.5 rounded-full transition flex items-center gap-1 text-xs font-semibold ${
+                  activeTab === 'code'
+                    ? 'bg-white dark:bg-[#25262c] text-neutral-950 dark:text-white shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
                 }`}
+                title="View Code"
               >
-                <Code2 className="w-3.5 h-3.5" /> Code
+                <Code2 className="w-4 h-4" />
               </button>
             </div>
 
-            <button
-              onClick={copyPrompt}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bencho-surface-2)] hover:bg-[var(--bencho-surface-3)] border border-[var(--bencho-border)] rounded-lg text-xs font-medium text-[var(--bencho-ink-2)] transition"
-            >
-              {copiedPrompt ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5 text-pink-400" />}
-              {copiedPrompt ? 'Copied prompt!' : 'Copy prompt'}
-            </button>
+            {/* Right Stage Controls */}
+            {activeTab === 'preview' ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsBookmarked(!isBookmarked)}
+                  className={`w-9 h-9 rounded-full flex items-center justify-center transition ${
+                    isBookmarked
+                      ? 'bg-neutral-900 text-white dark:bg-white dark:text-black'
+                      : 'bg-white/70 dark:bg-black/40 text-neutral-600 dark:text-neutral-300 hover:bg-white dark:hover:bg-black/60'
+                  }`}
+                  title="Bookmark"
+                >
+                  <Bookmark className="w-4 h-4" />
+                </button>
+                <button
+                  className="w-9 h-9 rounded-full bg-white/70 dark:bg-black/40 text-neutral-600 dark:text-neutral-300 flex items-center justify-center hover:bg-white dark:hover:bg-black/60 transition"
+                  title="Sound"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={copyPrompt}
+                className="px-4 py-1.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black text-xs font-semibold shadow-md flex items-center gap-1.5 hover:opacity-90 transition"
+              >
+                {copiedPrompt ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5" />}
+                {copiedPrompt ? 'Copied prompt!' : 'Copy prompt'}
+              </button>
+            )}
+          </div>
 
+          {/* Canvas Center Stage / Code View */}
+          {activeTab === 'preview' ? (
+            <div className="flex-1 flex items-center justify-center my-6 relative">
+              <BlockComponent
+                bounce={bounce / 100}
+                radius={corner}
+                fill={fillState}
+                stroke={strokeState === 'on'}
+              />
+            </div>
+          ) : (
+            <div className="flex-1 my-6 space-y-3 overflow-y-auto max-h-[340px] pr-2">
+              {/* Install Accordion */}
+              <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+                <div
+                  onClick={() => setOpenSection(openSection === 'install' ? null : 'install')}
+                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                >
+                  <div className="flex items-center gap-2">
+                    {openSection === 'install' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                    <span>Install</span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigator.clipboard.writeText(snippet.install);
+                      setCopiedInstall(true);
+                      setTimeout(() => setCopiedInstall(false), 2000);
+                    }}
+                    className="p-1 text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                  >
+                    {copiedInstall ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                {openSection === 'install' && (
+                  <div className="px-4 pb-3 font-mono text-xs text-neutral-600 dark:text-neutral-300">
+                    <div className="p-2.5 bg-neutral-100 dark:bg-neutral-800 rounded-xl">
+                      {snippet.install}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Usage Accordion */}
+              <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+                <div
+                  onClick={() => setOpenSection(openSection === 'usage' ? null : 'usage')}
+                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                >
+                  <div className="flex items-center gap-2">
+                    {openSection === 'usage' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                    <span>Usage</span>
+                  </div>
+                  <Copy className="w-3.5 h-3.5 text-neutral-400" />
+                </div>
+                {openSection === 'usage' && (
+                  <div className="px-4 pb-3">
+                    <CodeBlock code={snippet.usage} language="tsx" />
+                  </div>
+                )}
+              </div>
+
+              {/* Code Accordion */}
+              <div className="bg-white/80 dark:bg-black/40 border border-black/5 dark:border-white/10 rounded-2xl overflow-hidden shadow-xs">
+                <div
+                  onClick={() => setOpenSection(openSection === 'code' ? null : 'code')}
+                  className="px-4 py-3 flex items-center justify-between cursor-pointer text-xs font-bold text-neutral-800 dark:text-neutral-200 select-none"
+                >
+                  <div className="flex items-center gap-2">
+                    {openSection === 'code' ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                    <span>Code</span>
+                  </div>
+                  <Copy className="w-3.5 h-3.5 text-neutral-400" />
+                </div>
+                {openSection === 'code' && (
+                  <div className="px-4 pb-3">
+                    <CodeBlock code={snippet.code} language="tsx" />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Bottom Stage Play Action */}
+          <div className="flex justify-end z-10">
             <button
-              onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-[var(--bencho-surface-2)] text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)] transition"
+              onClick={() => {
+                confetti({ particleCount: 20, spread: 45, origin: { y: 0.6 } });
+              }}
+              className="w-9 h-9 rounded-full bg-white/80 dark:bg-black/50 text-neutral-800 dark:text-white flex items-center justify-center hover:scale-105 transition shadow-sm"
+              title="Replay Animation"
             >
-              <X className="w-5 h-5" />
+              <Play className="w-4 h-4 fill-current ml-0.5" />
             </button>
           </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="flex-1 overflow-y-auto p-6 flex flex-col lg:flex-row gap-6">
-          {activeTab === 'preview' ? (
-            <>
-              {/* Live Canvas */}
-              <div className="flex-1 min-h-[380px] bg-[var(--bencho-surface)] border border-[var(--bencho-border)] rounded-xl flex flex-col items-center justify-center p-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(var(--bencho-canvas-dot)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-                <div className="relative z-10 w-full flex items-center justify-center">
-                  <BlockComponent bounce={bounce} radius={radius} fill={fill} stroke={stroke} />
-                </div>
-              </div>
+        {/* Right Controls Panel Card */}
+        <div className="w-full md:w-[310px] bg-white dark:bg-[#141518] border border-black/5 dark:border-white/10 rounded-[28px] p-6 flex flex-col justify-between shadow-2xl">
+          <div>
+            {/* Header: Title & Close */}
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h3 className="text-xl font-bold text-neutral-900 dark:text-white tracking-tight">
+                {block.name}
+              </h3>
+              <button
+                onClick={onClose}
+                className="w-7 h-7 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-500 hover:text-neutral-900 dark:hover:text-white flex items-center justify-center transition"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
 
-              {/* Controls Sidebar */}
-              <div className="w-full lg:w-72 bg-[var(--bencho-surface)] border border-[var(--bencho-border)] rounded-xl p-5 flex flex-col gap-5">
-                <div className="flex items-center gap-2 text-xs font-bold text-[var(--bencho-ink-2)] uppercase tracking-wider">
-                  <Sliders className="w-4 h-4 text-[var(--bencho-ink-3)]" /> Block Parameters
-                </div>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mb-6">
+              {block.description}
+            </p>
 
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-xs text-[var(--bencho-ink-3)] mb-1.5">
-                      <span>Corner Radius</span>
-                      <span className="font-mono text-[var(--bencho-ink)]">{radius}px</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="32"
-                      value={radius}
-                      onChange={(e) => setRadius(Number(e.target.value))}
-                      className="bencho-range"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-xs text-[var(--bencho-ink-3)] mb-1.5">
-                      <span>Spring Bounce</span>
-                      <span className="font-mono text-[var(--bencho-ink)]">{bounce.toFixed(2)}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="0.1"
-                      max="0.8"
-                      step="0.05"
-                      value={bounce}
-                      onChange={(e) => setBounce(Number(e.target.value))}
-                      className="bencho-range"
-                    />
-                  </div>
-
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs text-neutral-400">Background Fill</span>
-                    <button
-                      onClick={() => setFill(!fill)}
-                      className={`w-9 h-5 rounded-full transition-colors relative ${
-                        fill ? 'bg-white' : 'bg-neutral-800'
-                      }`}
-                    >
-                      <span
-                        className={`absolute top-0.5 bottom-0.5 w-4 rounded-full transition-transform ${
-                          fill ? 'right-0.5 bg-black' : 'left-0.5 bg-neutral-400'
-                        }`}
-                      />
-                    </button>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-neutral-400">Border Stroke</span>
-                    <button
-                      onClick={() => setStroke(!stroke)}
-                      className={`w-9 h-5 rounded-full transition-colors relative ${
-                        stroke ? 'bg-white' : 'bg-neutral-800'
-                      }`}
-                    >
-                      <span
-                        className={`absolute top-0.5 bottom-0.5 w-4 rounded-full transition-transform ${
-                          stroke ? 'right-0.5 bg-black' : 'left-0.5 bg-neutral-400'
-                        }`}
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="mt-auto pt-4 border-t border-white/5">
-                  <p className="text-xs text-neutral-400 leading-relaxed">{block.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {block.tags.map((t) => (
-                      <span key={t} className="px-2 py-0.5 text-[10px] rounded bg-white/5 text-neutral-400">
-                        #{t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            /* Code Tab */
-            <div className="flex-1 space-y-6">
-              {/* Install CLI */}
-              <div>
-                <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Terminal className="w-3.5 h-3.5" /> Installation
-                </h4>
-                <div className="flex items-center justify-between bg-black/60 border border-white/10 rounded-lg px-4 py-3 font-mono text-xs text-neutral-200">
-                  <span>{snippet.install}</span>
+            {/* Segmented Controls */}
+            <div className="space-y-3.5 mb-6">
+              {/* Fill Control */}
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-neutral-600 dark:text-neutral-400 font-medium">Fill</span>
+                <div className="bencho-seg-bar w-32">
                   <button
-                    onClick={copyInstall}
-                    className="p-1 hover:bg-white/10 rounded transition text-neutral-400 hover:text-white"
+                    onClick={() => setFillState('light')}
+                    className={`bencho-seg-btn ${fillState === 'light' ? 'active' : ''}`}
                   >
-                    {copiedInstall ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    Light
+                  </button>
+                  <button
+                    onClick={() => setFillState('dark')}
+                    className={`bencho-seg-btn ${fillState === 'dark' ? 'active' : ''}`}
+                  >
+                    Dark
                   </button>
                 </div>
               </div>
 
-              {/* Usage */}
-              <div>
-                <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Usage</h4>
-                <CodeBlock code={snippet.usage} language="tsx" />
+              {/* Stroke Control */}
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-neutral-600 dark:text-neutral-400 font-medium">Stroke</span>
+                <div className="bencho-seg-bar w-32">
+                  <button
+                    onClick={() => setStrokeState('off')}
+                    className={`bencho-seg-btn ${strokeState === 'off' ? 'active' : ''}`}
+                  >
+                    Off
+                  </button>
+                  <button
+                    onClick={() => setStrokeState('on')}
+                    className={`bencho-seg-btn ${strokeState === 'on' ? 'active' : ''}`}
+                  >
+                    On
+                  </button>
+                </div>
               </div>
 
-              {/* Source Code */}
-              <div>
-                <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">
-                  Component Source Code
-                </h4>
-                <CodeBlock code={snippet.code} language="tsx" />
+              {/* Bounce Slider Pill */}
+              <div className="bencho-ctrl-pill">
+                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-400">Bounce</span>
+                <input
+                  type="range"
+                  min="10"
+                  max="60"
+                  value={bounce}
+                  onChange={(e) => setBounce(Number(e.target.value))}
+                  className="w-24 accent-neutral-900 dark:accent-white cursor-pointer"
+                />
+                <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white w-6 text-right">
+                  {bounce}
+                </span>
+              </div>
+
+              {/* Corner Slider Pill */}
+              <div className="bencho-ctrl-pill">
+                <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-400">Corner</span>
+                <input
+                  type="range"
+                  min="8"
+                  max="36"
+                  value={corner}
+                  onChange={(e) => setCorner(Number(e.target.value))}
+                  className="w-24 accent-neutral-900 dark:accent-white cursor-pointer"
+                />
+                <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white w-8 text-right">
+                  {corner}px
+                </span>
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Footer CTAs: Share & Add to Bench */}
+          <div className="space-y-2 pt-4 border-t border-black/5 dark:border-white/5">
+            <button
+              onClick={handleShare}
+              className="w-full py-2.5 rounded-full border border-black/10 dark:border-white/15 text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition flex items-center justify-center gap-1.5"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              {copiedShare ? 'Link copied!' : 'Share'}
+            </button>
+
+            <button
+              onClick={() => {
+                setAddedToBench(!addedToBench);
+                confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+              }}
+              className={`w-full py-2.5 rounded-full text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-md ${
+                addedToBench
+                  ? 'bg-emerald-500 text-black'
+                  : 'bg-neutral-900 text-white dark:bg-white dark:text-black hover:opacity-95'
+              }`}
+            >
+              {addedToBench ? 'Added to bench ✓' : 'Add to bench 1'}
+            </button>
+          </div>
         </div>
       </motion.div>
     </div>
