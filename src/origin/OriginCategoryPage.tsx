@@ -75,7 +75,8 @@ export const OriginCategoryPage: React.FC<OriginCategoryPageProps> = ({
   };
 
   const handleCopyCli = (compName: string) => {
-    navigator.clipboard.writeText(`npx shadcn@latest add https://coss.com/origin/r/${compName}.json`);
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://coss-ui-beta.vercel.app';
+    navigator.clipboard.writeText(`npx shadcn@latest add ${origin}/origin/r/${compName}.json`);
     setCopiedCli(true);
     setTimeout(() => setCopiedCli(false), 2000);
   };
@@ -262,7 +263,9 @@ export const OriginCategoryPage: React.FC<OriginCategoryPageProps> = ({
                   </button>
                 </div>
                 <div className="rounded-lg border border-border bg-zinc-950 px-3.5 py-2.5 font-mono text-xs text-zinc-300 overflow-x-auto">
-                  <code>npx shadcn@latest add https://coss.com/origin/r/{activeCodeModal}.json</code>
+                  <code>
+                    npx shadcn@latest add {typeof window !== 'undefined' ? window.location.origin : 'https://coss-ui-beta.vercel.app'}/origin/r/{activeCodeModal}.json
+                  </code>
                 </div>
               </div>
 

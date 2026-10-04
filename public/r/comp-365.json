@@ -3,7 +3,7 @@
   "name": "comp-365",
   "type": "registry:component",
   "registryDependencies": [
-    "https://coss.com/origin/r/hover-card.json"
+    "https://coss-ui-beta.vercel.app/origin/r/hover-card.json"
   ],
   "files": [
     {

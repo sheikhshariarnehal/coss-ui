@@ -10,18 +10,18 @@
     "@remixicon/react"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/button.json",
-    "https://coss.com/origin/r/calendar.json",
-    "https://coss.com/origin/r/checkbox.json",
-    "https://coss.com/origin/r/dropdown-menu.json",
-    "https://coss.com/origin/r/dialog.json",
-    "https://coss.com/origin/r/input.json",
-    "https://coss.com/origin/r/textarea.json",
-    "https://coss.com/origin/r/label.json",
-    "https://coss.com/origin/r/popover.json",
-    "https://coss.com/origin/r/radio-group.json",
-    "https://coss.com/origin/r/select.json",
-    "https://coss.com/origin/r/sonner.json"
+    "https://coss-ui-beta.vercel.app/origin/r/button.json",
+    "https://coss-ui-beta.vercel.app/origin/r/calendar.json",
+    "https://coss-ui-beta.vercel.app/origin/r/checkbox.json",
+    "https://coss-ui-beta.vercel.app/origin/r/dropdown-menu.json",
+    "https://coss-ui-beta.vercel.app/origin/r/dialog.json",
+    "https://coss-ui-beta.vercel.app/origin/r/input.json",
+    "https://coss-ui-beta.vercel.app/origin/r/textarea.json",
+    "https://coss-ui-beta.vercel.app/origin/r/label.json",
+    "https://coss-ui-beta.vercel.app/origin/r/popover.json",
+    "https://coss-ui-beta.vercel.app/origin/r/radio-group.json",
+    "https://coss-ui-beta.vercel.app/origin/r/select.json",
+    "https://coss-ui-beta.vercel.app/origin/r/sonner.json"
   ],
   "files": [
     {

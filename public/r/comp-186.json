@@ -3,8 +3,8 @@
   "name": "comp-186",
   "type": "registry:component",
   "registryDependencies": [
-    "https://coss.com/origin/r/switch.json",
-    "https://coss.com/origin/r/label.json"
+    "https://coss-ui-beta.vercel.app/origin/r/switch.json",
+    "https://coss-ui-beta.vercel.app/origin/r/label.json"
   ],
   "files": [
     {

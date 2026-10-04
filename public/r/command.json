@@ -6,7 +6,7 @@
     "cmdk"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/dialog.json"
+    "https://coss-ui-beta.vercel.app/origin/r/dialog.json"
   ],
   "files": [
     {

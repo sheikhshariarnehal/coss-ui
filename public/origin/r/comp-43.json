@@ -8,8 +8,8 @@
     "@internationalized/date"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/calendar-rac.json",
-    "https://coss.com/origin/r/datefield-rac.json"
+    "https://coss-ui-beta.vercel.app/origin/r/calendar-rac.json",
+    "https://coss-ui-beta.vercel.app/origin/r/datefield-rac.json"
   ],
   "files": [
     {

@@ -6,8 +6,8 @@
     "@remixicon/react"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/select.json",
-    "https://coss.com/origin/r/label.json"
+    "https://coss-ui-beta.vercel.app/origin/r/select.json",
+    "https://coss-ui-beta.vercel.app/origin/r/label.json"
   ],
   "files": [
     {

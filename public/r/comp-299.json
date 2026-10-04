@@ -6,7 +6,7 @@
     "sonner"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/button.json"
+    "https://coss-ui-beta.vercel.app/origin/r/button.json"
   ],
   "files": [
     {

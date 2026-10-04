@@ -6,7 +6,7 @@
     "react-aria-components"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/label.json"
+    "https://coss-ui-beta.vercel.app/origin/r/label.json"
   ],
   "files": [
     {

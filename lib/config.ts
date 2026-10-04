@@ -52,5 +52,5 @@ export const siteConfig = {
 			upcoming: true,
 		},
 	],
-	url: "https://coss.com",
+	url: "https://coss-ui-beta.vercel.app",
 };

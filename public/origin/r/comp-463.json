@@ -3,9 +3,9 @@
   "name": "comp-463",
   "type": "registry:component",
   "registryDependencies": [
-    "https://coss.com/origin/r/label.json",
-    "https://coss.com/origin/r/pagination.json",
-    "https://coss.com/origin/r/select.json"
+    "https://coss-ui-beta.vercel.app/origin/r/label.json",
+    "https://coss-ui-beta.vercel.app/origin/r/pagination.json",
+    "https://coss-ui-beta.vercel.app/origin/r/select.json"
   ],
   "files": [
     {

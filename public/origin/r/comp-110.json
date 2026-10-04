@@ -3,7 +3,7 @@
   "name": "comp-110",
   "type": "registry:component",
   "registryDependencies": [
-    "https://coss.com/origin/r/toggle-group.json"
+    "https://coss-ui-beta.vercel.app/origin/r/toggle-group.json"
   ],
   "files": [
     {

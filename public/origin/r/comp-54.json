@@ -6,8 +6,8 @@
     "use-mask-input"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/input.json",
-    "https://coss.com/origin/r/label.json"
+    "https://coss-ui-beta.vercel.app/origin/r/input.json",
+    "https://coss-ui-beta.vercel.app/origin/r/label.json"
   ],
   "files": [
     {

@@ -6,10 +6,10 @@
     "@tanstack/react-table"
   ],
   "registryDependencies": [
-    "https://coss.com/origin/r/badge.json",
-    "https://coss.com/origin/r/button.json",
-    "https://coss.com/origin/r/checkbox.json",
-    "https://coss.com/origin/r/table.json"
+    "https://coss-ui-beta.vercel.app/origin/r/badge.json",
+    "https://coss-ui-beta.vercel.app/origin/r/button.json",
+    "https://coss-ui-beta.vercel.app/origin/r/checkbox.json",
+    "https://coss-ui-beta.vercel.app/origin/r/table.json"
   ],
   "files": [
     {

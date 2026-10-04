@@ -375,7 +375,7 @@ export const ComponentDocsViewer: React.FC<ComponentDocsViewerProps> = ({ compon
 
                   {installTab === 'cli' ? (
                     <CodeBlock
-                      code={`npx shadcn@latest add @coss/${component.slug}`}
+                      code={`npx shadcn@latest add ${typeof window !== 'undefined' ? window.location.origin : 'https://coss-ui-beta.vercel.app'}/r/${component.slug}.json`}
                       language="bash"
                       showLineNumbers={false}
                     />

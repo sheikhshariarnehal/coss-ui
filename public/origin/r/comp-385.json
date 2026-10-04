@@ -3,8 +3,8 @@
   "name": "comp-385",
   "type": "registry:component",
   "registryDependencies": [
-    "https://coss.com/origin/r/button.json",
-    "https://coss.com/origin/r/popover.json"
+    "https://coss-ui-beta.vercel.app/origin/r/button.json",
+    "https://coss-ui-beta.vercel.app/origin/r/popover.json"
   ],
   "files": [
     {
