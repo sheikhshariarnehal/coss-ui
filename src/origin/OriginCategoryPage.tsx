@@ -215,7 +215,7 @@ export const OriginCategoryPage: React.FC<OriginCategoryPageProps> = ({
         </h2>
         <div className="mt-4">
           <a
-            href="https://github.com/cosscom/coss/discussions"
+            href="https://github.com/sheikhshariarnehal/coss-ui/discussions"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"

@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* GitHub Star Badge */}
           <a
-            href="https://github.com/cosscom/coss"
+            href="https://github.com/sheikhshariarnehal/coss-ui"
             target="_blank"
             rel="noreferrer"
             className="inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-transparent text-foreground hover:bg-accent h-8 px-2.5 sm:h-7 text-xs font-medium transition-colors"

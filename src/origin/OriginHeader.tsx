@@ -60,7 +60,7 @@ export const OriginHeader: React.FC<OriginHeaderProps> = ({
               <RiTwitterXFill className="size-4" />
             </a>
             <a
-              href="https://github.com/cosscom/coss"
+              href="https://github.com/sheikhshariarnehal/coss-ui"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
