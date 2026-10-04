@@ -4959,6 +4959,21 @@ export const COMPONENTS_LIST: ComponentMeta[] = [
     "exampleCount": 2
   },
   {
+    "slug": "skeuomorphic-button",
+    "title": "Skeuomorphic Button",
+    "description": "Tactile skeuomorphic buttons with specular highlights, frosted glass, and custom platform styles.",
+    "hasCode": true,
+    "hasDoc": true,
+    "examples": [
+      {
+        "id": "p-skeuomorphic-button-1",
+        "filename": "p-skeuomorphic-button-1.tsx",
+        "title": "Skeuomorphic Button Showcase"
+      }
+    ],
+    "exampleCount": 1
+  },
+  {
     "slug": "slider",
     "title": "Slider",
     "description": "An input where the user selects a value from within a given range.",
@@ -6470,5 +6485,5 @@ export const COMPONENTS_LIST: ComponentMeta[] = [
   }
 ];
 
-export const TOTAL_COMPONENTS = 69;
-export const TOTAL_PARTICLES = 1153;
+export const TOTAL_COMPONENTS = 70;
+export const TOTAL_PARTICLES = 1154;

@@ -17,12 +17,25 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/registry/default/ui/*": ["components/*"],
+      "@/origin/*": ["registry/default/*"],
+      "@/registry/default/ui/*": [
+        "components/*",
+        "registry/default/ui/*"
+      ],
+      "@coss/ui/components/*": [
+        "components/*"
+      ],
+      "@/components/ui/*": [
+        "components/*"
+      ],
       "@/registry/default/lib/*": ["lib/*"],
+      "@coss/ui/lib/*": ["lib/*"],
+      "@/lib/*": ["lib/*"],
       "@/registry/default/hooks/*": ["hooks/*"],
-      "@coss/ui/*": ["*"]
+      "@/hooks/*": ["hooks/*"],
+      "@coss/ui/*": ["*"],
+      "@/*": ["src/*", "*"]
     }
   },
-  "include": ["src", "components", "lib", "hooks", "base-ui"]
+  "include": ["src", "components", "lib", "hooks", "base-ui", "registry"]
 }
