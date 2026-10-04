@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Sparkles, SlidersHorizontal, ArrowUpRight, Layers, Bookmark, Maximize2 } from 'lucide-react';
+import { Search, Sparkles, SlidersHorizontal, ArrowUpRight, Layers, Bookmark, Maximize2, ChevronDown } from 'lucide-react';
 import { BLOCKS_DATA, BlockItem } from '../data/blocks-list';
 import { BLOCKS_COMPONENTS } from '../blocks';
 import { BlockDetailModal } from './BlockDetailModal';
@@ -14,6 +14,7 @@ interface BlocksGalleryProps {
 
 export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSelectBlock }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<'newest' | 'popular' | 'name'>('newest');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeModalBlock, setActiveModalBlock] = useState<BlockItem | null>(null);
 
@@ -28,8 +29,8 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSe
   }, [selectedSlug]);
 
   const filteredBlocks = useMemo(() => {
-    return BLOCKS_DATA.filter((block) => {
-      const matchesCategory = selectedCategory === 'All' || block.category === selectedCategory;
+    let items = BLOCKS_DATA.filter((block) => {
+      const matchesCategory = selectedCategory === 'All' || block.category.toLowerCase() === selectedCategory.toLowerCase();
       const q = searchQuery.toLowerCase().trim();
       const matchesQuery =
         !q ||
@@ -38,7 +39,15 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSe
         block.tags.some((t) => t.toLowerCase().includes(q));
       return matchesCategory && matchesQuery;
     });
-  }, [selectedCategory, searchQuery]);
+
+    if (sortBy === 'name') {
+      items.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'popular') {
+      items.sort((a, b) => b.id.localeCompare(a.id));
+    }
+
+    return items;
+  }, [selectedCategory, searchQuery, sortBy]);
 
   const handleOpenBlock = (block: BlockItem) => {
     setActiveModalBlock(block);
@@ -55,22 +64,22 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSe
   };
 
   return (
-    <div className="bencho-root w-full max-w-[1416px] mx-auto px-4 sm:px-6 lg:px-8 py-10 font-sans">
+    <div className="bencho-root w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 font-sans select-none">
       {/* Hero Section matching bencho.dev */}
-      <div className="mb-14 text-center flex flex-col items-center">
+      <div className="mb-12 md:mb-16 text-center flex flex-col items-center">
         {/* Count Badge */}
-        <div className="mb-5 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white dark:bg-[#18191d] border border-black/5 dark:border-white/10 text-xs font-semibold text-neutral-800 dark:text-neutral-200 shadow-xs">
+        <div className="mb-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#18191d] border border-black/5 dark:border-white/10 text-xs font-semibold text-neutral-800 dark:text-neutral-200 shadow-xs">
           <span>{BLOCKS_DATA.length} interactive blocks</span>
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl sm:text-5xl font-bold text-neutral-950 dark:text-white tracking-tight mb-4">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-950 dark:text-white tracking-tight mb-4">
           Interactive UI Components
         </h1>
 
         {/* Subtitle */}
         <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-xl leading-relaxed mb-6">
-          A library of interactive React components and micro-interactions you can explore, tweak, and take straight into your projects.
+          A library of interactive React components and micro-interactions you can explore and take straight into your projects.
         </p>
 
         {/* Action Button */}
@@ -87,8 +96,8 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSe
         </div>
       </div>
 
-      {/* Filter Category Pills & Search Bar */}
-      <div id="blocks-grid" className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 pb-4">
+      {/* Filter Category Pills & Sort Bar */}
+      <div id="blocks-grid" className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8 pb-2">
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-2">
           {CATEGORIES.map((cat) => {
@@ -105,16 +114,33 @@ export const BlocksGallery: React.FC<BlocksGalleryProps> = ({ selectedSlug, onSe
           })}
         </div>
 
-        {/* Search Bar */}
-        <div className="relative w-full md:w-64">
-          <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search blocks..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white dark:bg-[#18191d] border border-black/5 dark:border-white/10 rounded-full pl-9 pr-4 py-1.5 text-xs text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition shadow-xs"
-          />
+        {/* Right Sort Dropdown & Search */}
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          {/* Search Bar */}
+          <div className="relative flex-1 md:w-56">
+            <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search blocks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#f0f1f4] dark:bg-[#1c1d22] border border-black/5 dark:border-white/5 rounded-full pl-9 pr-4 py-1.5 text-xs text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition shadow-xs"
+            />
+          </div>
+
+          {/* Sort Dropdown Pill */}
+          <div className="relative">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="appearance-none bg-[#f0f1f4] dark:bg-[#1c1d22] border border-black/5 dark:border-white/5 rounded-full pl-4 pr-8 py-1.5 text-xs font-medium text-neutral-700 dark:text-neutral-300 focus:outline-none cursor-pointer"
+            >
+              <option value="newest">Newest</option>
+              <option value="popular">Popular</option>
+              <option value="name">Name (A-Z)</option>
+            </select>
+            <ChevronDown className="w-3 h-3 text-neutral-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
         </div>
       </div>
 

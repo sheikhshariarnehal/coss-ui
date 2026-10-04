@@ -7,13 +7,13 @@
   /* Bencho Theme Scope */
   .bencho-root {
     --bn-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --bn-font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --bn-font-mono: 'Geist Mono', 'SF Mono', Menlo, Consolas, monospace;
 
     /* Light Mode */
-    --bn-bg: #f7f7f8;
-    --bn-card: #eef0f3;
+    --bn-bg: #fbfbfb;
+    --bn-card: #ebedf1;
     --bn-card-border: rgba(0, 0, 0, 0.04);
-    --bn-card-hover-border: rgba(0, 0, 0, 0.12);
+    --bn-card-hover-border: rgba(0, 0, 0, 0.1);
     --bn-ink: #111215;
     --bn-ink-2: #3e4148;
     --bn-ink-3: #6b7280;
@@ -21,36 +21,40 @@
     --bn-chip-bg: #ffffff;
     --bn-chip-text: #111215;
     --bn-modal-bg: #ffffff;
-    --bn-modal-canvas: #e5e7eb;
-    --bn-modal-border: rgba(0, 0, 0, 0.08);
+    --bn-modal-canvas: #ebedf1;
+    --bn-modal-border: rgba(0, 0, 0, 0.06);
     --bn-pill-active-bg: #111215;
     --bn-pill-active-text: #ffffff;
-    --bn-pill-bg: #ffffff;
-    --bn-pill-border: rgba(0, 0, 0, 0.06);
-    --bn-dot-grid: rgba(0, 0, 0, 0.04);
+    --bn-pill-bg: #f0f1f4;
+    --bn-pill-border: rgba(0, 0, 0, 0.05);
+    --bn-ctrl-bg: #f0f1f4;
+    --bn-ctrl-border: rgba(0, 0, 0, 0.04);
+    --bn-dot-grid: rgba(0, 0, 0, 0.05);
   }
 
-  /* Dark Mode (Active inside Coss UI Dark Mode) */
+  /* Dark Mode */
   .dark .bencho-root,
   [data-theme='dark'] .bencho-root {
-    --bn-bg: #0d0e11;
+    --bn-bg: #0c0d0e;
     --bn-card: #16171b;
     --bn-card-border: rgba(255, 255, 255, 0.06);
-    --bn-card-hover-border: rgba(255, 255, 255, 0.16);
+    --bn-card-hover-border: rgba(255, 255, 255, 0.15);
     --bn-ink: #f9fafb;
     --bn-ink-2: #e5e7eb;
     --bn-ink-3: #9ca3af;
     --bn-ink-4: #6b7280;
-    --bn-chip-bg: rgba(255, 255, 255, 0.08);
+    --bn-chip-bg: #222328;
     --bn-chip-text: #f9fafb;
     --bn-modal-bg: #141518;
     --bn-modal-canvas: #1b1c20;
     --bn-modal-border: rgba(255, 255, 255, 0.08);
     --bn-pill-active-bg: #ffffff;
     --bn-pill-active-text: #000000;
-    --bn-pill-bg: #18191d;
+    --bn-pill-bg: #1c1d22;
     --bn-pill-border: rgba(255, 255, 255, 0.06);
-    --bn-dot-grid: rgba(255, 255, 255, 0.05);
+    --bn-ctrl-bg: #1c1d22;
+    --bn-ctrl-border: rgba(255, 255, 255, 0.06);
+    --bn-dot-grid: rgba(255, 255, 255, 0.06);
   }
 
   /* Main Card Layout (.bencho-card) */
@@ -66,14 +70,19 @@
     justify-content: center;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
   }
 
   .bencho-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     border-color: var(--bn-card-hover-border);
-    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+  }
+
+  .dark .bencho-card:hover,
+  [data-theme='dark'] .bencho-card:hover {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
   }
 
   /* Dot Grid Canvas Background */
@@ -85,23 +94,29 @@
   /* Top-left Category/New Chip */
   .bencho-card-chip {
     position: absolute;
-    top: 18px;
+    top: 20px;
     left: 20px;
     font-size: 11px;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 4px 11px;
     border-radius: 9999px;
     background-color: var(--bn-chip-bg);
     color: var(--bn-chip-text);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     z-index: 10;
   }
 
-  /* Card Bottom Bar on Hover */
+  .dark .bencho-card-chip,
+  [data-theme='dark'] .bencho-card-chip {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Card Bottom Actions on Hover */
   .bencho-card-actions {
     position: absolute;
-    bottom: 16px;
+    bottom: 18px;
     right: 20px;
     display: flex;
     align-items: center;
@@ -127,7 +142,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: all 0.15s ease;
   }
 
@@ -138,14 +153,14 @@
 
   /* Filter Category Pills */
   .bencho-filter-pill {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 500;
     padding: 7px 16px;
     border-radius: 9999px;
     border: 1px solid var(--bn-pill-border);
     background-color: var(--bn-pill-bg);
     color: var(--bn-ink-3);
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
   }
 
@@ -154,12 +169,17 @@
     color: var(--bn-pill-active-text);
     font-weight: 600;
     border-color: var(--bn-pill-active-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
 
   .bencho-filter-pill:not(.active):hover {
     color: var(--bn-ink);
-    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .dark .bencho-filter-pill:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--bn-ink);
   }
 
   /* Dual-Panel Modal */
@@ -179,19 +199,19 @@
 
   /* Segmented Toggle Bar */
   .bencho-seg-bar {
-    background-color: var(--bn-card);
+    background-color: var(--bn-ctrl-bg);
     border-radius: 12px;
     padding: 3px;
     display: flex;
     align-items: center;
     gap: 2px;
-    border: 1px solid var(--bn-card-border);
+    border: 1px solid var(--bn-ctrl-border);
   }
 
   .bencho-seg-btn {
     flex: 1;
     text-align: center;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 500;
     padding: 5px 12px;
     border-radius: 9px;
@@ -209,13 +229,13 @@
 
   /* Bencho Interactive Control Slider Pill */
   .bencho-ctrl-pill {
-    background-color: var(--bn-card);
-    border-radius: 12px;
-    height: 42px;
+    background-color: var(--bn-ctrl-bg);
+    border-radius: 14px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 14px;
-    border: 1px solid var(--bn-card-border);
+    padding: 0 16px;
+    border: 1px solid var(--bn-ctrl-border);
   }
 }
