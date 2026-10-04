@@ -194,14 +194,14 @@ export function App() {
 
   return (
     <div className="relative isolate flex min-h-screen flex-col bg-sidebar font-sans text-foreground antialiased selection:bg-neutral-800 selection:text-white">
-      {/* Crisp vertical boundary lines flanking the central container */}
+      {/* Crisp subtle vertical boundary lines matching coss.com */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[1416px] z-50 border-x border-border hidden sm:block"
+        className="container pointer-events-none fixed inset-0 z-45 before:absolute before:inset-y-0 before:-left-3 before:w-px before:bg-border/64 after:absolute after:inset-y-0 after:-right-3 after:w-px after:bg-border/64 hidden sm:block"
       >
         {/* Decorative corner anchor boxes at the header line intersection */}
-        <div className="absolute top-[3.75rem] -left-[4.5px] size-2 rounded-[2px] border border-border bg-popover shadow-xs" />
-        <div className="absolute top-[3.75rem] -right-[4.5px] size-2 rounded-[2px] border border-border bg-popover shadow-xs" />
+        <div className="absolute top-[calc(4rem-4.5px)] -left-[15.5px] size-2 rounded-[2px] border border-border bg-popover shadow-xs/5" />
+        <div className="absolute top-[calc(4rem-4.5px)] -right-[15.5px] size-2 rounded-[2px] border border-border bg-popover shadow-xs/5" />
       </div>
 
       {/* Full-width sticky header with horizontal bottom line */}
@@ -218,34 +218,36 @@ export function App() {
 
       {/* Main Container */}
       {activeTab === 'docs' ? (
-        <div className="container relative flex-1 flex w-full max-w-[1416px] px-0">
-          {/* Left Sidebar with right border line */}
-          <Sidebar
-            components={COMPONENTS_LIST}
-            selectedSlug={selectedSlug}
-            onSelectComponent={handleSelectComponent}
-            selectedOverview={selectedOverview}
-            onSelectOverview={handleSelectOverview}
-            isOpenMobile={isMobileSidebarOpen}
-            onCloseMobile={() => setIsMobileSidebarOpen(false)}
-          />
+        <main className="flex flex-1 flex-col">
+          <div className="group/sidebar-wrapper flex w-full container min-h-min flex-1 items-start px-0 lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
+            {/* Left Sidebar */}
+            <Sidebar
+              components={COMPONENTS_LIST}
+              selectedSlug={selectedSlug}
+              onSelectComponent={handleSelectComponent}
+              selectedOverview={selectedOverview}
+              onSelectOverview={handleSelectOverview}
+              isOpenMobile={isMobileSidebarOpen}
+              onCloseMobile={() => setIsMobileSidebarOpen(false)}
+            />
 
-          {/* Main Docs Content Canvas */}
-          <div className="flex-1 min-w-0 min-h-[calc(100vh-4rem)]">
-            {selectedOverview ? (
-              <OverviewPage
-                overviewId={selectedOverview}
-                onExploreComponents={() => handleSelectComponent('accordion')}
-                onExploreParticles={() => handleTabChange('particles')}
-              />
-            ) : (
-              <ComponentDocsViewer component={currentComponent} />
-            )}
+            {/* Main Docs Content Canvas */}
+            <div className="h-full w-full min-w-0">
+              {selectedOverview ? (
+                <OverviewPage
+                  overviewId={selectedOverview}
+                  onExploreComponents={() => handleSelectComponent('accordion')}
+                  onExploreParticles={() => handleTabChange('particles')}
+                />
+              ) : (
+                <ComponentDocsViewer component={currentComponent} />
+              )}
+            </div>
           </div>
-        </div>
+        </main>
       ) : activeTab === 'blocks' ? (
         /* Blocks Gallery Page */
-        <div className="container relative flex-1 w-full max-w-[1416px]">
+        <div className="container relative flex-1 w-full max-w-[1416px] px-4 sm:px-6">
           <BlocksGallery
             selectedSlug={selectedBlockSlug}
             onSelectBlock={handleSelectBlock}
@@ -253,7 +255,7 @@ export function App() {
         </div>
       ) : (
         /* Particles Gallery Page */
-        <div className="container relative flex-1 w-full max-w-[1416px]">
+        <div className="container relative flex-1 w-full max-w-[1416px] px-4 sm:px-6">
           <ParticlesGallery
             components={COMPONENTS_LIST}
             onSelectComponent={handleSelectComponent}

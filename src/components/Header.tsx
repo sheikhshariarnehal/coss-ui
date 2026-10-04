@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full bg-sidebar/80 backdrop-blur-md before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-border/64">
-      <div className="container relative flex h-16 w-full items-center justify-between gap-2 px-4">
+      <div className="container relative flex h-16 w-full items-center justify-between gap-2 px-4 sm:px-6">
         {/* Mobile Hamburger Menu Trigger */}
         <button
           type="button"
@@ -102,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'border-transparent text-muted-foreground hover:bg-accent hover:text-foreground'
               }`}
             >
-              <span>Particles</span>
+              <span>Components</span>
               <span className="rounded-full bg-primary/10 px-1.5 py-0.2 text-[11px] font-semibold text-primary">
                 {totalParticles}
               </span>

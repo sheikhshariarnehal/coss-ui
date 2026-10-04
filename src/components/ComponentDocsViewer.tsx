@@ -228,9 +228,9 @@ export const ComponentDocsViewer: React.FC<ComponentDocsViewerProps> = ({ compon
         }));
 
   return (
-    <div className="flex items-start xl:w-full" data-slot="docs">
+    <div className="flex items-stretch xl:w-full" data-slot="docs">
       {/* Central Content Card */}
-      <div className="relative flex w-full min-w-0 flex-1 flex-col lg:my-8 lg:mx-4">
+      <div className="relative flex w-full min-w-0 flex-1 flex-col lg:mt-8 lg:mr-4 lg:mb-8">
         <div className="relative flex flex-col rounded-2xl border border-sidebar-border bg-card not-dark:bg-clip-padding text-card-foreground shadow-xs/5 max-lg:rounded-none! dark:bg-background overflow-hidden">
           <div className="px-4 py-6 sm:px-6 lg:p-8">
             <div className="mx-auto w-full max-w-3xl">

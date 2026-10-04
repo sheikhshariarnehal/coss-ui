@@ -70,18 +70,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation list */}
-        <div className="flex-1 overflow-y-auto no-scrollbar px-4 py-4 space-y-6">
+        <div className="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-2 px-4 py-2">
+          <div className="h-4 shrink-0 hidden lg:block" />
+
           {/* Overview Group */}
-          <div className="space-y-1">
-            <div className="flex h-7 items-center rounded-lg font-medium text-xs text-sidebar-accent-foreground">
+          <div className="relative flex w-full min-w-0 flex-col p-2 gap-1">
+            <div className="flex shrink-0 items-center rounded-lg font-medium text-xs h-7 px-0 text-sidebar-accent-foreground">
               Overview
             </div>
-            <ul className="flex flex-col gap-0.5">
+            <ul className="flex w-full min-w-0 flex-col gap-0.5">
               {OVERVIEW_ITEMS.map((item) => {
                 const isActive = selectedOverview === item.id;
                 const href = `/ui/docs/${item.id}`;
                 return (
-                  <li key={item.id}>
+                  <li key={item.id} className="relative">
                     <a
                       href={href}
                       onClick={(e) => {
@@ -91,7 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           onCloseMobile();
                         }
                       }}
-                      className={`flex w-full items-center justify-between rounded-lg px-3.5 py-1.5 text-left text-sm transition-colors ${
+                      className={`peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 text-left h-8 text-sm transition-colors ps-3.5 ${
                         isActive
                           ? 'bg-sidebar-accent font-medium text-sidebar-accent-foreground'
                           : 'text-muted-foreground hover:text-sidebar-accent-foreground hover:bg-transparent'
@@ -106,16 +108,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* Components Group */}
-          <div className="space-y-1">
-            <div className="flex h-7 items-center justify-between rounded-lg font-medium text-xs text-sidebar-accent-foreground">
+          <div className="relative flex w-full min-w-0 flex-col p-2 gap-1">
+            <div className="flex shrink-0 items-center rounded-lg font-medium text-xs h-7 px-0 text-sidebar-accent-foreground">
               <span>Components</span>
             </div>
-            <ul className="flex flex-col gap-0.5">
+            <ul className="flex w-full min-w-0 flex-col gap-0.5">
               {filteredComponents.map((comp) => {
                 const isActive = selectedOverview === null && selectedSlug === comp.slug;
                 const href = `/ui/docs/components/${comp.slug}`;
                 return (
-                  <li key={comp.slug}>
+                  <li key={comp.slug} className="relative">
                     <a
                       href={href}
                       onClick={(e) => {
@@ -125,7 +127,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           onCloseMobile();
                         }
                       }}
-                      className={`flex w-full items-center justify-between rounded-lg px-3.5 py-1.5 text-left text-sm transition-colors ${
+                      className={`peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-lg p-2 text-left h-8 text-sm transition-colors ps-3.5 ${
                         isActive
                           ? 'bg-sidebar-accent font-medium text-sidebar-accent-foreground'
                           : 'text-muted-foreground hover:text-sidebar-accent-foreground hover:bg-transparent'
