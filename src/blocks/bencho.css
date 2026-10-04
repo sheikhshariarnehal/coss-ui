@@ -1,0 +1,177 @@
+/* ==========================================================================
+   Bencho Design System & Block Stylesheet (Dedicated CSS for Bencho Blocks)
+   Extracted & Scoped from https://bencho.dev/
+   ========================================================================== */
+
+@layer components {
+  /* Bencho Root Tokens */
+  .bencho-scope {
+    --bencho-font-head: 'Google Sans', 'Inter Head', 'Plus Jakarta Sans', sans-serif;
+    --bencho-font-ui: 'Inter', 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --bencho-font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    
+    /* Light mode defaults */
+    --bencho-bg: #fbfbfa;
+    --bencho-surface: #f4f3f1;
+    --bencho-surface-2: #eceae5;
+    --bencho-surface-3: #e2dfd7;
+    --bencho-card: #ffffff;
+    --bencho-pane: rgba(255, 255, 255, 0.75);
+    --bencho-pane-edge: rgba(0, 0, 0, 0.08);
+    --bencho-ink: #17181a;
+    --bencho-ink-2: #3c3b37;
+    --bencho-ink-3: #6f6e68;
+    --bencho-ink-4: #85847e;
+    --bencho-pick: #0d99ff;
+    --bencho-pink: #ff3b6b;
+    --bencho-ok: #15803d;
+    --bencho-chip-bg: #eceae5;
+    --bencho-chip-text: #17181a;
+    --bencho-border: rgba(0, 0, 0, 0.08);
+    --bencho-canvas-dot: rgba(0, 0, 0, 0.05);
+  }
+
+  /* Dark mode overrides (Native Bencho Dark Palette) */
+  .dark .bencho-scope,
+  [data-theme='dark'] .bencho-scope {
+    --bencho-bg: #09090b;
+    --bencho-surface: #111113;
+    --bencho-surface-2: #18181b;
+    --bencho-surface-3: #222226;
+    --bencho-card: #121215;
+    --bencho-pane: rgba(24, 24, 27, 0.65);
+    --bencho-pane-edge: rgba(255, 255, 255, 0.1);
+    --bencho-ink: #f4f4f5;
+    --bencho-ink-2: #d4d4d8;
+    --bencho-ink-3: #a1a1aa;
+    --bencho-ink-4: #71717a;
+    --bencho-pick: #38bdf8;
+    --bencho-pink: #f43f5e;
+    --bencho-ok: #34d17a;
+    --bencho-chip-bg: rgba(255, 255, 255, 0.07);
+    --bencho-chip-text: #e4e4e7;
+    --bencho-border: rgba(255, 255, 255, 0.08);
+    --bencho-canvas-dot: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Bencho Card Container (.gcard) */
+  .bencho-gcard {
+    position: relative;
+    background: var(--bencho-card);
+    border: 1px solid var(--bencho-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+    isolation: isolate;
+  }
+
+  .bencho-gcard:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Bencho Interactive Stage Canvas */
+  .bencho-stage {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    background: var(--bencho-surface);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--bencho-border);
+  }
+
+  .bencho-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--bencho-canvas-dot) 1px, transparent 1px);
+    background-size: 14px 14px;
+    pointer-events: none;
+  }
+
+  /* Bencho Signature Chip */
+  .bencho-chip {
+    font-family: var(--bencho-font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--bencho-chip-bg);
+    color: var(--bencho-chip-text);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Filter Pills */
+  .bencho-pill {
+    font-family: var(--bencho-font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    transition: all 0.18s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bencho-pill.active {
+    background: var(--bencho-ink);
+    color: var(--bencho-bg);
+    font-weight: 600;
+    border-color: var(--bencho-ink);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .bencho-pill:not(.active) {
+    background: var(--bencho-surface);
+    color: var(--bencho-ink-3);
+    border-color: var(--bencho-border);
+  }
+
+  .bencho-pill:not(.active):hover {
+    background: var(--bencho-surface-2);
+    color: var(--bencho-ink);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Control Sliders */
+  .bencho-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--bencho-surface-3);
+    border-radius: 4px;
+    outline: none;
+  }
+
+  .bencho-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bencho-ink);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.1s ease;
+  }
+
+  .bencho-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+}

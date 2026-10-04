@@ -68,24 +68,24 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.2 }}
-        className="w-full max-w-5xl max-h-[90vh] bg-[#141414] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+        className="bencho-scope w-full max-w-5xl max-h-[90vh] bg-[var(--bencho-card)] border border-[var(--bencho-border)] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#111111]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--bencho-border)] bg-[var(--bencho-surface)]">
           <div className="flex items-center gap-3">
-            <span className="px-2.5 py-1 text-xs font-semibold rounded-full bg-white/10 text-white font-mono">
+            <span className="bencho-chip">
               {block.category}
             </span>
-            <h2 className="text-lg font-bold text-white tracking-tight">{block.name}</h2>
+            <h2 className="text-lg font-bold text-[var(--bencho-ink)] tracking-tight">{block.name}</h2>
           </div>
 
           {/* Tab Selector & Close */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center p-1 bg-white/5 rounded-lg border border-white/5">
+            <div className="flex items-center p-1 bg-[var(--bencho-surface-2)] rounded-lg border border-[var(--bencho-border)]">
               <button
                 onClick={() => setActiveTab('preview')}
                 className={`px-3 py-1 text-xs font-medium rounded-md transition ${
-                  activeTab === 'preview' ? 'bg-white/15 text-white' : 'text-neutral-400 hover:text-white'
+                  activeTab === 'preview' ? 'bg-[var(--bencho-surface-3)] text-[var(--bencho-ink)]' : 'text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)]'
                 }`}
               >
                 Preview
@@ -93,7 +93,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
               <button
                 onClick={() => setActiveTab('code')}
                 className={`px-3 py-1 text-xs font-medium rounded-md transition flex items-center gap-1.5 ${
-                  activeTab === 'code' ? 'bg-white/15 text-white' : 'text-neutral-400 hover:text-white'
+                  activeTab === 'code' ? 'bg-[var(--bencho-surface-3)] text-[var(--bencho-ink)]' : 'text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)]'
                 }`}
               >
                 <Code2 className="w-3.5 h-3.5" /> Code
@@ -102,7 +102,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
 
             <button
               onClick={copyPrompt}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-medium text-neutral-300 transition"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[var(--bencho-surface-2)] hover:bg-[var(--bencho-surface-3)] border border-[var(--bencho-border)] rounded-lg text-xs font-medium text-[var(--bencho-ink-2)] transition"
             >
               {copiedPrompt ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Sparkles className="w-3.5 h-3.5 text-pink-400" />}
               {copiedPrompt ? 'Copied prompt!' : 'Copy prompt'}
@@ -110,7 +110,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition"
+              className="p-1.5 rounded-lg hover:bg-[var(--bencho-surface-2)] text-[var(--bencho-ink-3)] hover:text-[var(--bencho-ink)] transition"
             >
               <X className="w-5 h-5" />
             </button>
@@ -122,24 +122,24 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
           {activeTab === 'preview' ? (
             <>
               {/* Live Canvas */}
-              <div className="flex-1 min-h-[380px] bg-[#0c0c0c] border border-white/5 rounded-xl flex flex-col items-center justify-center p-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+              <div className="flex-1 min-h-[380px] bg-[var(--bencho-surface)] border border-[var(--bencho-border)] rounded-xl flex flex-col items-center justify-center p-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(var(--bencho-canvas-dot)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
                 <div className="relative z-10 w-full flex items-center justify-center">
                   <BlockComponent bounce={bounce} radius={radius} fill={fill} stroke={stroke} />
                 </div>
               </div>
 
               {/* Controls Sidebar */}
-              <div className="w-full lg:w-72 bg-[#111111] border border-white/5 rounded-xl p-5 flex flex-col gap-5">
-                <div className="flex items-center gap-2 text-xs font-bold text-neutral-300 uppercase tracking-wider">
-                  <Sliders className="w-4 h-4 text-neutral-400" /> Block Parameters
+              <div className="w-full lg:w-72 bg-[var(--bencho-surface)] border border-[var(--bencho-border)] rounded-xl p-5 flex flex-col gap-5">
+                <div className="flex items-center gap-2 text-xs font-bold text-[var(--bencho-ink-2)] uppercase tracking-wider">
+                  <Sliders className="w-4 h-4 text-[var(--bencho-ink-3)]" /> Block Parameters
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-xs text-neutral-400 mb-1.5">
+                    <div className="flex justify-between text-xs text-[var(--bencho-ink-3)] mb-1.5">
                       <span>Corner Radius</span>
-                      <span className="font-mono text-white">{radius}px</span>
+                      <span className="font-mono text-[var(--bencho-ink)]">{radius}px</span>
                     </div>
                     <input
                       type="range"
@@ -147,14 +147,14 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
                       max="32"
                       value={radius}
                       onChange={(e) => setRadius(Number(e.target.value))}
-                      className="w-full accent-white cursor-pointer"
+                      className="bencho-range"
                     />
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs text-neutral-400 mb-1.5">
+                    <div className="flex justify-between text-xs text-[var(--bencho-ink-3)] mb-1.5">
                       <span>Spring Bounce</span>
-                      <span className="font-mono text-white">{bounce.toFixed(2)}</span>
+                      <span className="font-mono text-[var(--bencho-ink)]">{bounce.toFixed(2)}</span>
                     </div>
                     <input
                       type="range"
@@ -163,7 +163,7 @@ export const BlockDetailModal: React.FC<BlockDetailModalProps> = ({ block, onClo
                       step="0.05"
                       value={bounce}
                       onChange={(e) => setBounce(Number(e.target.value))}
-                      className="w-full accent-white cursor-pointer"
+                      className="bencho-range"
                     />
                   </div>
 
