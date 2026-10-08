@@ -2,13 +2,16 @@ import React from 'react';
 
 // Vite glob loaders for Shadcn Space components
 const shadcnSpaceModules = import.meta.glob('/components/shadcnspace/*/*.tsx');
-const shadcnSpaceRawCodes = import.meta.glob('/components/shadcnspace/*/*.tsx', {
+const shadcnSpaceRawCodes = import.meta.glob('/components/shadcnspace/**/*.{tsx,ts,css,jsx,json}', {
   query: '?raw',
   import: 'default',
 });
 
 export async function getShadcnSpaceComponentSource(category: string, filename: string): Promise<string> {
-  const file = filename.endsWith('.tsx') ? filename : `${filename}.tsx`;
+  let file = filename;
+  if (!file.includes('.')) {
+    file = `${file}.tsx`;
+  }
   const key = `/components/shadcnspace/${category}/${file}`;
   if (shadcnSpaceRawCodes[key]) {
     const code = await shadcnSpaceRawCodes[key]();

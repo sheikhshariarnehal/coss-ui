@@ -4,8 +4,6 @@ import {
   Copy,
   Check,
   ChevronLeft,
-  Terminal,
-  Loader2,
   X,
   RotateCw,
   Search,
@@ -14,6 +12,7 @@ import {
   Menu,
   LayoutGrid,
   LayoutList,
+  Loader2,
 } from 'lucide-react';
 import {
   SHADCNSPACE_COMPONENTS,
@@ -24,9 +23,8 @@ import {
 } from '../data/shadcnspace-sidebar';
 import {
   loadShadcnSpaceComponent,
-  getShadcnSpaceComponentSource,
 } from './shadcnspace-loader';
-import { CodeBlock } from '../components/CodeBlock';
+import { ShadcnSpaceCodeModal } from './ShadcnSpaceCodeModal';
 
 interface ShadcnSpaceCategoryPageProps {
   category: string;
@@ -105,52 +103,11 @@ export const ShadcnSpaceCategoryPage: React.FC<ShadcnSpaceCategoryPageProps> = (
   }, [sidebarSearch]);
 
   const [activeCodeModal, setActiveCodeModal] = useState<ShadcnSpaceComponent | null>(null);
-  const [modalCode, setModalCode] = useState<string>('');
-  const [loadingCode, setLoadingCode] = useState<boolean>(false);
-  const [activePkgManager, setActivePkgManager] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [copiedCli, setCopiedCli] = useState<boolean>(false);
-  const [copiedModalCode, setCopiedModalCode] = useState<boolean>(false);
   const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
   const [reloadKeys, setReloadKeys] = useState<Record<string, number>>({});
 
-  const handleOpenCode = async (comp: ShadcnSpaceComponent) => {
+  const handleOpenCode = (comp: ShadcnSpaceComponent) => {
     setActiveCodeModal(comp);
-    setLoadingCode(true);
-    try {
-      const filename = comp.files.length > 0 ? comp.files[0].name : `${comp.slug}.tsx`;
-      const code = await getShadcnSpaceComponentSource(comp.category, filename);
-      setModalCode(code);
-    } catch {
-      setModalCode('// Failed to load source code');
-    } finally {
-      setLoadingCode(false);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setActiveCodeModal(null);
-    setModalCode('');
-    setCopiedCli(false);
-    setCopiedModalCode(false);
-  };
-
-  const getCliCommand = (slug: string) => {
-    switch (activePkgManager) {
-      case 'pnpm':
-        return `pnpm dlx shadcn@latest add @shadcn-space/${slug}`;
-      case 'npm':
-        return `npx shadcn@latest add @shadcn-space/${slug}`;
-      case 'yarn':
-        return `npx shadcn@latest add @shadcn-space/${slug}`;
-      case 'bun':
-        return `bunx --bun shadcn@latest add @shadcn-space/${slug}`;
-    }
-  };
-
-  const handleCopyCli = (slug: string) => {
-    navigator.clipboard.writeText(getCliCommand(slug));
-    setCopiedCli(true);
-    setTimeout(() => setCopiedCli(false), 2000);
   };
 
   const handleCopyCard = (comp: ShadcnSpaceComponent) => {
@@ -437,111 +394,12 @@ export const ShadcnSpaceCategoryPage: React.FC<ShadcnSpaceCategoryPageProps> = (
         </main>
       </div>
 
-      {/* Code Modal Dialog */}
-      {activeCodeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <div className="relative flex flex-col w-full max-w-4xl max-h-[90vh] rounded-2xl border border-border bg-card shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-border/80 px-6 py-4 bg-muted/30">
-              <div className="space-y-1">
-                <h3 className="text-base font-semibold text-foreground">CLI Command</h3>
-                <p className="text-xs text-muted-foreground">
-                  Install this component directly via shadcn CLI
-                </p>
-              </div>
-              <button
-                onClick={handleCloseModal}
-                className="size-8 inline-flex items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-
-            {/* CLI Bar with PM Selector */}
-            <div className="border-b border-border/60 bg-muted/10 p-5 space-y-3">
-              <div className="flex items-center gap-1.5">
-                {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((pm) => (
-                  <button
-                    key={pm}
-                    onClick={() => setActivePkgManager(pm)}
-                    className={`rounded-md px-2.5 py-1 text-xs font-mono font-medium transition-colors cursor-pointer ${
-                      activePkgManager === pm
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground hover:text-foreground'
-                    }`}
-                  >
-                    {pm}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-2.5 font-mono text-xs text-foreground shadow-xs">
-                <span className="truncate">{getCliCommand(activeCodeModal.slug)}</span>
-                <button
-                  onClick={() => handleCopyCli(activeCodeModal.slug)}
-                  className="shrink-0 ml-3 inline-flex items-center gap-1 text-xs font-sans text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  {copiedCli ? (
-                    <>
-                      <Check className="size-3.5 text-emerald-400" />
-                      <span className="text-emerald-400 font-medium">Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="size-3.5" />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Explorer Path Header */}
-            <div className="flex items-center justify-between border-b border-border/60 bg-muted/20 px-6 py-2.5 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2 font-mono">
-                <Terminal className="size-3.5 text-emerald-400" />
-                <span>
-                  components/shadcnspace/{activeCodeModal.category}/
-                  {activeCodeModal.files.length > 0 ? activeCodeModal.files[0].name : `${activeCodeModal.slug}.tsx`}
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  if (modalCode) {
-                    navigator.clipboard.writeText(modalCode);
-                    setCopiedModalCode(true);
-                    setTimeout(() => setCopiedModalCode(false), 2000);
-                  }
-                }}
-                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              >
-                {copiedModalCode ? (
-                  <>
-                    <Check className="size-3.5 text-emerald-400" />
-                    <span className="text-emerald-400 font-medium">Copied code</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="size-3.5" />
-                    <span>Copy code</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Code Body */}
-            <div className="flex-1 overflow-auto p-4 bg-muted/40 max-h-[50vh]">
-              {loadingCode ? (
-                <div className="flex items-center justify-center py-20 text-muted-foreground">
-                  <Loader2 className="size-6 animate-spin text-emerald-500" />
-                </div>
-              ) : (
-                <CodeBlock code={modalCode} language="tsx" />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Code & Explorer Modal */}
+      <ShadcnSpaceCodeModal
+        isOpen={!!activeCodeModal}
+        component={activeCodeModal}
+        onClose={() => setActiveCodeModal(null)}
+      />
     </div>
   );
 };
