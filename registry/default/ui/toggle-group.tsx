@@ -18,11 +18,13 @@ function ToggleGroup({
   variant,
   size,
   children,
+  type = "single",
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
   VariantProps<typeof toggleVariants>) {
   return (
     <ToggleGroupPrimitive.Root
+      type={type}
       className={cn(
         "group/toggle-group flex items-center rounded-md data-[variant=outline]:shadow-xs",
         className,

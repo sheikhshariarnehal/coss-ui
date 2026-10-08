@@ -9,6 +9,8 @@ import { BlocksGallery } from './components/BlocksGallery';
 import { SearchModal } from './components/SearchModal';
 import { OverviewPage } from './components/OverviewPage';
 import { OriginPage } from './origin/OriginPage';
+import { ShadcnSpacePage } from './shadcnspace/ShadcnSpacePage';
+import { SHADCNSPACE_COMPONENTS } from './data/shadcnspace-list';
 
 const OVERVIEW_SLUGS = [
   'introduction',
@@ -21,19 +23,53 @@ const OVERVIEW_SLUGS = [
 ];
 
 function parseCurrentRoute(): {
-  tab: 'docs' | 'particles' | 'blocks' | 'origin';
+  tab: 'docs' | 'particles' | 'blocks' | 'origin' | 'shadcnspace';
   componentSlug: string;
   overviewId: string | null;
   blockSlug: string | null;
   originCategory: string | null;
+  shadcnSpaceCategory: string | null;
 } {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+
+  // Check /components (matches shadcnspace.com/components)
+  if (pathname === '/components' || pathname === '/components/') {
+    return {
+      tab: 'shadcnspace',
+      componentSlug: 'accordion',
+      overviewId: null,
+      blockSlug: null,
+      originCategory: null,
+      shadcnSpaceCategory: null,
+    };
+  }
+
+  // Check /shadcnspace or /shadcnspace/:category
+  const ssMatch = pathname.match(/^\/shadcnspace(?:\/([a-z0-9-]+))?/i);
+  if (ssMatch) {
+    const cat = ssMatch[1] ? ssMatch[1].toLowerCase() : null;
+    return {
+      tab: 'shadcnspace',
+      componentSlug: 'accordion',
+      overviewId: null,
+      blockSlug: null,
+      originCategory: null,
+      shadcnSpaceCategory: cat,
+    };
+  }
 
   // Check /origin or /origin/:category
   const originMatch = pathname.match(/^\/origin(?:\/([a-z0-9-]+))?/i);
   if (originMatch) {
     const cat = originMatch[1] ? originMatch[1].toLowerCase() : null;
-    return { tab: 'origin', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: cat };
+    return {
+      tab: 'origin',
+      componentSlug: 'accordion',
+      overviewId: null,
+      blockSlug: null,
+      originCategory: cat,
+      shadcnSpaceCategory: null,
+    };
   }
 
   if (
@@ -42,14 +78,14 @@ function parseCurrentRoute(): {
     pathname.startsWith('/ui/particles') ||
     pathname.startsWith('/particles')
   ) {
-    return { tab: 'particles', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null };
+    return { tab: 'particles', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null, shadcnSpaceCategory: null };
   }
 
   // Check /ui/blocks or /blocks or /ui/blocks/:slug
   const blockMatch = pathname.match(/^(?:\/ui)?\/blocks(?:\/([a-z0-9-]+))?/i);
   if (blockMatch) {
     const slug = blockMatch[1] ? blockMatch[1].toLowerCase() : null;
-    return { tab: 'blocks', componentSlug: 'accordion', overviewId: null, blockSlug: slug, originCategory: null };
+    return { tab: 'blocks', componentSlug: 'accordion', overviewId: null, blockSlug: slug, originCategory: null, shadcnSpaceCategory: null };
   }
 
   // Check /ui/docs/components/:slug or /docs/components/:slug or /components/:slug
@@ -57,7 +93,7 @@ function parseCurrentRoute(): {
   if (compMatch) {
     const slug = compMatch[1].toLowerCase();
     if (COMPONENTS_LIST.some((c) => c.slug === slug)) {
-      return { tab: 'docs', componentSlug: slug, overviewId: null, blockSlug: null, originCategory: null };
+      return { tab: 'docs', componentSlug: slug, overviewId: null, blockSlug: null, originCategory: null, shadcnSpaceCategory: null };
     }
   }
 
@@ -66,23 +102,24 @@ function parseCurrentRoute(): {
   if (overviewMatch) {
     const id = overviewMatch[1].toLowerCase();
     if (OVERVIEW_SLUGS.includes(id)) {
-      return { tab: 'docs', componentSlug: 'accordion', overviewId: id, blockSlug: null, originCategory: null };
+      return { tab: 'docs', componentSlug: 'accordion', overviewId: id, blockSlug: null, originCategory: null, shadcnSpaceCategory: null };
     }
     if (COMPONENTS_LIST.some((c) => c.slug === id)) {
-      return { tab: 'docs', componentSlug: id, overviewId: null, blockSlug: null, originCategory: null };
+      return { tab: 'docs', componentSlug: id, overviewId: null, blockSlug: null, originCategory: null, shadcnSpaceCategory: null };
     }
   }
 
-  return { tab: 'docs', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null };
+  return { tab: 'docs', componentSlug: 'accordion', overviewId: null, blockSlug: null, originCategory: null, shadcnSpaceCategory: null };
 }
 
 export function App() {
   const initialRoute = parseCurrentRoute();
-  const [activeTab, setActiveTab] = useState<'docs' | 'particles' | 'blocks' | 'origin'>(initialRoute.tab);
+  const [activeTab, setActiveTab] = useState<'docs' | 'particles' | 'blocks' | 'origin' | 'shadcnspace'>(initialRoute.tab);
   const [selectedSlug, setSelectedSlug] = useState<string>(initialRoute.componentSlug);
   const [selectedOverview, setSelectedOverview] = useState<string | null>(initialRoute.overviewId);
   const [selectedBlockSlug, setSelectedBlockSlug] = useState<string | null>(initialRoute.blockSlug);
   const [selectedOriginCategory, setSelectedOriginCategory] = useState<string | null>(initialRoute.originCategory);
+  const [selectedShadcnSpaceCategory, setSelectedShadcnSpaceCategory] = useState<string | null>(initialRoute.shadcnSpaceCategory);
   const [isDark, setIsDark] = useState<boolean>(true);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
@@ -104,6 +141,7 @@ export function App() {
       setSelectedOverview(route.overviewId);
       setSelectedBlockSlug(route.blockSlug);
       setSelectedOriginCategory(route.originCategory);
+      setSelectedShadcnSpaceCategory(route.shadcnSpaceCategory);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -112,7 +150,17 @@ export function App() {
 
   // Sync document title
   useEffect(() => {
-    if (activeTab === 'origin') {
+    if (activeTab === 'shadcnspace') {
+      if (selectedShadcnSpaceCategory) {
+        const formatted = selectedShadcnSpaceCategory
+          .split('-')
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+        document.title = `${formatted} - Shadcn Space`;
+      } else {
+        document.title = 'Shadcn Space - 490+ Components';
+      }
+    } else if (activeTab === 'origin') {
       if (selectedOriginCategory) {
         const formatted = selectedOriginCategory
           .split('-')
@@ -204,9 +252,24 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleTabChange = (tab: 'docs' | 'particles' | 'blocks' | 'origin') => {
+  const handleSelectShadcnSpaceCategory = (cat: string | null) => {
+    setSelectedShadcnSpaceCategory(cat);
+    setActiveTab('shadcnspace');
+    if (cat) {
+      window.history.pushState(null, '', `/shadcnspace/${cat}`);
+    } else {
+      window.history.pushState(null, '', '/shadcnspace');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleTabChange = (tab: 'docs' | 'particles' | 'blocks' | 'origin' | 'shadcnspace') => {
     setActiveTab(tab);
-    if (tab === 'origin') {
+    if (tab === 'shadcnspace') {
+      setSelectedBlockSlug(null);
+      const url = selectedShadcnSpaceCategory ? `/shadcnspace/${selectedShadcnSpaceCategory}` : '/shadcnspace';
+      window.history.pushState(null, '', url);
+    } else if (tab === 'origin') {
       setSelectedBlockSlug(null);
       const url = selectedOriginCategory ? `/origin/${selectedOriginCategory}` : '/origin';
       window.history.pushState(null, '', url);
@@ -227,6 +290,34 @@ export function App() {
 
   const currentComponent =
     COMPONENTS_LIST.find((c) => c.slug === selectedSlug) || COMPONENTS_LIST[0];
+
+  // If in Shadcn Space tab, render the full Shadcn Space Explorer
+  if (activeTab === 'shadcnspace') {
+    return (
+      <div className={isDark ? 'dark' : ''}>
+        <ShadcnSpacePage
+          selectedCategory={selectedShadcnSpaceCategory}
+          onSelectCategory={handleSelectShadcnSpaceCategory}
+          onSwitchToCossUi={() => handleTabChange('docs')}
+          darkMode={isDark}
+          onToggleDarkMode={toggleTheme}
+          onOpenSearch={() => setIsSearchOpen(true)}
+        />
+        {/* Global ⌘K Search Modal */}
+        <SearchModal
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+          components={COMPONENTS_LIST}
+          onSelectComponent={handleSelectComponent}
+          onSelectParticle={(slug) => handleSelectComponent(slug)}
+          onSelectBlock={(slug) => {
+            setActiveTab('blocks');
+            handleSelectBlock(slug);
+          }}
+        />
+      </div>
+    );
+  }
 
   // If in Origin tab, render the full authentic 1:1 Origin UI Experience
   if (activeTab === 'origin') {
@@ -278,6 +369,7 @@ export function App() {
         onToggleMobileSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
         totalParticles={TOTAL_PARTICLES}
         totalBlocks={BLOCKS_DATA.length}
+        totalShadcnSpace={SHADCNSPACE_COMPONENTS.length}
       />
 
       {/* Main Container */}

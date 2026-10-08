@@ -1,0 +1,464 @@
+{
+  "accordion": {
+    "title": "Accordion",
+    "count": "9",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/accordion.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/accordian.webp"
+  },
+  "alert": {
+    "title": "Alert",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/alert.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/alert.webp"
+  },
+  "animated-list": {
+    "title": "Animated List",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/animated-list.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/list-animation.webp"
+  },
+  "animated-text": {
+    "title": "Animated Text",
+    "count": "12",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/animated-text.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/animated-text.webp"
+  },
+  "animation": {
+    "title": "Animation",
+    "count": null,
+    "badge": "New",
+    "localImage": "/shadcnspace/thumbnails/animation.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/animation.webp"
+  },
+  "apple-dock": {
+    "title": "Apple Dock",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/apple-dock.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/apple-dock.webp"
+  },
+  "aspect-ratio": {
+    "title": "Aspect Ratio",
+    "count": "6",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/aspect-ratio.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/aspect-ratio.webp"
+  },
+  "attachment": {
+    "title": "Attachment",
+    "count": null,
+    "badge": "New",
+    "localImage": "/shadcnspace/thumbnails/attachment.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/attachment.webp"
+  },
+  "autocomplete": {
+    "title": "Autocomplete",
+    "count": "6",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/autocomplete.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/autocomplete.webp"
+  },
+  "avatar": {
+    "title": "Avatar",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/avatar.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/avatar.webp"
+  },
+  "badge": {
+    "title": "Badge",
+    "count": "13",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/badge.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/badge.webp"
+  },
+  "breadcrumb": {
+    "title": "Breadcrumb",
+    "count": "6",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/breadcrumb.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/breadcrumb.webp"
+  },
+  "bubble": {
+    "title": "Bubble",
+    "count": null,
+    "badge": "New",
+    "localImage": "/shadcnspace/thumbnails/bubble.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/bubble.webp"
+  },
+  "button": {
+    "title": "Button",
+    "count": "33",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/button.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/button.webp"
+  },
+  "button-group": {
+    "title": "Button Group",
+    "count": "13",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/button-group.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/button-group.webp"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "count": "16",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/calendar.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/calender.webp"
+  },
+  "card": {
+    "title": "Card",
+    "count": "26",
+    "badge": "+2 New",
+    "localImage": "/shadcnspace/thumbnails/card.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/card.webp"
+  },
+  "carousel": {
+    "title": "Carousel",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/carousel.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/carousel.webp"
+  },
+  "checkbox": {
+    "title": "Checkbox",
+    "count": "10",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/checkbox.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/checkbox.webp"
+  },
+  "code-block": {
+    "title": "Code Block",
+    "count": "7",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/code-block.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/code-block.webp"
+  },
+  "collapsible": {
+    "title": "Collapsible",
+    "count": "5",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/collapsible.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/collapsible.webp"
+  },
+  "combobox": {
+    "title": "Combobox",
+    "count": "10",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/combobox.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/combobox.webp"
+  },
+  "command": {
+    "title": "Command",
+    "count": "7",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/command.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/command.webp"
+  },
+  "context-menu": {
+    "title": "Context Menu",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/context-menu.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/context-menu.webp"
+  },
+  "date-picker": {
+    "title": "Date Picker",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/date-picker.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/date-picker.webp"
+  },
+  "dialog": {
+    "title": "Dialog",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/dialog.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/dialog.webp"
+  },
+  "dots": {
+    "title": "Dots",
+    "count": null,
+    "badge": "New",
+    "localImage": "/shadcnspace/thumbnails/dots.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/dots.webp"
+  },
+  "drawer": {
+    "title": "Drawer",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/drawer.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/drawer.webp"
+  },
+  "dropdown-menu": {
+    "title": "Dropdown Menu",
+    "count": "11",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/dropdown-menu.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/blocks-images/dashboard/dropdown-blocks.webp"
+  },
+  "field": {
+    "title": "Field",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/field.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/field.webp"
+  },
+  "file-upload": {
+    "title": "File Upload",
+    "count": "5",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/file-upload.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/file-upload.webp"
+  },
+  "input": {
+    "title": "Input",
+    "count": "20",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/input.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/input.webp"
+  },
+  "input-group": {
+    "title": "Input Group",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/input-group.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/input-group.webp"
+  },
+  "input-mask": {
+    "title": "Input Mask",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/input-mask.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/input-mask.webp"
+  },
+  "input-otp": {
+    "title": "Input OTP",
+    "count": "10",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/input-otp.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/input-otp.webp"
+  },
+  "item": {
+    "title": "Item",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/item.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/item.webp"
+  },
+  "kbd": {
+    "title": "KBD",
+    "count": "5",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/kbd.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/kbd.webp"
+  },
+  "label": {
+    "title": "Label",
+    "count": "6",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/label.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/label.webp"
+  },
+  "marquee": {
+    "title": "Marquee",
+    "count": "5",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/marquee.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/marquee.webp"
+  },
+  "number-ticker": {
+    "title": "Number Ticker",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/number-ticker.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/number-ticker.webp"
+  },
+  "orbiting-circles": {
+    "title": "Orbiting Circles",
+    "count": "4",
+    "badge": "+2 New",
+    "localImage": "/shadcnspace/thumbnails/orbiting-circles.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/circular-icons.webp"
+  },
+  "pagination": {
+    "title": "Pagination",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/pagination.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/pagination.webp"
+  },
+  "popover": {
+    "title": "Popover",
+    "count": "9",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/popover.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/popover.webp"
+  },
+  "progress": {
+    "title": "Progress",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/progress.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/progress.webp"
+  },
+  "questionnaire": {
+    "title": "Questionnaire",
+    "count": "1",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/questionnaire.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/questionnaire.webp"
+  },
+  "radio-group": {
+    "title": "Radio Group",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/radio-group.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/radio-group.webp"
+  },
+  "rating": {
+    "title": "Rating",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/rating.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/rating.webp"
+  },
+  "resizable": {
+    "title": "Resizable",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/resizable.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/resizable.webp"
+  },
+  "scroll-area": {
+    "title": "Scroll Area",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/scroll-area.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/scroll-area.webp"
+  },
+  "select": {
+    "title": "Select",
+    "count": "12",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/select.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/select.webp"
+  },
+  "separator": {
+    "title": "Separator",
+    "count": "9",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/separator.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/separator.webp"
+  },
+  "sheet": {
+    "title": "Sheet",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/sheet.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/sheet.webp"
+  },
+  "shine-border": {
+    "title": "Shine Border",
+    "count": "7",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/shine-border.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/shine-border.webp"
+  },
+  "skeleton": {
+    "title": "Skeleton",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/skeleton.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/skeleton.webp"
+  },
+  "slider": {
+    "title": "Slider",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/slider.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/slider.webp"
+  },
+  "sonner": {
+    "title": "Sonner",
+    "count": "7",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/sonner.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/sonner.webp"
+  },
+  "sortable": {
+    "title": "Sortable",
+    "count": "6",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/sortable.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/sortable.webp"
+  },
+  "spinner": {
+    "title": "Spinner",
+    "count": "10",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/spinner.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/spinner.webp"
+  },
+  "spinning-text": {
+    "title": "Spinning Text",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/spinning-text.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/spinning-text.webp"
+  },
+  "stepper": {
+    "title": "Stepper",
+    "count": "4",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/stepper.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/stepper.webp"
+  },
+  "switch": {
+    "title": "Switch",
+    "count": "8",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/switch.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/switch.webp"
+  },
+  "tabs": {
+    "title": "Tabs",
+    "count": "10",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/tabs.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/tabs.webp"
+  },
+  "textarea": {
+    "title": "Textarea",
+    "count": "9",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/textarea.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/text-area.webp"
+  },
+  "toggle": {
+    "title": "Toggle",
+    "count": "3",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/toggle.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/toggle.webp"
+  },
+  "toggle-group": {
+    "title": "Toggle Group",
+    "count": "2",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/toggle-group.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/toggle-group.webp"
+  },
+  "tooltip": {
+    "title": "Tooltip",
+    "count": "9",
+    "badge": null,
+    "localImage": "/shadcnspace/thumbnails/tooltip.webp",
+    "remoteImage": "https://images.shadcnspace.com/assets/components/tooltip.webp"
+  }
+}

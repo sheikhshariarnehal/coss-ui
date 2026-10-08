@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
+import fs from 'fs';
 
 export default defineConfig({
   plugins: [
@@ -23,8 +24,12 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'components/$1/$1.tsx'),
       },
       {
+        find: /^@\/components\/shadcnspace\/(.+)$/,
+        replacement: path.resolve(__dirname, 'components/shadcnspace/$1'),
+      },
+      {
         find: /^@\/components\/ui\/(.+)$/,
-        replacement: path.resolve(__dirname, 'components/$1/$1.tsx'),
+        replacement: path.resolve(__dirname, 'registry/default/ui/$1.tsx'),
       },
       {
         find: /^@\/registry\/default\/lib\/(.+)$/,

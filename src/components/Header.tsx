@@ -2,8 +2,8 @@ import React from 'react';
 import { Search, Moon, Sun, Menu, Sparkles, BookOpen } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'docs' | 'particles' | 'blocks' | 'origin';
-  setActiveTab: (tab: 'docs' | 'particles' | 'blocks' | 'origin') => void;
+  activeTab: 'docs' | 'particles' | 'blocks' | 'origin' | 'shadcnspace';
+  setActiveTab: (tab: 'docs' | 'particles' | 'blocks' | 'origin' | 'shadcnspace') => void;
   isDark: boolean;
   toggleTheme: () => void;
   onOpenSearch: () => void;
@@ -11,6 +11,7 @@ interface HeaderProps {
   totalParticles: number;
   totalBlocks?: number;
   totalOrigin?: number;
+  totalShadcnSpace?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -23,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   totalParticles,
   totalBlocks = 30,
   totalOrigin = 620,
+  totalShadcnSpace = 490,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full bg-sidebar/80 backdrop-blur-md before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-border/64">
@@ -126,6 +128,25 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Origin</span>
               <span className="rounded-full bg-amber-500/10 px-1.5 py-0.2 text-[11px] font-semibold text-amber-500">
                 {totalOrigin}
+              </span>
+            </a>
+            <a
+              href="/shadcnspace"
+              onClick={(e) => {
+                if (!e.metaKey && !e.ctrlKey) {
+                  e.preventDefault();
+                  setActiveTab('shadcnspace');
+                }
+              }}
+              className={`relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border font-medium text-sm transition-all h-8 px-3 ${
+                activeTab === 'shadcnspace'
+                  ? 'border-transparent bg-accent text-foreground'
+                  : 'border-transparent text-muted-foreground hover:bg-accent hover:text-foreground'
+              }`}
+            >
+              <span>Shadcn Space</span>
+              <span className="rounded-full bg-emerald-500/10 px-1.5 py-0.2 text-[11px] font-semibold text-emerald-400">
+                {totalShadcnSpace}
               </span>
             </a>
           </nav>

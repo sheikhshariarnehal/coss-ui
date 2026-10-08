@@ -26,7 +26,11 @@
         "components/*"
       ],
       "@/components/ui/*": [
+        "registry/default/ui/*",
         "components/*"
+      ],
+      "@/components/shadcnspace/*": [
+        "components/shadcnspace/*"
       ],
       "@/registry/default/lib/*": ["lib/*"],
       "@coss/ui/lib/*": ["lib/*"],

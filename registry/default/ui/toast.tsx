@@ -130,7 +130,10 @@ type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
 
 type ToastActionElement = React.ReactElement<typeof ToastAction>;
 
+import { toast } from "sonner";
+
 export {
+  toast,
   Toast,
   ToastAction,
   ToastClose,
